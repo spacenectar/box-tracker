@@ -3,8 +3,8 @@ FROM node:18
 WORKDIR /app
 
 COPY package.json package-lock.json ./
-RUN npm install
+RUN yarn install
 
 COPY . .
 
-CMD ["npm", "run", "dev"]
+CMD ["yarn", "dev"]
