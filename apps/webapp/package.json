@@ -1,0 +1,16 @@
+{
+  "name": "box-tracker",
+  "version": "0.0.1alpha",
+  "description": "The Webapp for the Box-Tracker application",
+  "private": true,
+  "author": {
+    "name": "Alexander (Foxy) Foxleigh",
+    "email": "alex@alexfoxleigh.com",
+    "url": "http://github.com/foxleigh81"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spacenectar/box-tracker"
+  },
+  "license": "MIT"
+}

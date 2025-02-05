@@ -1,12 +1,20 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "namedInputs": {
-    "default": ["{projectRoot}/**/*", "sharedGlobals"],
-    "production": ["default"],
-    "sharedGlobals": ["{workspaceRoot}/.github/workflows/ci.yml"]
+    "default": [
+      "{projectRoot}/**/*",
+      "sharedGlobals"
+    ],
+    "production": [
+      "default"
+    ],
+    "sharedGlobals": [
+      "{workspaceRoot}/.github/workflows/ci.yml"
+    ]
   },
   "nxCloudId": "67a34621c78c150cb8bbce92",
   "plugins": [
+    "@nxlv/python",
     {
       "plugin": "@nx/js/typescript",
       "options": {
@@ -21,5 +29,41 @@
         }
       }
     }
-  ]
+  ],
+  "targetDefaults": {
+    "install": {
+      "dependsOn": [
+        "^install"
+      ]
+    },
+    "serve": {
+      "cache": false
+    },
+    "test": {
+      "inputs": [
+        "default",
+        "^default"
+      ]
+    },
+    "lint": {
+      "inputs": [
+        "default",
+        "^default"
+      ]
+    },
+    "format": {
+      "inputs": [
+        "default",
+        "^default"
+      ]
+    }
+  },
+  "projects": {
+    "backend": {
+      "root": "apps/backend"
+    },
+    "webapp": {
+      "root": "apps/webapp"
+    }
+  }
 }
