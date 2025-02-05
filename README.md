@@ -1,90 +1,176 @@
-# BoxTracker
+# Box Tracker 📦
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+Welcome to Box Tracker, the ultimate solution for organizing and tracking all your stuff in boxes, across multiple locations, and even with multiple users! This repo is structured as a monorepo managed by `Nx`, with separate folders for the backend (`FastAPI`) and the frontend (`Next.js`).
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is almost ready ✨.
+Disclaimer: These docs are a work in progress and will evolve as the project develops. They are mostly just here for my reference at the moment.
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/nx-api/js?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+---
 
-## Finish your CI setup
+## Table of Contents
 
-[Click here to finish setting up your workspace!](https://cloud.nx.app/connect/T0c7xQliy5)
+1. [Tech Stack](#tech-stack)
+2. [Project Structure](#project-structure)
+3. [Getting Started](#getting-started)
+4. [How to Navigate](#how-to-navigate)
+5. [Contributing](#contributing)
 
+---
 
-## Generate a library
+## Tech Stack
 
-```sh
-npx nx g @nx/js:lib packages/pkg1 --publishable --importPath=@my-org/pkg1
+- Frontend: `Next.js` (React)
+- Backend: `FastAPI` (Python) with `PostgreSQL`
+- Monorepo Management: `Nx`
+- Infrastructure:
+  - `Docker` for containerization
+  - `Docker Compose` for service orchestration
+- Documentation: Markdown files in `/docs`
+
+---
+
+## Project Structure
+
+```plaintext
+repo/
+├─ apps/
+│  ├─ backend/       # FastAPI backend service
+│  └─ webapp/        # Next.js frontend service
+├─ docs/              # Project documentation, design notes, etc.
+├─ .env.example       # Environment variables (example)
+├─ docker-compose.yml # Docker setup for backend and database
+├─ nx.json            # Nx workspace configuration
+└─ package.json       # Shared scripts for Nx tasks
 ```
 
-## Run tasks
+### /docs
 
-To build the library use:
+All the project documentation, including architectural diagrams, technical decisions, and implementation notes.
 
-```sh
-npx nx build pkg1
+### /apps/webapp
+
+The `Next.js` front-end. You can install dependencies with `yarn install` and start the development server using `nx run webapp:serve`.
+
+### /apps/backend
+
+The `FastAPI` backend that handles authentication, API endpoints, and database interactions.
+
+**Note:** The backend is designed to run inside Docker, and you should not run it manually outside of the containerized environment.
+
+---
+
+## Getting Started
+
+### Before you begin
+
+1. Clone the Repo
+
+   ```bash
+   git clone https://github.com/yourusername/box-tracker.git
+   cd box-tracker
+   ```
+
+2. Ensure you have Docker installed and running.
+3. Copy `.env.example` to `.env` and update the values as needed.
+
+---
+
+### Running the Project
+
+#### Backend (Runs in Docker)
+
+To start the backend (including `PostgreSQL`):
+
+```bash
+docker-compose up backend
 ```
 
-To run any task with Nx use:
+This will:
 
-```sh
-npx nx <target> <project-name>
+- Start the `FastAPI` backend inside a container.
+- Connect it to a `PostgreSQL` database inside Docker.
+
+#### Frontend
+
+To start the `Next.js` frontend:
+
+```bash
+nx run webapp:serve
 ```
 
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
+This will start the development server, and the app should be available at `http://localhost:3000`.
 
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+#### Running Everything
 
-## Versioning and releasing
+You can start both the frontend and backend in one step:
 
-To version and release the library use
-
-```
-npx nx release
+```bash
+docker-compose up
 ```
 
-Pass `--dry-run` to see what would happen without actually releasing the library.
+---
 
-[Learn more about Nx release &raquo;](hhttps://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+## Using Nx Commands
 
-## Keep TypeScript project references up to date
+This project is managed using `Nx`, which allows for efficient task execution.
+Here are some useful commands:
 
-Nx automatically updates TypeScript [project references](https://www.typescriptlang.org/docs/handbook/project-references.html) in `tsconfig.json` files to ensure they remain accurate based on your project dependencies (`import` or `require` statements). This sync is automatically done when running tasks such as `build` or `typecheck`, which require updated references to function correctly.
+### Install dependencies
 
-To manually trigger the process to sync the project graph dependencies information to the TypeScript project references, run the following command:
-
-```sh
-npx nx sync
+```bash
+yarn install
 ```
 
-You can enforce that the TypeScript project references are always in the correct state when running in CI by adding a step to your CI job configuration that runs the following command:
+### Run the backend inside Docker
 
-```sh
-npx nx sync:check
+```bash
+docker-compose up backend
 ```
 
-[Learn more about nx sync](https://nx.dev/reference/nx-commands#sync)
+### Run the frontend
 
+```bash
+nx run webapp:serve
+```
 
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+### Run database migrations
 
-## Install Nx Console
+```bash
+nx run backend:migrate
+```
 
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
+### Seed the database
 
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+```bash
+nx run backend:seed
+```
 
-## Useful links
+### Lint the code
 
-Learn more:
+```bash
+nx format
+```
 
-- [Learn more about this workspace setup](https://nx.dev/nx-api/js?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+---
 
-And join the Nx community:
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+## How to Navigate
+
+- `docs/`: Project documentation, technical decisions, and notes.
+- `apps/webapp/`: Frontend (`Next.js`).
+- `apps/backend/`: Backend (`FastAPI`).
+- `docker-compose.yml`: Defines how services (backend, database) are containerized.
+
+---
+
+## Contributing
+
+If you want to help out, feel free to:
+
+1. Fork or clone this repo.
+2. Make your changes.
+3. Submit a pull request with a clear description of what you did.
+
+We'll review and merge it if it looks good.
+
+---
+
+Thanks for checking out Box Tracker! If you have questions, feature requests, or just want to rant about how unorganized your boxes are, open an issue or reach out. Let's build something awesome!
