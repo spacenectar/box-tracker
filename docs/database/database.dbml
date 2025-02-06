@@ -1,0 +1,90 @@
+Table users {
+  id uuid [primary key] // Unique user ID
+  cognito_id varchar [unique, not null] // AWS Cognito user ID
+  role varchar // Global role (e.g., admin, user)
+  staff_role varchar // Staff-specific role (optional)
+  date_registered timestamp // When the user signed up
+  date_last_logged_in timestamp // Last login timestamp
+}
+
+Table locations {
+  id uuid [primary key] // Unique location ID
+  name varchar [not null] // Location name
+  address varchar // Optional: Physical address
+  what_three_words varchar // Optional: What3Words location
+  photo varchar // Optional: URL to a photo of the location
+  type varchar // Optional: Type of location (e.g., room, warehouse)
+  notes text // Optional: Additional details
+  date_added timestamp [not null, default: "CURRENT_TIMESTAMP"] // When the location was added
+  date_last_modified timestamp // When the location was last modified
+  date_last_accessed timestamp // When the location was last accessed
+}
+
+Table user_locations {
+  user_id uuid [not null] // Foreign key to users
+  location_id uuid [not null] // Foreign key to locations
+  primary key (user_id, location_id) // Composite primary key
+}
+
+Table boxes {
+  id uuid [primary key] // Unique box ID
+  name varchar [not null] // Box name
+  slug varchar [not null, unique] // URL-friendly identifier
+  location_id uuid [not null] // Foreign key referencing locations
+  description text // Optional: Box details (e.g., fragile, special instructions)
+  sealed boolean [not null, default: false] // Whether the box is sealed
+  date_added timestamp [not null, default: "CURRENT_TIMESTAMP"] // When the box was added
+  date_last_modified timestamp // When the box was last modified
+  date_last_accessed timestamp // When the box was last accessed
+}
+
+Table items {
+  id uuid [primary key] // Unique item ID
+  name varchar [not null] // Item name
+  slug varchar [not null, unique] // URL-friendly identifier
+  description text // Optional: Item details
+  photo varchar // Optional: URL to item photo
+  condition int // Optional: Condition rating (e.g., 1-5 scale)
+  quantity int [not null, default: 1] // Number of this item
+  value decimal // Optional: Estimated value of the item
+  box_id uuid // Foreign key referencing boxes (nullable)
+  location_id uuid // Foreign key referencing locations (nullable)
+  date_added timestamp [not null, default: "CURRENT_TIMESTAMP"] // When the item was added
+  date_last_modified timestamp // When the item was last modified
+  date_last_accessed timestamp // When the item was last accessed
+}
+
+Table tags {
+  id uuid [primary key] // Unique tag ID
+  name varchar [not null, unique] // Tag name
+}
+
+Table item_tags {
+  item_id uuid [not null] // Foreign key to items
+  tag_id uuid [not null] // Foreign key to tags
+  primary key (item_id, tag_id) // Composite primary key
+}
+
+Table audit_logs {
+  id uuid [primary key] // Unique log entry ID
+  user_id uuid [not null, ref: > users.id] // User who made the change
+  table_name varchar [not null] // The table that was modified
+  record_id uuid [not null] // The ID of the affected record
+  column_name varchar [not null] // The specific column that was changed
+  old_value text // The previous value (nullable)
+  new_value text // The new value (nullable)
+  changed_at timestamp [not null, default: "CURRENT_TIMESTAMP"] // When the change occurred
+}
+
+// Explicit Foreign Key Relationships
+
+Ref: user_locations.user_id > users.id
+Ref: user_locations.location_id > locations.id
+
+Ref: boxes.location_id > locations.id
+
+Ref: items.box_id > boxes.id
+Ref: items.location_id > locations.id
+
+Ref: item_tags.item_id > items.id
+Ref: item_tags.tag_id > tags.id
