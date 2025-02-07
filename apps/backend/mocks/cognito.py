@@ -1,0 +1,50 @@
+def get_cognito_user(cognito_id: str):
+    """Mock function to return fake user data based on Cognito ID"""
+
+    fake_users = {
+        "admin-123": {
+            "cognito_id": "admin-123",
+            "username": "siteadmin",
+            "name": "Site Admin",
+            "email": "admin@example.com",
+            "photo": "https://i.pravatar.cc/150?img=60",
+            "staff_role": "super_admin",
+            "subscriber": True,
+            "date_registered": "2024-02-01T12:00:00Z",
+            "date_last_logged_in": "2024-02-07T15:30:00Z"
+        },
+        "admin-456": {
+            "cognito_id": "admin-456",
+            "username": "accountadmin",
+            "name": "Account Admin",
+            "email": "admin2@example.com",
+            "photo": "https://i.pravatar.cc/150?img=47",
+            "staff_role": "admin",
+            "subscriber": False,
+            "date_registered": "2024-01-15T09:45:00Z",
+            "date_last_logged_in": "2024-02-06T10:15:00Z"
+        },
+        "guest-789": {
+            "cognito_id": "guest-789",
+            "username": "accountguest",
+            "name": "Guest User",
+            "email": "guest@example.com",
+            "photo": "https://i.pravatar.cc/150?img=50",
+            "staff_role": "staff",
+            "subscriber": False,
+            "date_registered": "2024-02-05T08:30:00Z",
+            "date_last_logged_in": "2024-02-07T11:00:00Z"
+        },
+    }
+
+    return fake_users.get(cognito_id, {
+        "cognito_id": cognito_id,
+        "username": "unknown",
+        "name": "Unknown User",
+        "email": "unknown@example.com",
+        "photo": "https://example.com/avatar-default.jpg",
+        "staff_role": None,
+        "subscriber": False,
+        "date_registered": None,
+        "date_last_logged_in": None
+    })

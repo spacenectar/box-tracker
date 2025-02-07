@@ -4,8 +4,11 @@ from jose import JWTError, jwt
 from datetime import datetime, timedelta
 import os
 from fastapi import APIRouter
+import logging
 
 auth_router = APIRouter()
+
+logger = logging.getLogger(__name__)
 
 # Secret key (use environment variables in production)
 SECRET_KEY = os.getenv("JWT_SECRET", "dev_secret_key")
@@ -36,6 +39,7 @@ def verify_token(token: str):
 
 def get_current_user(token: str = Depends(oauth2_scheme)):
     """Dependency to extract the current user from the token."""
+    logger.debug("🔍 AUTH CHECK TRIGGERED: Token received -> %s", token)
     return verify_token(token)
 
 

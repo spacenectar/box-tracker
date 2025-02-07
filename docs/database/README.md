@@ -4,4 +4,4 @@ This folder contains the database design for the box-tracker app. It is written 
 
 You can import it into various database visualisation tools such as [https://dbdiagram.io/](https://dbdiagram.io/).
 
-You can [view the diagram on dbddiagram.io here](https://dbdiagram.io/d/Box-Tracker-67a49657263d6cf9a03f91f5)
+You can [view the diagram and schema on DBDocs here](https://dbdocs.io/foxleigh81/Box-Tracker)

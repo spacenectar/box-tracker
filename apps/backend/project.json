@@ -5,35 +5,42 @@
     "install": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "poetry install",
+        "command": "docker exec -it fastapi_backend poetry install",
+        "cwd": "apps/backend"
+      }
+    },
+    "exec": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker exec -it fastapi_backend /bin/bash",
         "cwd": "apps/backend"
       }
     },
     "serve": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "poetry run uvicorn main:app --reload --host 0.0.0.0 --port 8000",
+        "command": "docker exec -it fastapi_backend poetry run uvicorn main:app --reload --host 0.0.0.0 --port 8000",
         "cwd": "apps/backend"
       }
     },
     "format": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "poetry run black .",
+        "command": "docker exec -it fastapi_backend poetry run black .",
         "cwd": "apps/backend"
       }
     },
     "lint": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "poetry run flake8 .",
+        "command": "docker exec -it fastapi_backend poetry run flake8 .",
         "cwd": "apps/backend"
       }
     },
     "test": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "poetry run pytest",
+        "command": "docker exec -it fastapi_backend poetry run pytest",
         "cwd": "apps/backend"
       }
     },

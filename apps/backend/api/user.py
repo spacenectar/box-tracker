@@ -1,9 +1,18 @@
+import os
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from db.session import SessionLocal
 from models.user import User
-from schemas.user import UserCreate, UserResponse
+from schemas.user import UserCreate, UserUpdate, UserResponse, UserDeleteResponse
 from api.auth import get_current_user
+
+# Always use the mock for now
+# if os.getenv("TESTING", "false").lower() == "true":
+#   from mocks.cognito import get_cognito_user
+# else:
+#   from services.cognito import get_cognito_user
+
+from mocks.cognito import get_cognito_user
 
 from typing import List
 
@@ -16,17 +25,95 @@ def get_db():
     finally:
         db.close()
 
-@router.post("/users", response_model=UserResponse, dependencies=[Depends(get_current_user)])
+@router.get("/user/{username}", response_model=UserResponse)
+def get_user(username: str, db: Session = Depends(get_db)):
+    """Retrieve a user by username, merging details from Cognito"""
+    user = db.query(User).filter(User.username == username).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    cognito_data = get_cognito_user(user.cognito_id) or {}
+
+    return {
+        "id": user.id,
+        "cognito_id": user.cognito_id,
+        "username": user.username,
+        "name": cognito_data.get('name'),
+        "email": cognito_data.get("email"),
+        "photo": cognito_data.get("photo"),
+        "staff_role": user.staff_role,
+        "subscriber": user.subscriber,
+        "date_registered": user.date_registered,
+        "date_last_logged_in": user.date_last_logged_in,
+    }
+
+@router.get("/user/me", response_model=UserResponse)
+def get_current_user_info(current_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
+    """Retrieve current user's info, merging details from Cognito and DB"""
+    cognito_id = current_user.get("sub")
+    if not cognito_id:
+        raise HTTPException(status_code=401, detail="Invalid token")
+
+    user = db.query(User).filter(User.cognito_id == cognito_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    cognito_data = get_cognito_user(cognito_id) or {}
+
+    return {
+        "id": user.id,
+        "cognito_id": user.cognito_id,
+        "username": user.username,
+        "name": cognito_data.get("name"),
+        "email": cognito_data.get("email"),
+        "photo": cognito_data.get("photo"),
+        "staff_role": user.staff_role,
+        "subscriber": user.subscriber,
+        "date_registered": user.date_registered,
+        "date_last_logged_in": user.date_last_logged_in,
+    }
+
+@router.post("/user", response_model=UserResponse, dependencies=[Depends(get_current_user)])
 def create_user(user: UserCreate, db: Session = Depends(get_db)):
-    new_user = User(username=user.username, email=user.email, hashed_password="hashed_pw")
+    """Create a new user (only super admins can do this)"""
+    new_user = User(
+        cognito_id=user.cognito_id,
+        username=user.username,
+        subscriber=user.subscriber
+    )
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
     return new_user
 
-@router.get("/users", response_model=List[UserResponse], dependencies=[Depends(get_current_user)])
-def get_all_users(db: Session = Depends(get_db)):
-    users = db.query(User).all()
-    if not users:
-        raise HTTPException(status_code=404, detail="No users found")
-    return users
+@router.patch("/user/{username}", response_model=UserResponse, dependencies=[Depends(get_current_user)])
+def update_user(username: str, user_update: UserUpdate, db: Session = Depends(get_db)):
+    """Allow users to update their own subscriber status and username"""
+    user = db.query(User).filter(User.username == username).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    if user_update.username is not None:
+        # Ensure the new username is not already taken
+        existing_user = db.query(User).filter(User.username == user_update.username).first()
+        if existing_user:
+            raise HTTPException(status_code=400, detail="Username is already taken")
+        user.username = user_update.username
+
+    if user_update.subscriber is not None:
+        user.subscriber = user_update.subscriber
+
+    db.commit()
+    db.refresh(user)
+    return user
+
+@router.delete("/user/{username}", response_model=UserDeleteResponse)
+def delete_user(username: str, db: Session = Depends(get_db)):
+    """Delete a user by username"""
+    user = db.query(User).filter(User.username == username).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    db.delete(user)
+    db.commit()
+    return UserDeleteResponse(message=f"User {username} deleted successfully")

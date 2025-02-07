@@ -1,9 +1,16 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "namedInputs": {
-    "default": ["{projectRoot}/**/*", "sharedGlobals"],
-    "production": ["default"],
-    "sharedGlobals": ["{workspaceRoot}/.github/workflows/ci.yml"]
+    "default": [
+      "{projectRoot}/**/*",
+      "sharedGlobals"
+    ],
+    "production": [
+      "default"
+    ],
+    "sharedGlobals": [
+      "{workspaceRoot}/.github/workflows/ci.yml"
+    ]
   },
   "nxCloudId": "67a3801c1884752a7b9a3e5e",
   "plugins": [
@@ -11,7 +18,9 @@
     {
       "plugin": "@nx/js/typescript",
       "options": {
-        "typecheck": { "targetName": "typecheck" },
+        "typecheck": {
+          "targetName": "typecheck"
+        },
         "build": {
           "targetName": "build",
           "configName": "tsconfig.lib.json",
@@ -22,14 +31,44 @@
     }
   ],
   "targetDefaults": {
-    "install": { "dependsOn": ["^install"] },
-    "serve": { "cache": false },
-    "test": { "inputs": ["default", "^default"] },
-    "lint": { "inputs": ["default", "^default"] },
-    "format": { "inputs": ["default", "^default"] }
+    "install": {
+      "dependsOn": [
+        "^install"
+      ]
+    },
+    "exec": {
+      "dependsOn": [
+        "^exec"
+      ]
+    },
+    "serve": {
+      "cache": false
+    },
+    "test": {
+      "inputs": [
+        "default",
+        "^default"
+      ]
+    },
+    "lint": {
+      "inputs": [
+        "default",
+        "^default"
+      ]
+    },
+    "format": {
+      "inputs": [
+        "default",
+        "^default"
+      ]
+    }
   },
   "projects": {
-    "backend": { "root": "apps/backend" },
-    "webapp": { "root": "apps/webapp" }
+    "backend": {
+      "root": "apps/backend"
+    },
+    "webapp": {
+      "root": "apps/webapp"
+    }
   }
 }
