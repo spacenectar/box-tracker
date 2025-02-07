@@ -1,15 +1,16 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field, field_validator
 from uuid import UUID
 from datetime import datetime
 from typing import Optional
 from models.user import StaffRole
+from helpers.profanity import check_profanity
 
 class UserBase(BaseModel):
     id: UUID
-    cognito_id: str  # Immutable
-    username: str  # Immutable
-    staff_role: Optional[StaffRole] = None  # Super admins only
-    subscriber: bool = False  # Users can manage this
+    cognito_id: str
+    username: str = Field(..., min_length=3)
+    staff_role: Optional[StaffRole] = None
+    subscriber: bool = False
     date_registered: Optional[datetime] = None
     date_last_logged_in: Optional[datetime] = None
 
@@ -17,15 +18,33 @@ class UserBase(BaseModel):
         from_attributes = True
 
 class UserCreate(BaseModel):
-    cognito_id: str  # Required when creating a user
-    username: str  # Required when creating a user
-    staff_role: Optional[StaffRole] = None  # Only super admins can set this
-    subscriber: bool = False  # Users can manage this
+    cognito_id: str
+    username: str = Field(..., min_length=3)
+    staff_role: Optional[StaffRole] = None
+    subscriber: bool = False
+
+    @field_validator("username")
+    @classmethod
+    def validate_username(cls, value):
+        return check_profanity(value)
 
 class UserUpdate(BaseModel):
-    username: Optional[str] = None # Users can change their username
-    subscriber: Optional[bool] = None  # Users can toggle subscription
+    username: Optional[str] = Field(None, min_length=3)
+    subscriber: Optional[bool] = None
+
+    @field_validator("username")
+    @classmethod
+    def validate_username(cls, value):
+        return check_profanity(value)
 
 class UserResponse(UserBase):
+    """Includes additional Cognito fields in API responses"""
+    name: Optional[str] = None
+    email: Optional[str] = None
+    photo: Optional[str] = None
+
     class Config:
         from_attributes = True
+
+class UserDeleteResponse(BaseModel):
+    message: str

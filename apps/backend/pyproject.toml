@@ -6,7 +6,7 @@ authors = [
     {name = "Alex Foxleigh",email = "alex@alexfoxleigh.com"}
 ]
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.12,<4.0"
 dependencies = [
     "fastapi (>=0.115.8,<0.116.0)",
     "uvicorn (>=0.34.0,<0.35.0)",
@@ -17,6 +17,7 @@ dependencies = [
     "python-jose[cryptography] (>=3.3.0,<4.0.0)",
     "alembic (>=1.14.1,<2.0.0)",
     "passlib[bcrypt] (>=1.7.4,<2.0.0)",
+    "better-profanity (>=0.7.0,<0.8.0)",
 
 ]
 
