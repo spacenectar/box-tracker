@@ -5,10 +5,16 @@ from api.auth import get_current_user
 
 # Override FastAPI dependency
 def mock_get_current_user():
-    user = {"sub": "test-123"}  # This must match the test user
-    return user
+    return {
+        "sub": "test-123",  # Cognito ID from our test user
+        "username": "testuser",
+        "email": "testuser@example.com",
+        "photo": "https://example.com/avatar.png",
+        "subscriber": False
+    }
 
 app.dependency_overrides[get_current_user] = mock_get_current_user
+
 client = TestClient(app)
 
 def test_create_user():
@@ -32,6 +38,21 @@ def test_get_test_user():
     response = client.get("/user/testuser")
     assert response.status_code == 200
     assert response.json()["username"] == "testuser"
+
+def test_get_current_user():
+    """Test retrieving the current authenticated user"""
+    response = client.get("/user/me")
+    assert response.status_code == 200
+
+    user_data = response.json()
+    assert user_data["username"] == "testuser"
+    assert user_data["cognito_id"] == "test-123"
+    assert user_data["email"] == "testuser@example.com"
+    assert user_data["photo"] == "https://example.com/avatar.png"
+
+    user_data = response.json()
+    assert user_data["username"] == "testuser"
+    assert user_data["cognito_id"] == "test-123"
 
 def test_update_user():
     """Rename testuser to renameduser"""
