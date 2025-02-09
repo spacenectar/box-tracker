@@ -35,6 +35,17 @@ def get_cognito_user(cognito_id: str):
             "date_registered": "2024-02-05T08:30:00Z",
             "date_last_logged_in": "2024-02-07T11:00:00Z"
         },
+        "test-123": {
+            "cognito_id": "test-123",
+            "username": "testuser",
+            "name": "Test User",
+            "email": "testuser@example.com",
+            "photo": "https://example.com/avatar.png",
+            "staff_role": "user",
+            "subscriber": False,
+            "date_registered": "2024-02-01T12:00:00Z",
+            "date_last_logged_in": "2024-02-07T15:30:00Z"
+        },
     }
 
     return fake_users.get(cognito_id, {
