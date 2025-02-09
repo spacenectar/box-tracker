@@ -1,7 +1,7 @@
 import os
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from db.session import SessionLocal
+from db.session import get_db
 from models.user import User
 from schemas.user import UserCreate, UserUpdate, UserResponse, UserDeleteResponse
 from api.auth import get_current_user
@@ -16,16 +16,36 @@ from mocks.cognito import get_cognito_user
 
 from typing import List
 
-router = APIRouter()
+router = APIRouter(prefix="/user", tags=["User"])
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+@router.get("/me", response_model=UserResponse)
+def get_current_user_info(current_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
+    """Retrieve current user's info, merging details from Cognito and DB"""
+    cognito_id = current_user.get("sub")
+    if not cognito_id:
+        raise HTTPException(status_code=401, detail="Invalid token")
 
-@router.get("/user/{username}", response_model=UserResponse)
+    user = db.query(User).filter(User.cognito_id == cognito_id).first()
+
+    if not user:
+        raise HTTPException(status_code=404, detail="Current user not found")
+
+    cognito_data = get_cognito_user(cognito_id) or {}
+
+    return {
+        "id": user.id,
+        "cognito_id": user.cognito_id,
+        "username": user.username,
+        "name": cognito_data.get("name"),
+        "email": cognito_data.get("email"),
+        "photo": cognito_data.get("photo"),
+        "staff_role": user.staff_role,
+        "subscriber": user.subscriber,
+        "date_registered": user.date_registered,
+        "date_last_logged_in": user.date_last_logged_in,
+    }
+
+@router.get("/{username}", response_model=UserResponse)
 def get_user(username: str, db: Session = Depends(get_db)):
     """Retrieve a user by username, merging details from Cognito"""
     user = db.query(User).filter(User.username == username).first()
@@ -47,33 +67,7 @@ def get_user(username: str, db: Session = Depends(get_db)):
         "date_last_logged_in": user.date_last_logged_in,
     }
 
-@router.get("/user/me", response_model=UserResponse)
-def get_current_user_info(current_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
-    """Retrieve current user's info, merging details from Cognito and DB"""
-    cognito_id = current_user.get("sub")
-    if not cognito_id:
-        raise HTTPException(status_code=401, detail="Invalid token")
-
-    user = db.query(User).filter(User.cognito_id == cognito_id).first()
-    if not user:
-        raise HTTPException(status_code=404, detail="User not found")
-
-    cognito_data = get_cognito_user(cognito_id) or {}
-
-    return {
-        "id": user.id,
-        "cognito_id": user.cognito_id,
-        "username": user.username,
-        "name": cognito_data.get("name"),
-        "email": cognito_data.get("email"),
-        "photo": cognito_data.get("photo"),
-        "staff_role": user.staff_role,
-        "subscriber": user.subscriber,
-        "date_registered": user.date_registered,
-        "date_last_logged_in": user.date_last_logged_in,
-    }
-
-@router.post("/user", response_model=UserResponse, dependencies=[Depends(get_current_user)])
+@router.post("/", response_model=UserResponse, dependencies=[Depends(get_current_user)])
 def create_user(user: UserCreate, db: Session = Depends(get_db)):
     """Create a new user (only super admins can do this)"""
     new_user = User(
@@ -86,7 +80,7 @@ def create_user(user: UserCreate, db: Session = Depends(get_db)):
     db.refresh(new_user)
     return new_user
 
-@router.patch("/user/{username}", response_model=UserResponse, dependencies=[Depends(get_current_user)])
+@router.patch("/{username}", response_model=UserResponse, dependencies=[Depends(get_current_user)])
 def update_user(username: str, user_update: UserUpdate, db: Session = Depends(get_db)):
     """Allow users to update their own subscriber status and username"""
     user = db.query(User).filter(User.username == username).first()
@@ -107,7 +101,7 @@ def update_user(username: str, user_update: UserUpdate, db: Session = Depends(ge
     db.refresh(user)
     return user
 
-@router.delete("/user/{username}", response_model=UserDeleteResponse)
+@router.delete("/{username}", response_model=UserDeleteResponse)
 def delete_user(username: str, db: Session = Depends(get_db)):
     """Delete a user by username"""
     user = db.query(User).filter(User.username == username).first()
