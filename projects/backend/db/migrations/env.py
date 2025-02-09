@@ -25,8 +25,10 @@ if config.config_file_name is not None:
 
 # Begin importing app-specific modules
 
-from models.user import User
 from db.base import Base
+from models.user import User
+from models.space import Space
+from models.location import Location
 
 # add your model's MetaData object here
 # for 'autogenerate' support
