@@ -65,10 +65,10 @@
   },
   "projects": {
     "backend": {
-      "root": "apps/backend"
+      "root": "projects/backend"
     },
     "webapp": {
-      "root": "apps/webapp"
+      "root": "projects/webapp"
     }
   }
 }

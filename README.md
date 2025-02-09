@@ -32,7 +32,7 @@ Disclaimer: These docs are a work in progress and will evolve as the project dev
 
 ```plaintext
 repo/
-├─ apps/
+├─ projects/
 │  ├─ backend/       # FastAPI backend service
 │  └─ webapp/        # Next.js frontend service
 ├─ docs/              # Project documentation, design notes, etc.
@@ -46,11 +46,11 @@ repo/
 
 All the project documentation, including architectural diagrams, technical decisions, and implementation notes.
 
-### /apps/webapp
+### /projects/webapp
 
 The `Next.js` front-end. You can install dependencies with `yarn install` and start the development server using `nx run webapp:serve`.
 
-### /apps/backend
+### /projects/backend
 
 The `FastAPI` backend that handles authentication, API endpoints, and database interactions.
 
@@ -155,8 +155,8 @@ nx format
 ## How to Navigate
 
 - `docs/`: Project documentation, technical decisions, and notes.
-- `apps/webapp/`: Frontend (`Next.js`).
-- `apps/backend/`: Backend (`FastAPI`).
+- `projects/webapp/`: Frontend (`Next.js`).
+- `projects/backend/`: Backend (`FastAPI`).
 - `docker-compose.yml`: Defines how services (backend, database) are containerized.
 
 ---

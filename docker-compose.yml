@@ -19,7 +19,7 @@ services:
 
   backend:
     build:
-      context: ./apps/backend
+      context: ./projects/backend
       dockerfile: Dockerfile
       args:
         DATABASE_URL: ${DATABASE_URL}
@@ -33,11 +33,11 @@ services:
       postgres:
         condition: service_healthy
     volumes:
-      - ./apps/backend:/app
+      - ./projects/backend:/app
 
   webapp:
     build:
-      context: ./apps/webapp
+      context: ./projects/webapp
       dockerfile: Dockerfile
     container_name: nextjs_webapp
     env_file: .env
@@ -46,7 +46,7 @@ services:
     depends_on:
       - backend
     volumes:
-      - ./apps/webapp:/app
+      - ./projects/webapp:/app
 
   portainer:
     image: portainer/portainer-ce
