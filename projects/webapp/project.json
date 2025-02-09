@@ -1,34 +1,34 @@
 {
-    "name": "webapp",
-    "root": "apps/webapp",
-    "targets": {
-        "install": {
-            "executor": "nx:run-commands",
-            "options": {
-                "command": "yarn install",
-                "cwd": "apps/webapp"
-            }
-        },
-        "serve": {
-            "executor": "nx:run-commands",
-            "options": {
-                "command": "next dev",
-                "cwd": "apps/webapp"
-            }
-        },
-        "build": {
-            "executor": "nx:run-commands",
-            "options": {
-                "command": "next build",
-                "cwd": "apps/webapp"
-            }
-        },
-        "typecheck": {
-            "executor": "nx:run-commands",
-            "options": {
-                "command": "tsc --noEmit",
-                "cwd": "apps/webapp"
-            }
-        }
+  "name": "webapp",
+  "root": "projects/webapp",
+  "targets": {
+    "install": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "yarn install",
+        "cwd": "projects/webapp"
+      }
+    },
+    "serve": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "next dev",
+        "cwd": "projects/webapp"
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "next build",
+        "cwd": "projects/webapp"
+      }
+    },
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "tsc --noEmit",
+        "cwd": "projects/webapp"
+      }
     }
+  }
 }
