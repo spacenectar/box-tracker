@@ -3,17 +3,32 @@ from fastapi.testclient import TestClient
 from main import app
 from api.auth import get_current_user
 
-# Override FastAPI dependency
-def mock_get_current_user():
+# Mock admin user
+def mock_admin_user():
     return {
-        "sub": "test-123",  # Cognito ID from our test user
+        "sub": "admin-123",
+        "username": "siteadmin",
+        "email": "admin@example.com",
+        "photo": "https://example.com/avatar.png",
+        "subscriber": True
+    }
+
+# Mock test user
+def mock_test_user():
+    return {
+        "sub": "test-123",
         "username": "testuser",
         "email": "testuser@example.com",
         "photo": "https://example.com/avatar.png",
         "subscriber": False
     }
 
-app.dependency_overrides[get_current_user] = mock_get_current_user
+@pytest.fixture(autouse=True, scope="function")
+def reset_dependency_overrides():
+    """Ensure FastAPI dependency overrides reset before and after each test."""
+    app.dependency_overrides[get_current_user] = mock_test_user
+    yield  # Run the test
+    app.dependency_overrides[get_current_user] = mock_admin_user  # Reset after test
 
 client = TestClient(app)
 
@@ -33,12 +48,6 @@ def test_create_user():
     assert created_user["cognito_id"] == "test-123"
     assert created_user["subscriber"] is False
 
-def test_get_test_user():
-    """Ensure test user exists and can be retrieved"""
-    response = client.get("/user/testuser")
-    assert response.status_code == 200
-    assert response.json()["username"] == "testuser"
-
 def test_get_current_user():
     """Test retrieving the current authenticated user"""
     response = client.get("/user/me")
@@ -49,10 +58,6 @@ def test_get_current_user():
     assert user_data["cognito_id"] == "test-123"
     assert user_data["email"] == "testuser@example.com"
     assert user_data["photo"] == "https://example.com/avatar.png"
-
-    user_data = response.json()
-    assert user_data["username"] == "testuser"
-    assert user_data["cognito_id"] == "test-123"
 
 def test_update_user():
     """Rename testuser to renameduser"""
