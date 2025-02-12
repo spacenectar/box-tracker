@@ -7,6 +7,7 @@ logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 from fastapi import FastAPI
+from services.permissions import PermissionsMiddleware
 
 # Import routers
 from api.user import router as user_router
@@ -20,6 +21,9 @@ app = FastAPI(
   description="API for tracking boxes and items across different locations.",
   version="0.0.1"
 )
+
+# Import middleware
+app.add_middleware(PermissionsMiddleware)
 
 # Healthcheck endpoint
 @app.get("/healthcheck")
