@@ -15,7 +15,7 @@ class Space(Base):
     created_at = Column(TIMESTAMP, server_default=func.now())
     updated_at = Column(TIMESTAMP, server_default=func.now(), onupdate=func.now())
 
-    users = relationship("SpaceUser", back_populates="space", lazy="joined")
-    locations = relationship("Location", back_populates="space")
+    users = relationship("SpaceUser", back_populates="space", cascade="all, delete-orphan", lazy="joined")
+    locations = relationship("Location", back_populates="space", cascade="all, delete-orphan")
 
     __table_args__ = (UniqueConstraint("slug", name="uq_space_slug"),)

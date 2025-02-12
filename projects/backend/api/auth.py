@@ -30,15 +30,19 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
 def verify_token(token: str):
     """Decode and verify JWT token using PyJWT."""
     try:
+        logging.debug(f"Verifying token: {token}")
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        logging.debug(f"Token verified. Payload: {payload}")
         return payload
     except ExpiredSignatureError:
+        logging.error("Token has expired")
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Token has expired",
             headers={"WWW-Authenticate": "Bearer"},
         )
-    except InvalidTokenError:
+    except InvalidTokenError as e:
+        logging.error(f"Invalid token: {e}")
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid token",
@@ -53,5 +57,10 @@ def get_current_user(token: str = Depends(oauth2_scheme)):
 
 @auth_router.post("/token")
 def generate_dummy_token():
-    """Temporary endpoint to generate a test token."""
-    return {"access_token": create_access_token({"sub": "admin-123"})}
+  """Temporary endpoint to generate a test token."""
+  if os.getenv("ENV") == "production":
+    raise HTTPException(
+      status_code=status.HTTP_403_FORBIDDEN,
+      detail="This endpoint is not available in production",
+    )
+  return {"access_token": create_access_token({"sub": "admin-123"})}

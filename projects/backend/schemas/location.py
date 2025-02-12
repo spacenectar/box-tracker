@@ -1,34 +1,26 @@
-from pydantic import BaseModel
-import uuid
+from pydantic import BaseModel, UUID4
+from typing import Optional
 
-class LocationBase(BaseModel):
-    """Base schema for locations."""
+class LocationCreate(BaseModel):
     name: str
-    address: str | None = None
-    notes: str | None = None
-    what3words: str | None = None
-
-class LocationCreate(LocationBase):
-    """Schema for creating a new location."""
-    space_id: uuid.UUID  # New field to specify which space the location belongs to
-
-    def generate_slug(self):
-        """Generate a slug from the name."""
-        from slugify import slugify
-        return slugify(self.name)
+    address: str
+    notes: Optional[str] = None
+    what3words: Optional[str] = None
 
 class LocationUpdate(BaseModel):
-    """Schema for updating a location (excluding slug and space_id)."""
-    name: str | None = None
-    address: str | None = None
-    notes: str | None = None
-    what3words: str | None = None
+    name: Optional[str] = None
+    address: Optional[str] = None
+    notes: Optional[str] = None
+    what3words: Optional[str] = None
 
-class LocationResponse(LocationBase):
-    """Response schema for a location, including slug, space ID, and UUID."""
-    id: uuid.UUID
+class LocationResponse(BaseModel):
+    id: UUID4
+    name: str
+    address: str
     slug: str
-    space_id: uuid.UUID
+    notes: Optional[str] = None
+    what3words: Optional[str] = None
+    # etc.
 
     class Config:
-        from_attributes = True
+        orm_mode = True

@@ -7,7 +7,9 @@ logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 from fastapi import FastAPI
-from services.permissions import PermissionsMiddleware
+
+# Import middleware
+from fastapi.middleware.cors import CORSMiddleware
 
 # Import routers
 from api.user import router as user_router
@@ -23,7 +25,7 @@ app = FastAPI(
 )
 
 # Import middleware
-app.add_middleware(PermissionsMiddleware)
+app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
 
 # Healthcheck endpoint
 @app.get("/healthcheck")
