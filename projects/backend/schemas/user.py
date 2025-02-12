@@ -3,7 +3,7 @@ from uuid import UUID
 from datetime import datetime
 from typing import Optional
 from models.user import StaffRole
-from helpers.profanity import check_profanity
+from services.profanity import check_profanity
 
 class UserBase(BaseModel):
     id: UUID
