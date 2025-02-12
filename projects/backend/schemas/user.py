@@ -2,14 +2,12 @@ from pydantic import BaseModel, Field, field_validator
 from uuid import UUID
 from datetime import datetime
 from typing import Optional
-from models.user import StaffRole
-from helpers.profanity import check_profanity
+from services.profanity import check_profanity
 
 class UserBase(BaseModel):
     id: UUID
     cognito_id: str
     username: str = Field(..., min_length=3)
-    staff_role: Optional[StaffRole] = None
     subscriber: bool = False
     date_registered: Optional[datetime] = None
     date_last_logged_in: Optional[datetime] = None
@@ -20,7 +18,6 @@ class UserBase(BaseModel):
 class UserCreate(BaseModel):
     cognito_id: str
     username: str = Field(..., min_length=3)
-    staff_role: Optional[StaffRole] = None
     subscriber: bool = False
 
     @field_validator("username")

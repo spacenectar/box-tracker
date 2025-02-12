@@ -8,6 +8,9 @@ logger = logging.getLogger(__name__)
 
 from fastapi import FastAPI
 
+# Import middleware
+from fastapi.middleware.cors import CORSMiddleware
+
 # Import routers
 from api.user import router as user_router
 from api.auth import auth_router
@@ -20,6 +23,9 @@ app = FastAPI(
   description="API for tracking boxes and items across different locations.",
   version="0.0.1"
 )
+
+# Import middleware
+app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
 
 # Healthcheck endpoint
 @app.get("/healthcheck")

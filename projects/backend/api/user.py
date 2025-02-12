@@ -5,16 +5,7 @@ from db.session import get_db
 from models.user import User
 from schemas.user import UserCreate, UserUpdate, UserResponse, UserDeleteResponse
 from api.auth import get_current_user
-
-# Always use the mock for now
-# if os.getenv("TESTING", "false").lower() == "true":
-#   from mocks.cognito import get_cognito_user
-# else:
-#   from services.cognito import get_cognito_user
-
 from mocks.cognito import get_cognito_user
-
-from typing import List
 
 router = APIRouter(prefix="/user", tags=["User"])
 
@@ -26,7 +17,6 @@ def get_current_user_info(current_user: dict = Depends(get_current_user), db: Se
         raise HTTPException(status_code=401, detail="Invalid token")
 
     user = db.query(User).filter(User.cognito_id == cognito_id).first()
-
     if not user:
         raise HTTPException(status_code=404, detail="Current user not found")
 
@@ -39,7 +29,6 @@ def get_current_user_info(current_user: dict = Depends(get_current_user), db: Se
         "name": cognito_data.get("name"),
         "email": cognito_data.get("email"),
         "photo": cognito_data.get("photo"),
-        "staff_role": user.staff_role,
         "subscriber": user.subscriber,
         "date_registered": user.date_registered,
         "date_last_logged_in": user.date_last_logged_in,
@@ -61,7 +50,6 @@ def get_user(username: str, db: Session = Depends(get_db)):
         "name": cognito_data.get('name'),
         "email": cognito_data.get("email"),
         "photo": cognito_data.get("photo"),
-        "staff_role": user.staff_role,
         "subscriber": user.subscriber,
         "date_registered": user.date_registered,
         "date_last_logged_in": user.date_last_logged_in,
@@ -69,7 +57,7 @@ def get_user(username: str, db: Session = Depends(get_db)):
 
 @router.post("/", response_model=UserResponse, dependencies=[Depends(get_current_user)])
 def create_user(user: UserCreate, db: Session = Depends(get_db)):
-    """Create a new user (only super admins can do this)"""
+    """Create a new user"""
     new_user = User(
         cognito_id=user.cognito_id,
         username=user.username,
@@ -88,7 +76,6 @@ def update_user(username: str, user_update: UserUpdate, db: Session = Depends(ge
         raise HTTPException(status_code=404, detail="User not found")
 
     if user_update.username is not None:
-        # Ensure the new username is not already taken
         existing_user = db.query(User).filter(User.username == user_update.username).first()
         if existing_user:
             raise HTTPException(status_code=400, detail="Username is already taken")

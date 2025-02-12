@@ -3,7 +3,7 @@ from fastapi.testclient import TestClient
 from main import app
 from api.auth import get_current_user
 
-# Override FastAPI dependency
+# Mock user with sub="admin-123". This user must exist in your DB (cognito_id="admin-123").
 def mock_get_current_user():
     return {
         "sub": "admin-123",
@@ -13,37 +13,37 @@ def mock_get_current_user():
         "subscriber": True
     }
 
-@pytest.fixture(autouse=True, scope="function")
-def reset_dependency_overrides():
-    """Ensure FastAPI dependency overrides reset between tests."""
-    yield  # Run the test
-    app.dependency_overrides.clear()
-    app.dependency_overrides[get_current_user] = mock_get_current_user
-
 client = TestClient(app)
 
+@pytest.fixture(autouse=True, scope="module")
+def override_auth():
+    """
+    Apply the mock user to all tests in this module. This ensures authenticated
+    requests for the entire test suite.
+    """
+    app.dependency_overrides[get_current_user] = mock_get_current_user
+    yield
+    app.dependency_overrides.clear()
 
 @pytest.fixture(scope="module")
 def test_user():
-    """Retrieve an existing user from seed data"""
+    """Retrieve an existing user from seed data."""
     response = client.get("/user/accountadmin")
     print("TEST USER RESPONSE:", response.json())  # Debugging output
     assert response.status_code == 200, f"User not found in seed data: {response.json()}"
     return response.json()
 
-
-@pytest.fixture
+@pytest.fixture(scope="module")
 def seeded_spaces():
-    """Retrieve existing seeded spaces"""
+    """Retrieve existing seeded spaces."""
     response = client.get("/space/london-move")
     assert response.status_code == 200, f"Seeded space not found: {response.json()}"
     return response.json()
 
-
-# ─── 1. GET TESTS ────────────────────────────────────────────────────────────────
+# ─── 1. GET TESTS ─────────────────────────────────────────────────────────
 
 def test_get_space_by_id(seeded_spaces):
-    """Ensure a space can be retrieved by its ID"""
+    """Ensure a space can be retrieved by its ID."""
     space_id = seeded_spaces["id"]
     response = client.get(f"/space/id/{space_id}")
     assert response.status_code == 200, response.json()
@@ -51,18 +51,17 @@ def test_get_space_by_id(seeded_spaces):
 
 
 def test_get_space_by_slug(seeded_spaces):
-    """Ensure a space can be retrieved by its slug"""
+    """Ensure a space can be retrieved by its slug."""
     space_slug = seeded_spaces["slug"]
     response = client.get(f"/space/{space_slug}")
     assert response.status_code == 200, response.json()
     assert response.json()["name"] == seeded_spaces["name"]
 
-
-# ─── 2. CREATE TEST ──────────────────────────────────────────────────────────────
+# ─── 2. CREATE TEST ───────────────────────────────────────────────────────
 
 @pytest.fixture(scope="module")
 def created_space(test_user):
-    """Create a new space once per test session and reuse it"""
+    """Create a new space once per test session and reuse it."""
     space_data = {
         "name": "Test Space",
         "slug": "test-space",
@@ -80,16 +79,16 @@ def created_space(test_user):
 
 
 def test_create_space(created_space):
-    """Ensure a space can be created successfully"""
+    """Ensure a space can be created successfully."""
     assert created_space["name"] == "Test Space"
     assert created_space["slug"] == "test-space"
 
-
-# ─── 3. UPDATE TEST ──────────────────────────────────────────────────────────────
+# ─── 3. UPDATE TEST ───────────────────────────────────────────────────────
 
 @pytest.fixture
+
 def updated_space(created_space):
-    """Update the name of the created space"""
+    """Update the name of the created space."""
     space_id = created_space["id"]
     update_data = {"name": "Updated Space"}
     response = client.patch(f"/space/id/{space_id}", json=update_data)
@@ -98,14 +97,13 @@ def updated_space(created_space):
 
 
 def test_update_space(updated_space):
-    """Ensure a space can be updated successfully"""
+    """Ensure a space can be updated successfully."""
     assert updated_space["name"] == "Updated Space"
 
-
-# ─── 4. PERMISSION TEST ─────────────────────────────────────────────────────────
+# ─── 4. PERMISSION TEST ───────────────────────────────────────────────────
 
 def test_space_permissions(updated_space):
-    """Ensure only space_admin can modify/delete spaces"""
+    """Ensure only space_admin can modify/delete spaces."""
     space_id = updated_space["id"]
 
     def mock_non_admin_user():
@@ -131,11 +129,10 @@ def test_space_permissions(updated_space):
     app.dependency_overrides.clear()
     app.dependency_overrides[get_current_user] = mock_get_current_user
 
-
-# ─── 5. DELETE TEST ─────────────────────────────────────────────────────────────
+# ─── 5. DELETE TEST ───────────────────────────────────────────────────────
 
 def test_delete_space(updated_space):
-    """Ensure a space can be deleted"""
+    """Ensure a space can be deleted."""
     space_id = updated_space["id"]
     response = client.delete(f"/space/id/{space_id}")
     assert response.status_code == 200, response.json()
