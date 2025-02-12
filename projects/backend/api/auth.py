@@ -54,4 +54,4 @@ def get_current_user(token: str = Depends(oauth2_scheme)):
 @auth_router.post("/token")
 def generate_dummy_token():
     """Temporary endpoint to generate a test token."""
-    return {"access_token": create_access_token({"sub": "test_user"})}
+    return {"access_token": create_access_token({"sub": "admin-123"})}

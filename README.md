@@ -65,7 +65,7 @@ The `FastAPI` backend that handles authentication, API endpoints, and database i
 1. Clone the Repo
 
    ```bash
-   git clone https://github.com/yourusername/box-tracker.git
+   git clone https://github.com/spacenectar/box-tracker.git
    cd box-tracker
    ```
 

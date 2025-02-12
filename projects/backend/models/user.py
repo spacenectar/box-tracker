@@ -2,6 +2,7 @@ import uuid
 from enum import Enum
 from sqlalchemy import Column, String, Boolean, TIMESTAMP
 from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.orm import relationship
 from db.base import Base
 
 class StaffRole(str, Enum):
@@ -19,3 +20,5 @@ class User(Base):
     subscriber = Column(Boolean, default=False)
     date_registered = Column(TIMESTAMP)
     date_last_logged_in = Column(TIMESTAMP)
+
+    spaces = relationship("SpaceUser", back_populates="user")
