@@ -26,7 +26,7 @@ def create_space(
     if not current_user or "sub" not in current_user:
         raise HTTPException(status_code=401, detail="Missing or invalid authentication token")
 
-    user = db.query(User).filter(User.cognito_id == current_user["sub"]).first()
+    user = db.query(User).filter(User.auth_id == current_user["sub"]).first()
     if not user:
         raise HTTPException(status_code=404, detail="User not found in DB")
 

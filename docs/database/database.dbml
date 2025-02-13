@@ -1,8 +1,7 @@
 Table users {
   id uuid [primary key] // Unique user ID
-  cognito_id varchar [unique, not null] // AWS Cognito user ID
+  auth_id varchar [unique, not null] // ID from Auth provider
   subscruber bool // Is the user subscribed or not
-  staff_role varchar // Staff-specific role (optional)
   date_registered timestamp // When the user signed up
   date_last_logged_in timestamp // Last login timestamp
 }
