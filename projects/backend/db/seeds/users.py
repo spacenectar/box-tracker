@@ -9,21 +9,18 @@ def seed_users(db: Session):
             "id": uuid.UUID("680f46fa-085d-4be1-a6ab-a66a6615dbea"),
             "auth_id": "admin-123",
             "username": "siteadmin",
-            "staff_role": "super_admin",
             "subscriber": True
         },
         {
             "id": uuid.UUID("d4faeb1f-77ce-4514-96cd-001198814f2e"),
             "auth_id": "admin-456",
             "username": "accountadmin",
-            "staff_role": "admin",
             "subscriber": False
         },
         {
             "id": uuid.UUID("7f395b59-38fe-4eb7-908c-5fb123e0a7aa"),
             "auth_id": "guest-789",
             "username": "accountguest",
-            "staff_role": "staff",
             "subscriber": False
         },
     ]
