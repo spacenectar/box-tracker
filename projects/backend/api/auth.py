@@ -1,66 +1,84 @@
-from fastapi import Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordBearer
+import requests
 import jwt
 from jwt import ExpiredSignatureError, InvalidTokenError
-from datetime import datetime, timedelta
+from fastapi import Depends, HTTPException, status
+from fastapi.security import OAuth2PasswordBearer
 import os
-from fastapi import APIRouter
 import logging
+from datetime import datetime, timedelta
+from fastapi import APIRouter
 
 auth_router = APIRouter()
 
 logger = logging.getLogger(__name__)
 
-# Secret key (use environment variables in production)
-SECRET_KEY = os.getenv("JWT_SECRET", "dev_secret_key")
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
+# Environment Variables
+ENV = os.getenv("ENVIRONMENT", "development")
+CLERK_SECRET_KEY = os.getenv("CLERK_SECRET_KEY")
+JWT_SECRET = os.getenv("JWT_SECRET", "dev_secret_key")  # Only used in dev mode
 
-# OAuth2 scheme
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
-def create_access_token(data: dict, expires_delta: timedelta | None = None):
-    """Generate a JWT access token."""
-    to_encode = data.copy()
-    expire = datetime.utcnow() + (expires_delta or timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES))
-    to_encode.update({"exp": expire})
-
-    return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+# Clerk Token Verification
+CLERK_VERIFY_URL = "https://api.clerk.dev/v1/tokens/verify"
 
 def verify_token(token: str):
-    """Decode and verify JWT token using PyJWT."""
+    """
+    Verify JWT using Clerk in production and a locally signed secret in development.
+    """
     try:
-        logging.debug(f"Verifying token: {token}")
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        logging.debug(f"Token verified. Payload: {payload}")
-        return payload
+        if ENV == "production":
+            # Verify the token with Clerk
+            headers = {"Authorization": f"Bearer {CLERK_SECRET_KEY}"}
+            response = requests.post(CLERK_VERIFY_URL, json={"token": token}, headers=headers)
+
+            if response.status_code != 200:
+                raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
+
+            payload = response.json()
+
+            return {
+                "sub": payload["sub"],
+                "email": payload.get("email_address"),
+                "username": payload.get("username"),
+                "photo": payload.get("image_url"),
+            }
+        else:
+            # Local development verification
+            payload = jwt.decode(token, JWT_SECRET, algorithms=["HS256"])
+
+        return {
+            "sub": payload["sub"],
+            "email": payload.get("email"),
+            "username": payload.get("username"),
+            "photo": payload.get("photo"),
+        }
     except ExpiredSignatureError:
-        logging.error("Token has expired")
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Token has expired",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
-    except InvalidTokenError as e:
-        logging.error(f"Invalid token: {e}")
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid token",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Token has expired")
+    except InvalidTokenError:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
+
 
 def get_current_user(token: str = Depends(oauth2_scheme)):
-    """Dependency to extract the current user from the token."""
-    logger.debug("🔍 AUTH CHECK TRIGGERED: Token received -> %s", token)
+    """Extract user from JWT."""
     return verify_token(token)
+
+
+def create_access_token(data: dict, expires_delta: timedelta | None = None):
+    """Generate a JWT access token for local development."""
+    to_encode = data.copy()
+    expire = datetime.utcnow() + (expires_delta or timedelta(minutes=30))
+    to_encode.update({"exp": expire})
+
+    return jwt.encode(to_encode, JWT_SECRET, algorithm="HS256")
 
 
 @auth_router.post("/token")
 def generate_dummy_token():
-  """Temporary endpoint to generate a test token."""
-  if os.getenv("ENV") == "production":
-    raise HTTPException(
-      status_code=status.HTTP_403_FORBIDDEN,
-      detail="This endpoint is not available in production",
-    )
-  return {"access_token": create_access_token({"sub": "admin-123"})}
+    """Temporary endpoint to generate a test token (only available in dev mode)."""
+    if ENV == "production":
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="This endpoint is not available in production",
+        )
+    return {"access_token": create_access_token({"sub": "admin-123"})}
