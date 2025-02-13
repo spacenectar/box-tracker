@@ -6,7 +6,7 @@ from api.auth import get_current_user
 
 client = TestClient(app)
 
-# Mock user with sub="admin-123". Your DB must have a user row with `cognito_id="admin-123"`.
+# Mock user with sub="admin-123". Your DB must have a user row with `auth_id="admin-123"`.
 def mock_get_current_user():
     return {
         "sub": "admin-123",

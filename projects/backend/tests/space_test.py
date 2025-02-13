@@ -3,7 +3,7 @@ from fastapi.testclient import TestClient
 from main import app
 from api.auth import get_current_user
 
-# Mock user with sub="admin-123". This user must exist in your DB (cognito_id="admin-123").
+# Mock user with sub="admin-123". This user must exist in your DB (auth_id="admin-123").
 def mock_get_current_user():
     return {
         "sub": "admin-123",

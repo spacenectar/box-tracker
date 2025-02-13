@@ -4,18 +4,18 @@ from models.user import User
 from models.space import Space, SpaceUser
 from helpers.permissions_matrix import PERMISSIONS_MATRIX
 
-def verify_space_access(space_slug: str, cognito_id: str, method: str, db: Session):
+def verify_space_access(space_slug: str, auth_id: str, method: str, db: Session):
     """
-    1. Look up the actual user by their cognito_id string (e.g., "admin-123").
+    1. Look up the actual user by their auth_id string (e.g., "admin-123").
     2. Use that user's UUID to check space_users for role/permissions.
     """
-    if not cognito_id:
+    if not auth_id:
         raise HTTPException(status_code=401, detail="Authentication required")
 
-    # First find the actual User record by cognito_id
-    user = db.query(User).filter(User.cognito_id == cognito_id).first()
+    # First find the actual User record by auth_id
+    user = db.query(User).filter(User.auth_id == auth_id).first()
     if not user:
-        raise HTTPException(status_code=403, detail="User not found in DB for cognito_id")
+        raise HTTPException(status_code=403, detail="User not found in DB for auth_id")
 
     # Next find the requested space by slug
     space = db.query(Space).filter(Space.slug == space_slug).first()

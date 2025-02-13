@@ -35,7 +35,7 @@ client = TestClient(app)
 def test_create_user():
     """Test creating a new user"""
     user_data = {
-        "cognito_id": "test-123",
+        "auth_id": "test-123",
         "username": "testuser",
         "subscriber": False
     }
@@ -45,7 +45,7 @@ def test_create_user():
     created_user = response.json()
 
     assert created_user["username"] == "testuser"
-    assert created_user["cognito_id"] == "test-123"
+    assert created_user["auth_id"] == "test-123"
     assert created_user["subscriber"] is False
 
 def test_get_current_user():
@@ -55,7 +55,7 @@ def test_get_current_user():
 
     user_data = response.json()
     assert user_data["username"] == "testuser"
-    assert user_data["cognito_id"] == "test-123"
+    assert user_data["auth_id"] == "test-123"
     assert user_data["email"] == "testuser@example.com"
     assert user_data["photo"] == "https://example.com/avatar.png"
 
@@ -81,7 +81,7 @@ def test_delete_user():
 def test_profanity_filter():
     """Ensure that a username with profanity is rejected"""
     user_data = {
-        "cognito_id": "test-456",
+        "auth_id": "test-456",
         "username": "shitstorm",
         "subscriber": False
     }
