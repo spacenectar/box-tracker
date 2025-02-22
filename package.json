@@ -18,6 +18,7 @@
   "devDependencies": {
     "@nx/js": "20.4.0",
     "@nxlv/python": "^20.5.1",
+    "@reduxjs/toolkit": "^2.5.1",
     "@swc-node/register": "~1.9.1",
     "@swc/core": "~1.5.7",
     "@swc/helpers": "~0.5.11",
@@ -31,6 +32,7 @@
     "postcss-preset-env": "^10.1.4",
     "postcss-scss": "^4.0.9",
     "prettier": "^3.5.2",
+    "react-redux": "^9.2.0",
     "sass": "^1.85.0",
     "sass-loader": "^16.0.5",
     "stylelint": "^16.14.1",
