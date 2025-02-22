@@ -65,10 +65,34 @@
   },
   "projects": {
     "backend": {
-      "root": "projects/backend"
+      "root": "projects/backend",
+      "tags": [
+        "scope:api, scope:backend, scope:webapp"
+      ]
     },
     "webapp": {
-      "root": "projects/webapp"
+      "root": "projects/webapp",
+      "tags": [
+        "scope:ui, scope:webapp, scope:website"
+      ]
+    },
+    "theme": {
+      "root": "projects/theme",
+      "tags": [
+        "scope:ui, scope:webapp, scope:website"
+      ]
+    },
+    "components": {
+      "root": "projects/components",
+      "tags": [
+        "scope:ui, scope:webapp, scope:website"
+      ]
+    },
+    "assets": {
+      "root": "projects/assets",
+      "tags": [
+        "scope:ui, scope:webapp, scope:website"
+      ]
     }
   }
 }

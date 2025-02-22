@@ -2,21 +2,54 @@
   "name": "@box-tracker/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
   "private": true,
-  "dependencies": {},
+  "workspaces": [
+    "projects/*"
+  ],
+  "engines": {
+    "node": ">=22.14.0",
+    "yarn": ">=1.22.0"
+  },
+  "dependencies": {
+    "next": "15.1.6",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
   "devDependencies": {
     "@nx/js": "20.4.0",
     "@nxlv/python": "^20.5.1",
     "@swc-node/register": "~1.9.1",
     "@swc/core": "~1.5.7",
     "@swc/helpers": "~0.5.11",
+    "concurrently": "^9.1.2",
+    "eslint": "^9",
+    "eslint-config-next": "15.1.6",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.4.3",
     "nx": "20.4.0",
-    "prettier": "^2.6.2",
+    "postcss-flexbugs-fixes": "^5.0.2",
+    "postcss-preset-env": "^10.1.4",
+    "postcss-scss": "^4.0.9",
+    "prettier": "^3.5.2",
+    "sass": "^1.85.0",
+    "sass-loader": "^16.0.5",
+    "stylelint": "^16.14.1",
+    "stylelint-prettier": "^5.0.3",
+    "stylelint-scss": "^6.11.1",
     "tslib": "^2.3.0",
     "typescript": "~5.7.2"
   },
-  "workspaces": [
-    "projects/*"
-  ]
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,json,md,mdx}": [
+      "prettier --write",
+      "yarn lint",
+      "git add"
+    ],
+    "*.{css,scss}": [
+      "stylelint --fix",
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "scripts": {}
 }

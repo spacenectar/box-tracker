@@ -1,6 +1,10 @@
 {
   "name": "webapp",
   "root": "projects/webapp",
+  "projectType": "application",
+  "tags": [
+    "scope:ui, scope:webapp, scope:website"
+  ],
   "targets": {
     "install": {
       "executor": "nx:run-commands",
@@ -27,6 +31,13 @@
       "executor": "nx:run-commands",
       "options": {
         "command": "tsc --noEmit",
+        "cwd": "projects/webapp"
+      }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "yarn lint",
         "cwd": "projects/webapp"
       }
     }

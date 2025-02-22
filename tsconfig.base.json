@@ -16,6 +16,13 @@
     "noUnusedLocals": true,
     "skipLibCheck": true,
     "strict": true,
-    "target": "es2022"
+    "target": "es2022",
+    "baseUrl": ".",
+    "paths": {
+      "@theme/*": ["projects/theme/*"],
+      "@components/*": ["projects/components/*"],
+      "@assets/*": ["projects/assets/*"],
+      "@/*": ["projects/webapp/*"]
+    },
   }
 }
