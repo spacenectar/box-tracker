@@ -1,0 +1,8 @@
+{
+  "name": "@box-tracker/theme",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "lint": "stylelint \"**/*.{css,scss}\" --fix"
+  }
+}

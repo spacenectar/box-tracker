@@ -1,0 +1,29 @@
+@use '../vars' as *;
+@use '../colours' as col;
+@use '../typography.scss' as type;
+@use './dark-mode.scss' as *;
+
+@mixin link() {
+  @include type.link();
+
+  color: col.$link;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+
+  &:hover {
+    text-decoration: underline;
+    text-decoration-color: col.$link-hover;
+    text-underline-offset: spacing(0.5);
+  }
+
+  &:focus {
+    background-color: col.$keyboard-focus;
+    color: col.$dark;
+  }
+
+  &:disabled {
+    background-color: transparent;
+    color: col.$link-disabled;
+  }
+}
