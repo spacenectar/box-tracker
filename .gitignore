@@ -18,7 +18,7 @@ build/
 out/
 .nx
 .next/
-.tsbuildinfo
+*.tsbuildinfo
 
 # Ignore database-related files
 pgdata/
