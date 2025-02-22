@@ -1,0 +1,10 @@
+{
+  "name": "@box-tracker/components",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "lint": "eslint --ext .ts,.tsx .",
+    "format": "prettier --write .",
+    "lint:styles": "stylelint \"**/*.{css,scss}\" --fix"
+  }
+}

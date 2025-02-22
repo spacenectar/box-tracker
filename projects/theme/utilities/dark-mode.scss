@@ -1,0 +1,6 @@
+@mixin dark-mode() {
+  :global([data-theme='dark']) &,
+  :global(.theme-block[data-theme='dark']) & {
+    @content;
+  }
+}
