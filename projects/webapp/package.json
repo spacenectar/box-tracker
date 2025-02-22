@@ -11,10 +11,13 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "build-storybook",
     "lint": "concurrently yarn:lint:*",
     "lint:next": "next lint --fix",
     "test": "concurrently yarn:test:*",
     "test:ts": "tsc",
+    "test:storybook": "test-storybook --coverage",
     "format": "prettier --write ."
   },
   "devDependencies": {
