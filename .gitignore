@@ -1,5 +1,6 @@
 # Ignore node_modules and dependencies
 node_modules/
+
 # We only want the yarn.lock file
 package-lock.json
 
@@ -19,6 +20,9 @@ out/
 .nx
 .next/
 *.tsbuildinfo
+projects/components/.storybook/.docs
+projects/webapp/public/favicons
+
 
 # Ignore database-related files
 pgdata/
@@ -61,3 +65,7 @@ logs/
 /junit.xml
 /pytest_cache/
 .nyc_output/
+
+
+storybook-static
+test-output

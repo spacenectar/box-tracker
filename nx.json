@@ -6,7 +6,17 @@
       "sharedGlobals"
     ],
     "production": [
-      "default"
+      "default",
+      "!{projectRoot}/**/*.stories.@(js|jsx|ts|tsx|mdx)",
+      "!{projectRoot}/.storybook/**/*",
+      "!{projectRoot}/tsconfig.storybook.json",
+      "!{projectRoot}/.eslintrc.json",
+      "!{projectRoot}/eslint.config.mjs",
+      "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
+      "!{projectRoot}/tsconfig.spec.json",
+      "!{projectRoot}/jest.config.[jt]s",
+      "!{projectRoot}/src/test-setup.[jt]s",
+      "!{projectRoot}/test-setup.[jt]s"
     ],
     "sharedGlobals": [
       "{workspaceRoot}/.github/workflows/ci.yml"
@@ -28,6 +38,27 @@
           "watchDepsName": "watch-deps"
         }
       }
+    },
+    {
+      "plugin": "@nx/storybook/plugin",
+      "options": {
+        "serveStorybookTargetName": "storybook",
+        "buildStorybookTargetName": "build-storybook",
+        "testStorybookTargetName": "test-storybook",
+        "staticStorybookTargetName": "static-storybook"
+      }
+    },
+    {
+      "plugin": "@nx/eslint/plugin",
+      "options": {
+        "targetName": "eslint:lint"
+      }
+    },
+    {
+      "plugin": "@nx/jest/plugin",
+      "options": {
+        "targetName": "test"
+      }
     }
   ],
   "targetDefaults": {
@@ -48,6 +79,9 @@
       "inputs": [
         "default",
         "^default"
+      ],
+      "dependsOn": [
+        "^build"
       ]
     },
     "lint": {
@@ -93,6 +127,9 @@
       "tags": [
         "scope:ui, scope:webapp, scope:website"
       ]
+    },
+    "scripts": {
+      "root": "projects/scripts"
     }
   }
 }
