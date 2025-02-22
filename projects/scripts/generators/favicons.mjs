@@ -5,10 +5,10 @@ import { writeFileSync, readFileSync, existsSync, mkdirSync, rmSync } from 'fs';
 import { resolve, dirname, join } from 'path';
 import chokidar from 'chokidar';
 
-const __dirname = dirname(resolve('./package.json'));
-const source = resolve(__dirname, 'public/icons/app-logo.svg'); // Source image(s). `string`, `buffer` or array of `string`
+const __dirname = dirname(resolve('../webapp/package.json'));
+const source = resolve(__dirname, '../assets/icons/app-logo.svg'); // Source image(s). `string`, `buffer` or array of `string`
 const dest = resolve(__dirname, 'public/favicons'); // Destination for the generated favicons. `string`
-const packageJson = readFileSync('package.json', 'utf8');
+const packageJson = readFileSync(resolve(__dirname, 'package.json'), 'utf8');
 const appInfo = JSON.parse(packageJson);
 
 const configuration = {
