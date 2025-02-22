@@ -96,7 +96,7 @@ const viewports = {
   }
 };
 
-export const parameters = {
+export const parameters: any = {
   docs: {
     page: () => (
       <>
@@ -134,30 +134,6 @@ export const parameters = {
     storySort: {
       method: 'configure',
       includeName: true,
-      // order: [
-      //   'Documentation',
-      //   [
-      //     'Introduction',
-      //     'Coding Guidelines',
-      //     ['General'],
-      //     'Infrastructure Guidelines',
-      //     'Design Guidelines',
-      //     ['Introduction'],
-      //     'Architectural Decisions',
-      //     ['Introduction'],
-      //     'Roadmap',
-      //     'Known Issues',
-      //     'Changelog'
-      //   ],
-      //   'Components',
-      //   ['Docs', ['Docs']],
-      //   'Partials',
-      //   ['Docs', ['Docs']],
-      //   'Pages',
-      //   ['Docs', ['Docs']],
-      //   'Templates',
-      //   ['Docs', ['Docs']]
-      // ]
     }
   },
   layout: 'centered',

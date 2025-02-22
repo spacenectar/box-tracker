@@ -3,7 +3,6 @@ import { within, expect } from '@storybook/test';
 import Masthead from './index';
 
 const meta: Meta<typeof Masthead> = {
-  title: 'Library/Masthead',
   component: Masthead,
 };
 
