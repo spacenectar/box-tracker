@@ -7,6 +7,13 @@
     "scope:ui, scope:webapp, scope:website"
   ],
   "targets": {
+    "dev": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "yarn dev",
+        "cwd": "projects/components"
+      }
+    },
     "lint": {
       "executor": "nx:run-commands",
       "options": {

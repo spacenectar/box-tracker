@@ -5,7 +5,7 @@ import styles from './styles.module.scss';
 
 import Logo from '@assets/branding/box-tracker-logo-white.svg'
 
-const Masthead: React.FC = () => {
+export const Masthead: React.FC = () => {
   return (
     <header className={styles.masthead}>
       <div className={styles.logo}>
