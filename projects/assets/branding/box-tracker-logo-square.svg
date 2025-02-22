@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="a" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 181.37 181.37">
+  <defs>
+    <linearGradient id="b" x1="90.47" y1="-3.5" x2="90.89" y2="177.87" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#bd5ca3"/>
+      <stop offset=".81" stop-color="#983794"/>
+    </linearGradient>
+  </defs>
+  <rect width="181.37" height="181.37" rx="12" ry="12" fill="url(#b)"/>
+  <path d="M136.67,44.69v91.98H44.69V44.69h91.98M154.17,14.56H27.2c-6.98,0-12.63,5.66-12.63,12.63v126.98c0,6.98,5.66,12.63,12.63,12.63h126.98c6.98,0,12.63-5.66,12.63-12.63V27.2c0-6.98-5.66-12.63-12.63-12.63h0Z" fill="#fff"/>
+  <polygon points="129.52 92.91 90.68 54.08 51.85 92.91 75.04 92.91 81.93 86.02 81.93 127.29 99.44 127.29 99.44 86.02 106.33 92.91 129.52 92.91" fill="#fff"/>
+</svg>
