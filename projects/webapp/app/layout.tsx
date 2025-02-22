@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Archivo, Archivo_Black, Archivo_Narrow } from "next/font/google";
+import StoreProvider from "./store-provider";
 import '@theme/index.scss';
 
 // Import components
@@ -34,8 +35,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${ArchivoFont.variable} ${ArchivoBlackFont.variable} ${ArchivoNarrowFont.variable}`}>
-        <Masthead />
-        {children}
+        <StoreProvider>
+          <Masthead />
+          {children}
+        </StoreProvider>
       </body>
     </html>
   );
