@@ -1,14 +1,23 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import { Archivo, Archivo_Black, Archivo_Narrow } from "next/font/google";
+import '@theme/index.scss';
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// Import components
+import Masthead from "@components/masthead";
+
+const ArchivoFont = Archivo({
+  variable: "--font-archivo",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const ArchivoBlackFont = Archivo_Black({
+  variable: "--font-archivo-black",
+  subsets: ["latin"],
+  weight: "400",
+});
+
+const ArchivoNarrowFont = Archivo_Narrow({
+  variable: "--font-archivo-narrow",
   subsets: ["latin"],
 });
 
@@ -24,7 +33,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body className={`${ArchivoFont.variable} ${ArchivoBlackFont.variable} ${ArchivoNarrowFont.variable}`}>
+        <Masthead />
         {children}
       </body>
     </html>
