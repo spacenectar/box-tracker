@@ -9,10 +9,10 @@ const config: StorybookConfig = {
     }
   },
   addons: [
+    '@storybook/addon-essentials',
     '@storybook/addon-a11y',
     '@storybook/addon-coverage',
     '@storybook/addon-interactions',
-    '@storybook/addon-essentials',
     '@chromatic-com/storybook',
     'msw-storybook-addon'
   ],
@@ -23,6 +23,14 @@ const config: StorybookConfig = {
     },
   ],
   stories: [
+     {
+      // 👇 The directory field sets the directory your stories
+      directory: '../../components/.storybook/.docs',
+      // 👇 The titlePrefix field will generate automatic titles for your stories
+      titlePrefix: 'Documentation',
+      // 👇 Storybook will load all files that contain the mdx extension
+      files: '**/*.mdx'
+    },
     {
       titlePrefix: 'Library',
       directory: '../../components/',

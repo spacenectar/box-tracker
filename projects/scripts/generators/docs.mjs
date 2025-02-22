@@ -27,7 +27,7 @@ const componentsProject = path.dirname(path.resolve('../components/package.json'
 
 // Includes and excludes should be relative to the root of the project
 export const includes = ['../../docs'];
-const excludes = ['.DS_Store'];
+const excludes = ['.DS_Store', 'database.dbml'];
 
 const sbRoot = path.resolve(componentsProject, '.storybook');
 const output = path.resolve(sbRoot, '.docs');
