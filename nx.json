@@ -1,16 +1,14 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "namedInputs": {
-    "default": [
-      "{projectRoot}/**/*",
-      "sharedGlobals"
-    ],
+    "default": ["{projectRoot}/**/*", "sharedGlobals"],
     "production": [
-      "default"
+      "default",
+      "!{projectRoot}/**/*.stories.@(js|jsx|ts|tsx|mdx)",
+      "!{projectRoot}/.storybook/**/*",
+      "!{projectRoot}/tsconfig.storybook.json"
     ],
-    "sharedGlobals": [
-      "{workspaceRoot}/.github/workflows/ci.yml"
-    ]
+    "sharedGlobals": ["{workspaceRoot}/.github/workflows/ci.yml"]
   },
   "nxCloudId": "67a3801c1884752a7b9a3e5e",
   "plugins": [
@@ -28,71 +26,57 @@
           "watchDepsName": "watch-deps"
         }
       }
+    },
+    {
+      "plugin": "@nx/storybook/plugin",
+      "options": {
+        "serveStorybookTargetName": "storybook",
+        "buildStorybookTargetName": "build-storybook",
+        "testStorybookTargetName": "test-storybook",
+        "staticStorybookTargetName": "static-storybook"
+      }
     }
   ],
   "targetDefaults": {
     "install": {
-      "dependsOn": [
-        "^install"
-      ]
+      "dependsOn": ["^install"]
     },
     "exec": {
-      "dependsOn": [
-        "^exec"
-      ]
+      "dependsOn": ["^exec"]
     },
     "serve": {
       "cache": false
     },
     "test": {
-      "inputs": [
-        "default",
-        "^default"
-      ]
+      "inputs": ["default", "^default"]
     },
     "lint": {
-      "inputs": [
-        "default",
-        "^default"
-      ]
+      "inputs": ["default", "^default"]
     },
     "format": {
-      "inputs": [
-        "default",
-        "^default"
-      ]
+      "inputs": ["default", "^default"]
     }
   },
   "projects": {
     "backend": {
       "root": "projects/backend",
-      "tags": [
-        "scope:api, scope:backend, scope:webapp"
-      ]
+      "tags": ["scope:api, scope:backend, scope:webapp"]
     },
     "webapp": {
       "root": "projects/webapp",
-      "tags": [
-        "scope:ui, scope:webapp, scope:website"
-      ]
+      "tags": ["scope:ui, scope:webapp, scope:website"]
     },
     "theme": {
       "root": "projects/theme",
-      "tags": [
-        "scope:ui, scope:webapp, scope:website"
-      ]
+      "tags": ["scope:ui, scope:webapp, scope:website"]
     },
     "components": {
       "root": "projects/components",
-      "tags": [
-        "scope:ui, scope:webapp, scope:website"
-      ]
+      "tags": ["scope:ui, scope:webapp, scope:website"]
     },
     "assets": {
       "root": "projects/assets",
-      "tags": [
-        "scope:ui, scope:webapp, scope:website"
-      ]
+      "tags": ["scope:ui, scope:webapp, scope:website"]
     }
   }
 }

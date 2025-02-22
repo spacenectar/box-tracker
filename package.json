@@ -16,17 +16,36 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "@chromatic-com/storybook": "^3.2.4",
     "@nx/js": "20.4.0",
+    "@nx/storybook": "20.4.0",
+    "@nx/web": "20.4.0",
     "@nxlv/python": "^20.5.1",
     "@reduxjs/toolkit": "^2.5.1",
+    "@storybook/addon-a11y": "^8.5.8",
+    "@storybook/addon-actions": "^8.5.8",
+    "@storybook/addon-coverage": "^1.0.5",
+    "@storybook/addon-essentials": "^8.5.8",
+    "@storybook/addon-interactions": "^8.4.6",
+    "@storybook/addon-links": "^8.5.8",
+    "@storybook/core-server": "8.5.8",
+    "@storybook/jest": "^0.2.3",
+    "@storybook/nextjs": "8.5.8",
+    "@storybook/react": "^8.5.8",
+    "@storybook/test": "^8.5.8",
+    "@storybook/test-runner": "^0.19.0",
     "@swc-node/register": "~1.9.1",
     "@swc/core": "~1.5.7",
     "@swc/helpers": "~0.5.11",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.2.0",
     "concurrently": "^9.1.2",
     "eslint": "^9",
     "eslint-config-next": "15.1.6",
     "husky": "^9.1.7",
     "lint-staged": "^15.4.3",
+    "msw": "^2.7.1",
+    "msw-storybook-addon": "^2.0.4",
     "nx": "20.4.0",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-preset-env": "^10.1.4",
@@ -35,9 +54,11 @@
     "react-redux": "^9.2.0",
     "sass": "^1.85.0",
     "sass-loader": "^16.0.5",
+    "storybook": "8.5.8",
     "stylelint": "^16.14.1",
     "stylelint-prettier": "^5.0.3",
     "stylelint-scss": "^6.11.1",
+    "ts-node": "10.9.1",
     "tslib": "^2.3.0",
     "typescript": "~5.7.2"
   },
@@ -53,5 +74,10 @@
       "git add"
     ]
   },
-  "scripts": {}
+  "scripts": {},
+  "msw": {
+    "workerDirectory": [
+      "projects/components/.storybook/public"
+    ]
+  }
 }

@@ -19,10 +19,10 @@
     "target": "es2022",
     "baseUrl": ".",
     "paths": {
-      "@theme/*": ["projects/theme/*"],
-      "@components/*": ["projects/components/*"],
+      "@/*": ["projects/webapp/*"],
       "@assets/*": ["projects/assets/*"],
-      "@/*": ["projects/webapp/*"]
-    },
+      "@components/*": ["projects/components/*"],
+      "@theme/*": ["projects/theme/*"]
+    }
   }
 }
