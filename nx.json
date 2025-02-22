@@ -1,14 +1,26 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "namedInputs": {
-    "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "default": [
+      "{projectRoot}/**/*",
+      "sharedGlobals"
+    ],
     "production": [
       "default",
       "!{projectRoot}/**/*.stories.@(js|jsx|ts|tsx|mdx)",
       "!{projectRoot}/.storybook/**/*",
-      "!{projectRoot}/tsconfig.storybook.json"
+      "!{projectRoot}/tsconfig.storybook.json",
+      "!{projectRoot}/.eslintrc.json",
+      "!{projectRoot}/eslint.config.mjs",
+      "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
+      "!{projectRoot}/tsconfig.spec.json",
+      "!{projectRoot}/jest.config.[jt]s",
+      "!{projectRoot}/src/test-setup.[jt]s",
+      "!{projectRoot}/test-setup.[jt]s"
     ],
-    "sharedGlobals": ["{workspaceRoot}/.github/workflows/ci.yml"]
+    "sharedGlobals": [
+      "{workspaceRoot}/.github/workflows/ci.yml"
+    ]
   },
   "nxCloudId": "67a3801c1884752a7b9a3e5e",
   "plugins": [
@@ -35,48 +47,89 @@
         "testStorybookTargetName": "test-storybook",
         "staticStorybookTargetName": "static-storybook"
       }
+    },
+    {
+      "plugin": "@nx/eslint/plugin",
+      "options": {
+        "targetName": "eslint:lint"
+      }
+    },
+    {
+      "plugin": "@nx/jest/plugin",
+      "options": {
+        "targetName": "test"
+      }
     }
   ],
   "targetDefaults": {
     "install": {
-      "dependsOn": ["^install"]
+      "dependsOn": [
+        "^install"
+      ]
     },
     "exec": {
-      "dependsOn": ["^exec"]
+      "dependsOn": [
+        "^exec"
+      ]
     },
     "serve": {
       "cache": false
     },
     "test": {
-      "inputs": ["default", "^default"]
+      "inputs": [
+        "default",
+        "^default"
+      ],
+      "dependsOn": [
+        "^build"
+      ]
     },
     "lint": {
-      "inputs": ["default", "^default"]
+      "inputs": [
+        "default",
+        "^default"
+      ]
     },
     "format": {
-      "inputs": ["default", "^default"]
+      "inputs": [
+        "default",
+        "^default"
+      ]
     }
   },
   "projects": {
     "backend": {
       "root": "projects/backend",
-      "tags": ["scope:api, scope:backend, scope:webapp"]
+      "tags": [
+        "scope:api, scope:backend, scope:webapp"
+      ]
     },
     "webapp": {
       "root": "projects/webapp",
-      "tags": ["scope:ui, scope:webapp, scope:website"]
+      "tags": [
+        "scope:ui, scope:webapp, scope:website"
+      ]
     },
     "theme": {
       "root": "projects/theme",
-      "tags": ["scope:ui, scope:webapp, scope:website"]
+      "tags": [
+        "scope:ui, scope:webapp, scope:website"
+      ]
     },
     "components": {
       "root": "projects/components",
-      "tags": ["scope:ui, scope:webapp, scope:website"]
+      "tags": [
+        "scope:ui, scope:webapp, scope:website"
+      ]
     },
     "assets": {
       "root": "projects/assets",
-      "tags": ["scope:ui, scope:webapp, scope:website"]
+      "tags": [
+        "scope:ui, scope:webapp, scope:website"
+      ]
+    },
+    "scripts": {
+      "root": "projects/scripts"
     }
   }
 }
