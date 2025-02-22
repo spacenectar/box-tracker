@@ -1,0 +1,25 @@
+{
+  "name": "components",
+  "root": "projects/components",
+  "sourceRoot": "projects/components",
+  "projectType": "library",
+  "tags": [
+    "scope:ui, scope:webapp, scope:website"
+  ],
+  "targets": {
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "yarn lint",
+        "cwd": "projects/theme"
+      }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "yarn test",
+        "cwd": "projects/theme"
+      }
+    }
+  }
+}

@@ -1,0 +1,8 @@
+@use '@theme/colours' as col;
+@use '@theme/vars' as vars;
+
+.masthead {
+  background-color: col.$primary;
+  padding: vars.padding(1);
+  border-bottom: 1px solid col.$dark;
+}
