@@ -11,7 +11,7 @@
     },
     {
       "path": "./projects/backend"
-    },
+    }
   ],
   "ts-node": {
     "compilerOptions": {
