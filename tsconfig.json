@@ -8,7 +8,10 @@
     },
     {
       "path": "./projects/webapp"
-    }
+    },
+    {
+      "path": "./projects/backend"
+    },
   ],
   "ts-node": {
     "compilerOptions": {
