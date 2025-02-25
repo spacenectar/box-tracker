@@ -20,4 +20,6 @@ model User {
   subscriber         Boolean  @default(false)
   dateRegistered     DateTime @default(now())
   dateLastLoggedIn   DateTime?
+
+   @@map("users")
 }

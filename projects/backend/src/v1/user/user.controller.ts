@@ -15,7 +15,8 @@ export class UserController {
     if (!req.user) {
       throw new UnauthorizedException('User not authenticated');
     }
-    return req.user;
+    // Use the user service to get the trimmed version of the user
+    return this.userService.getUserByAuthId(req.user.id);
   }
 
   // Get a user by auth_id instead of database ID
