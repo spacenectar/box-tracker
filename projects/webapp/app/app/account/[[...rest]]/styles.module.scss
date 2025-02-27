@@ -1,0 +1,29 @@
+.account-page {
+  align-content: start;
+  padding-top: padding(5);
+}
+
+.card-box {
+  width: 95vw;
+  min-height: 70vh;
+  background-color: col.$input-focus-bg;
+}
+
+.navbar {
+  flex: unset;
+  width: 12vw;
+}
+
+.social-buttons-provider-icon {
+  width: 2rem;
+  height: 2rem;
+  margin: margin(.5);
+}
+
+.form-field-input {
+  padding: padding(1.5) padding(1);
+}
+
+.form-field-label {
+  margin-bottom: margin(.5);
+}
