@@ -23,7 +23,7 @@
     "migrate": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "npx prisma migrate dev",
+        "command": "npx prisma migrate",
         "cwd": "projects/backend"
       }
     }
