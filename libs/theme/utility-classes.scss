@@ -19,6 +19,14 @@
   width: 1px;
 }
 
+.dashboard-layout {
+  display: grid;
+  place-content: center;
+  height: 100vh;
+  width: 100vw;
+  padding: padding(4);
+}
+
 // Margin
 .m-0 {
   margin: 0;
