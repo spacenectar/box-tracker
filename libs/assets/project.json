@@ -1,7 +1,7 @@
 {
   "name": "assets",
-  "root": "projects/assets",
-  "sourceRoot": "projects/assets",
+  "root": "libs/assets",
+  "sourceRoot": "libs/assets",
   "projectType": "library",
   "tags": []
 }

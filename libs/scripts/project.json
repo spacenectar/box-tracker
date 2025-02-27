@@ -1,0 +1,6 @@
+{
+  "name": "scripts",
+  "root": "libs/scripts",
+  "sourceRoot": "libs/scripts",
+  "projectType": "library"
+}

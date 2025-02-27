@@ -20,9 +20,10 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["projects/webapp/*"],
-      "@assets/*": ["projects/assets/*"],
+      "@assets/*": ["libs/assets/*"],
       "@components/*": ["projects/components/*"],
-      "@theme/*": ["projects/theme/*"]
+      "@theme/*": ["libs/theme/*"],
+      "@types/*": ["libs/types/*"],
     }
   }
 }
