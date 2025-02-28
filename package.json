@@ -44,7 +44,6 @@
     "@nx/storybook": "20.4.0",
     "@nx/web": "20.4.6",
     "@nx/webpack": "20.4.6",
-    "@nxlv/python": "^20.5.1",
     "@reduxjs/toolkit": "^2.5.1",
     "@storybook/addon-a11y": "^8.5.8",
     "@storybook/addon-actions": "^8.5.8",
