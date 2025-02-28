@@ -1,60 +1,29 @@
 {
   "name": "backend",
-  "root": "projects/backend",
   "targets": {
-    "install": {
+    "build": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "docker exec -it fastapi_backend poetry install",
-        "cwd": "projects/backend"
+        "command": "tsc -p tsconfig.build.json"
       }
     },
-    "exec": {
+    "dev": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "docker exec -it fastapi_backend /bin/bash",
+        "command": "nest start --watch",
         "cwd": "projects/backend"
       }
     },
     "serve": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "docker exec -it fastapi_backend poetry run uvicorn main:app --reload --host 0.0.0.0 --port 8000",
-        "cwd": "projects/backend"
-      }
-    },
-    "format": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "docker exec -it fastapi_backend poetry run black .",
-        "cwd": "projects/backend"
-      }
-    },
-    "lint": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "docker exec -it fastapi_backend poetry run flake8 .",
-        "cwd": "projects/backend"
-      }
-    },
-    "test": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "docker exec -it fastapi_backend poetry run pytest",
-        "cwd": "projects/backend"
+        "command": "node dist/main.js"
       }
     },
     "migrate": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "docker exec -it fastapi_backend alembic upgrade head",
-        "cwd": "projects/backend"
-      }
-    },
-    "seed": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "docker exec -it fastapi_backend python -m db.seeds.all",
+        "command": "npx prisma migrate",
         "cwd": "projects/backend"
       }
     }

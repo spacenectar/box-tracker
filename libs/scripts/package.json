@@ -1,0 +1,20 @@
+{
+  "name": "scripts",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "camelcase": "^8.0.0",
+    "chokidar": "^4.0.3",
+    "favicons": "^7.2.0"
+  },
+  "scripts": {
+    "generate": "concurrently generate:*",
+    "generate:icons": "node ./generators/icons.mjs",
+    "generate:icons:watch": "node ./generators/icons.mjs --watch",
+    "generate:docs": "node ./generators/docs.mjs",
+    "generate:docs:watch": "node ./generators/docs.mjs --watch",
+    "generate:favicons": "node ./generators/favicons.mjs",
+    "generate:favicons:watch": "node ./generators/favicons.mjs --watch"
+  }
+}

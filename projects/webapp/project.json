@@ -24,14 +24,14 @@
       "executor": "nx:run-commands",
       "options": {
         "command": "yarn storybook",
-        "cwd": "projects/components"
+        "cwd": "projects/webapp"
       }
     },
     "dev": {
       "executor": "nx:run-commands",
       "options": {
         "command": "yarn storybook & next dev",
-        "cwd": "projects/components"
+        "cwd": "projects/webapp"
       }
     },
     "build": {

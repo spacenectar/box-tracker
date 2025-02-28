@@ -5,15 +5,15 @@ const nextConfig: NextConfig = {
   sassOptions: {
     quietDeps: true,
     outputStyle: 'expanded',
-    indentWidth: 4,
-    // additionalData: `
-    //   @use 'styles/vars' as *;
-    //   @use 'styles/breakpoints' as bp;
-    //   @use 'styles/typography' as type;
-    //   @use 'styles/colours' as col;
-    //   @use 'styles/utilities' as util;
-    //   @use 'styles/animations' as animate;
-    // `
+    indentWidth: 2,
+    additionalData: `
+      @use '@theme/vars' as *;
+      @use '@theme/breakpoints' as bp;
+      @use '@theme/typography' as type;
+      @use '@theme/colours' as col;
+      @use '@theme/utilities' as util;
+      @use '@theme/animations' as animate;
+    `
   }
 };
 

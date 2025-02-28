@@ -5,7 +5,7 @@
 
 ## Status
 
-![accepted]
+![superceded] by [ADR 014](./adr-014-replace-fast-api-with-nestjs.md)
 
 ## Context
 
