@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
-import { PrismaService } from '../prisma/prisma.service';
+import { PrismaService } from '../../prisma/prisma.service';
 import { ClerkService } from '../../auth/clerk.service';
 import { ClerkAuthGuard } from '../../auth/clerk-auth.guard';
 import { ExecutionContext } from '@nestjs/common';
