@@ -32,8 +32,8 @@ describe('BoxController', () => {
     expect(controller).toBeDefined();
   });
 
-  it('should return all boxes', async () => {
-    expect(await controller.findAll()).toEqual([
+  it('should return all boxes in a location', async () => {
+    expect(await controller.findAll('location-1')).toEqual([
       { id: '1', name: 'Test Box', slug: 'test-box', locationId: 'location-1', sealed: false },
     ]);
   });
@@ -53,15 +53,18 @@ describe('BoxController', () => {
       name: 'New Box',
       slug: 'new-box',
       sealed: false,
-      location: { connect: { id: 'location-1' } }
+      locationId: 'location-1', // ✅ Flat ID format
     };
+
     expect(await controller.create(dto)).toEqual({
       id: '2',
       name: 'New Box',
       slug: 'new-box',
-      locationId: 'location-1',
+      locationId: 'location-1', // ✅ Expected flat ID
       sealed: false,
     });
+
+    expect(service.create).toHaveBeenCalledWith(dto);
   });
 
   it('should update a box', async () => {

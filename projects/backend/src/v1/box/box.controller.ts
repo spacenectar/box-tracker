@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Patch, Delete, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Patch, Delete, Body, Param, BadRequestException, Query } from '@nestjs/common';
 import { BoxService } from './box.service';
 import { Prisma } from '@prisma/client';
 
@@ -7,8 +7,11 @@ export class BoxController {
   constructor(private readonly boxService: BoxService) {}
 
   @Get()
-  async findAll() {
-    return this.boxService.findAll();
+  async findAll(@Query('locationId') locationId: string) {
+    if (!locationId) {
+      throw new BadRequestException('locationId is required');
+    }
+    return this.boxService.findAll(locationId);
   }
 
   @Get(':id')
@@ -17,8 +20,11 @@ export class BoxController {
   }
 
   @Post()
-  async create(@Body() data: Prisma.BoxCreateInput) {
-    return this.boxService.create(data);
+  async create(@Body() data: any) {
+    return this.boxService.create({
+      ...data,
+      locationId: data.locationId, // Ensure locationId is passed as a flat ID
+    });
   }
 
   @Patch(':id')

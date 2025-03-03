@@ -13,10 +13,22 @@ export class LocationService {
     return this.prisma.location.findUnique({ where: { id } });
   }
 
-  async create(data: any) {
-    return this.prisma.location.create({ data });
-  }
+async create(data: any) {
+  const createdLocation = await this.prisma.location.create({
+    data: {
+      ...data,
+      spaceId: data.spaceId, // Ensure spaceId is stored directly
+    },
+  });
 
+  return {
+    id: createdLocation.id,
+    name: createdLocation.name,
+    address: createdLocation.address,
+    type: createdLocation.type,
+    spaceId: createdLocation.spaceId, // Return spaceId as a flat ID
+  };
+}
   async update(id: string, data: any) {
     return this.prisma.location.update({ where: { id }, data });
   }

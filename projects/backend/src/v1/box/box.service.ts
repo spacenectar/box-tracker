@@ -5,8 +5,10 @@ import { PrismaService } from '../../prisma/prisma.service';
 export class BoxService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findAll() {
-    return this.prisma.box.findMany();
+  async findAll(locationId: string) {
+    return this.prisma.box.findMany({
+      where: { locationId },
+    });
   }
 
   async findOne(id: string) {
@@ -16,11 +18,20 @@ export class BoxService {
   }
 
   async create(data: any) {
-    // Ensure slug is unique
-    const existingBox = await this.prisma.box.findUnique({ where: { slug: data.slug } });
-    if (existingBox) throw new ConflictException('A box with this slug already exists');
+    const createdBox = await this.prisma.box.create({
+      data: {
+        ...data,
+        locationId: data.locationId, // Store locationId directly
+      },
+    });
 
-    return this.prisma.box.create({ data });
+    return {
+      id: createdBox.id,
+      name: createdBox.name,
+      slug: createdBox.slug,
+      locationId: createdBox.locationId, // Return locationId as a flat ID
+      sealed: createdBox.sealed,
+    };
   }
 
   async update(id: string, data: any) {
