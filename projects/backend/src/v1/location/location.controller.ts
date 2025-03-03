@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
 import { LocationService } from './location.service';
 
-@Controller('v1/location')
+@Controller({ path: 'location', version: '1' })
 export class LocationController {
   constructor(private readonly locationService: LocationService) {}
 

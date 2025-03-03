@@ -2,7 +2,7 @@ import { Controller, Get, Post, Patch, Delete, Body, Param, BadRequestException,
 import { BoxService } from './box.service';
 import { Prisma } from '@prisma/client';
 
-@Controller('v1/box')
+@Controller({ path: 'box', version: '1' })
 export class BoxController {
   constructor(private readonly boxService: BoxService) {}
 

@@ -5,7 +5,7 @@ import { UserService } from './user.service';
 import { CreateUserDto, UpdateUserDto } from './dto/user.dto';
 import { AuthenticatedRequest } from '../../../types/express'; // Import the extended request type
 
-@Controller('v1/user')
+@Controller({ path: 'user', version: '1' })
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
