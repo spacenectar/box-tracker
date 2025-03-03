@@ -6,6 +6,7 @@ import { SpaceModule } from './space/space.module';
 import { LocationModule } from './location/location.module';
 import { BoxModule } from './box/box.module';
 import { ItemModule } from './item/item.module';
+import { RoomModule } from './room/room.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { ItemModule } from './item/item.module';
     LocationModule,
     BoxModule,
     ItemModule,
+    RoomModule,
   ],
 })
 export class V1Module {}
