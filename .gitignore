@@ -42,6 +42,7 @@ Dockerfile.prod
 
 # Ignore IDE and editor files
 .vscode/
+.cursor/
 .idea/
 *.sublime-workspace
 .project
