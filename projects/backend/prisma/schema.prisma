@@ -70,6 +70,7 @@ model Location {
   userLocations    UserLocation[]
   boxes            Box[]
   items            Item[]
+  rooms            Room[]
 
   @@map("locations")
 }
@@ -83,6 +84,22 @@ model UserLocation {
 
   @@id([userId, locationId])
   @@map("user_locations")
+}
+
+model Room {
+  id               String   @id @default(uuid()) @db.Uuid
+  name             String
+  slug             String   @unique
+  locationId       String   @db.Uuid
+  colour           String   // Hex color value (e.g., "#6699cc")
+  dateAdded        DateTime @default(now())
+  dateLastModified DateTime?
+  dateLastAccessed DateTime?
+
+  location         Location @relation(fields: [locationId], references: [id], onDelete: Cascade)
+
+  @@unique([locationId, slug]) // Ensure slugs are unique within a location
+  @@map("rooms")
 }
 
 model Box {
