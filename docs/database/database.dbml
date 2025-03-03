@@ -45,6 +45,17 @@ Table user_locations {
   primary key (user_id, location_id) // Composite primary key
 }
 
+Table rooms {
+  id               uuid       [primary key] // Unique room ID
+  name             text       [not null] // The friendly name for the room
+  slug             text       [unique, not null] // The slug
+  location_id      uuid       [not null, ref: > locations.id] // The location it belongs to
+  colour           text       [not null]  // Hex color value (e.g., "#6699cc")
+  date_added       timestamp [not null, default: "CURRENT_TIMESTAMP"]
+  date_last_modified timestamp
+  date_last_accessed timestamp
+}
+
 Table boxes {
   id uuid [primary key] // Unique box ID
   name varchar [not null] // Box name
