@@ -21,6 +21,16 @@ async create(data: any) {
     },
   });
 
+   // Create the default room
+  await this.prisma.room.create({
+    data: {
+      name: 'Default Room',
+      slug: 'default-room',
+      locationId: createdLocation.id,
+      colour: '#CCCCCC', // Default grey color
+    },
+  });
+
   return {
     id: createdLocation.id,
     name: createdLocation.name,
