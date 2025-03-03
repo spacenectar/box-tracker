@@ -50,9 +50,10 @@ describe('LocationController', () => {
 
   it('should create a location', async () => {
     const dto = { spaceId: 'space-1', name: 'Office', address: '456 Road', type: 'Workplace' };
+
     expect(await controller.create(dto)).toEqual({
       id: '2',
-      spaceId: 'space-1',
+      spaceId: 'space-1', // Ensure spaceId is expected as a flat ID
       name: 'Office',
       address: '456 Road',
       type: 'Workplace',
