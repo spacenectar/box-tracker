@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { SpacesController } from './spaces.controller';
-import { SpacesService } from './spaces.service';
+import { SpaceController } from './space.controller';
+import { SpaceService } from './space.service';
 
 describe('SpacesController', () => {
-  let controller: SpacesController;
-  let service: SpacesService;
+  let controller: SpaceController;
+  let service: SpaceService;
 
   const mockSpacesService = {
     findAll: jest.fn().mockImplementation((userId) =>
@@ -28,12 +28,12 @@ describe('SpacesController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [SpacesController],
-      providers: [{ provide: SpacesService, useValue: mockSpacesService }],
+      controllers: [SpaceController],
+      providers: [{ provide: SpaceService, useValue: mockSpacesService }],
     }).compile();
 
-    controller = module.get<SpacesController>(SpacesController);
-    service = module.get<SpacesService>(SpacesService);
+    controller = module.get<SpaceController>(SpaceController);
+    service = module.get<SpaceService>(SpaceService);
   });
 
   it('should be defined', () => {
