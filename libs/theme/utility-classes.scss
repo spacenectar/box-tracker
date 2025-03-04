@@ -1,4 +1,5 @@
 @use 'typography' as type;
+@use 'utilities/link' as *;
 
 .db {
   display: block;
@@ -403,5 +404,5 @@
 }
 
 .link {
-  @include type.link;
+  @include link();
 }
