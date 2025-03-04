@@ -1,13 +1,17 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { healthcheckApi } from '../services'
+import { userApi } from '../services'
+import { authReducer } from './auth-slice'
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
+      auth: authReducer,
       [healthcheckApi.reducerPath]: healthcheckApi.reducer,
+      [userApi.reducerPath]: userApi.reducer
     },
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(healthcheckApi.middleware)
+      getDefaultMiddleware().concat(healthcheckApi.middleware, userApi.middleware),
   })
 }
 
