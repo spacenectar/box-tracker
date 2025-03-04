@@ -32,10 +32,10 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   // Once Clerk is loaded, but the user isn't signed in, show access denied message
   if (!isSignedIn) {
     return (
-      <div className='dashboard-layout'>
-        <h2>Access Denied</h2>
+      <div className='dashboard-layout ta-c flex flex-column gap-2 items-center'>
+        <h1 className='heading-large'>Access Denied</h1>
         <p>You must be logged in to access this page.</p>
-        <button onClick={() => router.push('/login')}>Go to Login</button>
+        <button className='btn-primary' onClick={() => router.push('/login')}>Go to Login</button>
       </div>
     )
   }
