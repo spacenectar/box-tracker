@@ -7,7 +7,12 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
    const config = new DocumentBuilder()
     .setTitle('Box Tracker API')
-    .setDescription('The Box Tracker API description')
+    .setDescription('The Box Tracker API swagger documentation')
+    .setContact(
+      'Alex Foxleigh',
+      'https://www.alexfoxleigh.com',
+      'alex@alexfoxleigh.com'
+    )
     .setVersion('1.0')
     .addBearerAuth()
     .build();
