@@ -1,0 +1,7 @@
+{
+  "name": "mocks",
+  "root": "libs/mocks",
+  "sourceRoot": "libs/mocks",
+  "projectType": "library",
+  "tags": []
+}
