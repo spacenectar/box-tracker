@@ -1,8 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
-
-console.log('API_URL', API_URL);
+const baseUrl = `/api/${process.env.NEXT_PUBLIC_API_VERSION}/`;
 
 export type Healthcheck = {
   status: string;
@@ -10,7 +8,7 @@ export type Healthcheck = {
 
 export const healthcheckApi = createApi({
   reducerPath: 'healthcheckApi',
-  baseQuery: fetchBaseQuery({ baseUrl: API_URL }),
+  baseQuery: fetchBaseQuery({ baseUrl }),
   endpoints: (builder) => ({
     getHealthcheck: builder.query<Healthcheck, void>({
       query: () => 'healthcheck',

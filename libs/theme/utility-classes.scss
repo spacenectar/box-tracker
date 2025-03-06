@@ -1,4 +1,8 @@
 @use 'typography' as type;
+@use 'colours' as col;
+@use 'utilities/link' as *;
+@use 'utilities/buttons' as *;
+@use 'vars/spacing' as *;
 
 .db {
   display: block;
@@ -333,6 +337,45 @@
   height: 25%;
 }
 
+// Flexbox
+
+.flex {
+  display: flex;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.items-center {
+  place-items: center;
+}
+
+.gap-0 {
+  gap: 0;
+}
+
+.gap-1 {
+  gap: 1rem;
+}
+
+.gap-2 {
+  gap: 2rem;
+}
+
+.gap-3 {
+  gap: 3rem;
+}
+
+.gap-4 {
+  gap: 4rem;
+}
+
+
 // Overflow
 .overflow-auto {
   overflow: auto;
@@ -399,9 +442,9 @@
 }
 
 .button {
-  @include type.button;
+  @include button(col.$primary-button, col.$light);
 }
 
 .link {
-  @include type.link;
+  @include link();
 }

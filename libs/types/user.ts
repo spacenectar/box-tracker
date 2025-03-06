@@ -5,4 +5,8 @@ export type User = {
   subscriber: boolean;
   dateRegistered: Date;
   dateLastLoggedIn: Date | null;
+  email?: string;
+  firstName?: string;
+  lastName?: string;
+  imageUri?: string;
 };
