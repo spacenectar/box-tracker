@@ -1,18 +1,18 @@
-@mixin skeleton($duration: 1.2s, $loop: infinite) {
-  @keyframes pulse {
-    0% {
-      background-color: hsla(0, 0%, 60%, 1);
-    }
-
-    50% {
-      background-color: hsla(0, 0%, 50%, 1);
-    }
-
-    100% {
-      background-color: hsla(0, 0%, 60%, 1);
-    }
+@keyframes pulse {
+  0% {
+    background-color: hsla(0, 0%, 60%, 1);
   }
 
+  50% {
+    background-color: hsla(0, 0%, 50%, 1);
+  }
+
+  100% {
+    background-color: hsla(0, 0%, 60%, 1);
+  }
+}
+
+@mixin skeleton($duration: 1.2s, $loop: infinite) {
   background-color: transparent !important;
   border-color: transparent !important;
   position: relative !important;

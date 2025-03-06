@@ -1,5 +1,81 @@
 .masthead {
+  background: linear-gradient(90deg, col.$primary, col.$secondary);
   background-color: col.$primary;
-  padding: padding(1);
   border-bottom: 1px solid col.$dark;
+}
+
+.top-bar {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: padding(1);
+
+  @include util.mq(bp.$medium-small) {
+    justify-content: space-between;
+    flex-direction: row;
+  }
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  margin-left: margin(1);
+  gap: spacing(1);
+}
+
+.title {
+  font-size: 4rem;
+  font-weight: bold;
+  color: col.$light;
+  @include util.mq(bp.$medium) {
+    font-size: 6rem;
+  }
+}
+
+.user-info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: spacing(1.5);
+}
+
+a.user-info {
+  color: col.$light;
+  padding: padding(1);
+  padding-left: padding(1.4);
+  border-radius: $border-radius;
+  &:hover {
+    background-color: rgba(col.$tertiary, .3);
+  }
+}
+
+.text-info {
+  text-align: right;
+  line-height: 1.5;
+}
+
+.nav ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  gap: spacing(2);
+  padding: 0 padding(1);
+  margin-bottom: margin(1);
+}
+
+.nav-item {
+  color: col.$light;
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding: padding(1);
+  border-radius: 5px;
+
+  &:first-child {
+    margin-left: -(margin(1));
+  }
+  &:hover {
+    background-color: col.$primary;
+  }
 }

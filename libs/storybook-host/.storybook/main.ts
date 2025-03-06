@@ -48,6 +48,10 @@ const config: StorybookConfig = {
       from: '../public',
       to: '/'
     },
+    {
+      from: '../../mocks',
+      to: '/mocks'
+    }
   ],
   webpackFinal: async (config) => {
   // Ensure config.resolve exists before assigning

@@ -39,7 +39,7 @@ $title-size: 10rem;
   font-size: 18vw;
 
   @include util.mq(620px) {
-    font-size: $title-size / 1.2;
+    font-size: calc($title-size / 1.2);
   }
 
   @include util.mq(bp.$medium) {
@@ -53,7 +53,7 @@ $heading-large-size: 3.4rem;
 @mixin heading-large {
   font-weight: 800;
   letter-spacing: 0;
-  font-size: $heading-large-size / 1.5;
+  font-size: calc($heading-large-size / 1.5);
   line-height: 4rem;
 
   @include util.mq(bp.$medium) {
@@ -67,7 +67,7 @@ $heading-medium-size: 2.4rem;
 @mixin heading-medium {
   font-weight: 800;
   letter-spacing: 0;
-  font-size: $heading-medium-size / 1.5;
+  font-size: calc($heading-medium-size / 1.5);
   line-height: 2.4rem;
 
   @include util.mq(bp.$medium) {
@@ -79,7 +79,7 @@ $heading-small-size: 2rem;
 
 @mixin heading-small {
   font-weight: 600;
-  font-size: $heading-small-size / 1.5;
+  font-size: calc($heading-small-size / 1.5);
   line-height: 2.2rem;
 
   @include util.mq(bp.$medium) {

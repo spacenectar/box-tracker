@@ -77,14 +77,18 @@
   @include button-secondary;
 }
 
-@mixin button-availability {
-  @include button(col.$availability-button, col.$unavailable-button-text);
+@mixin button-tertiary {
+  @include button(col.$tertiary-button, col.$tertiary-button-text);
 
   &:not([disabled]) {
     &:hover {
       filter: brightness(140%);
     }
   }
+}
+
+.btn-tertiary {
+  @include button-tertiary;
 }
 
 @mixin button-transparent($bg-colour, $lighten: 50%) {

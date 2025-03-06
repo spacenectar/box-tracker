@@ -31,6 +31,12 @@
   padding: padding(4);
 }
 
+.app-layout {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  height: 100vh;
+}
+
 // Margin
 .m-0 {
   margin: 0;
@@ -304,7 +310,7 @@
 }
 
 // Width
-.w-100 {
+.w-100, .w-full {
   width: 100%;
 }
 
@@ -321,7 +327,7 @@
 }
 
 // Height
-.h-100 {
+.h-100, .h-full {
   height: 100%;
 }
 
@@ -353,6 +359,10 @@
 
 .items-center {
   place-items: center;
+}
+
+.content-center {
+  place-content: center;
 }
 
 .gap-0 {

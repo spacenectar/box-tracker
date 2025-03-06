@@ -1,0 +1,29 @@
+@use 'sass:color';
+
+.table-row {
+  @include util.card();
+
+  margin-bottom: margin(2);
+  padding: padding(1) padding(2);
+
+  @include util.mq(bp.$medium) {
+    background-color: transparent;
+    box-shadow: none !important;
+    display: table-row;
+    margin-bottom: 0;
+    padding: 0;
+  }
+
+  &.selectable {
+    cursor: pointer;
+
+    &:hover,
+    &:focus {
+      background: rgba(col.$dark, 0.08);
+    }
+  }
+
+  &.active {
+    background: color.adjust(col.$action-focus-bg, $lightness: 25%);
+  }
+}

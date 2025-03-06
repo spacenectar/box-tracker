@@ -8,5 +8,5 @@ export type User = {
   email?: string;
   firstName?: string;
   lastName?: string;
-  imageUri?: string;
+  imageUrl?: string;
 };
