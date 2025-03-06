@@ -7,6 +7,15 @@
     "scope:ui, scope:webapp, scope:website"
   ],
   "targets": {
+    "build": {
+      "executor": "@nrwl/workspace:run-commands",
+      "outputs": [
+        "{workspaceRoot}/dist/libs/theme"
+      ],
+      "options": {
+        "command": "cp -R libs/theme/* dist/libs/theme/"
+      }
+    },
     "lint": {
       "executor": "nx:run-commands",
       "options": {
