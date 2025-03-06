@@ -3,3 +3,36 @@
   padding: padding(1);
   border-bottom: 1px solid col.$dark;
 }
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: spacing(1);
+}
+
+.title {
+  font-size: 6rem;
+  font-weight: bold;
+  color: col.$light;
+}
+
+.nav ul {
+  display: flex;
+  flex-direction: row;
+  gap: spacing(2);
+}
+
+.nav-item {
+  color: col.$light;
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding: padding(1);
+  border-radius: 5px;
+
+  &:first-child {
+    margin-left: -(margin(1));
+  }
+  &:hover {
+    background-color: col.$dark;
+  }
+}
