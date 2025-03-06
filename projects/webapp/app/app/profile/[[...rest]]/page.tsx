@@ -4,9 +4,9 @@ import { UserProfile } from "@clerk/nextjs";
 
 import styles from "./styles.module.scss";
 
-export default function AccountPage() {
+export default function ProfilePage() {
   return (
-    <div className={["dashboard-layout", styles['account-page']].join(' ')}>
+    <div className={["dashboard-layout", styles['profile-page']].join(' ')}>
       <UserProfile appearance={
         {
           elements: {
