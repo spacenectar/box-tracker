@@ -1,11 +1,10 @@
 import type { StorybookConfig } from '@storybook/nextjs';
-import path from 'path';
 
 const config: StorybookConfig = {
   framework: {
     name: '@storybook/nextjs',
     options: {
-      nextConfigPath: '../../webapp/next.config.js',
+      nextConfigPath: '../next.config.js',
     }
   },
   addons: [
@@ -39,10 +38,33 @@ const config: StorybookConfig = {
   ],
   webpackFinal: async (config) => {
     config.resolve = config.resolve || {};
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      '@theme': path.resolve(__dirname, '../../theme'),
-    };
+    config?.module?.rules?.push({
+      test: /\.scss$/,
+      use: [
+        'style-loader',
+        {
+          loader: 'css-loader',
+          options: { modules: true },
+        },
+        {
+          loader: 'sass-loader',
+          options: {
+            sourceMap: true,
+            sassOptions: {
+              outputStyle: "expanded",
+              additionalData: `
+                @use '@theme/vars' as *;
+                @use '@theme/breakpoints' as bp;
+                @use '@theme/typography' as type;
+                @use '@theme/colours' as col;
+                @use '@theme/utilities' as util;
+                @use '@theme/animations' as animate;
+              `,
+            },
+          }
+        },
+      ],
+    });
     return config;
   },
 };

@@ -13,6 +13,6 @@
     ".storybook/*.ts",
     ".storybook/preview.tsx",
     ".storybook/**/*.tsx",
-    ".storybook/doc-blocks/**/*.tsx"
+    ".storybook/doc-blocks/**/*.tsx",
   ]
 }

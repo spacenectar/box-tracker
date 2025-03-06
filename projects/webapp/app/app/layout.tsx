@@ -1,4 +1,5 @@
-import Masthead from "@components/masthead";
+
+import Masthead from "@components/layout/masthead";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {

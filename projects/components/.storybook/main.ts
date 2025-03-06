@@ -22,7 +22,7 @@ const config: StorybookConfig = {
     '@storybook/addon-coverage',
     '@storybook/addon-interactions',
     '@chromatic-com/storybook',
-    'msw-storybook-addon'
+    'msw-storybook-addon',
   ],
   staticDirs: [
     {
@@ -36,6 +36,33 @@ const config: StorybookConfig = {
       ...config.resolve.alias,
       '@theme': path.resolve(__dirname, '../../theme'),
     };
+    config?.module?.rules?.push({
+      test: /\.scss$/,
+      use: [
+        'style-loader',
+        {
+          loader: 'css-loader',
+          options: { modules: true },
+        },
+        {
+          loader: 'sass-loader',
+          options: {
+            sourceMap: true,
+            sassOptions: {
+              outputStyle: "expanded",
+              additionalData: `
+                @use '@theme/vars' as *;
+                @use '@theme/breakpoints' as bp;
+                @use '@theme/typography' as type;
+                @use '@theme/colours' as col;
+                @use '@theme/utilities' as util;
+                @use '@theme/animations' as animate;
+              `,
+            }
+          }
+        },
+      ],
+    });
     return config;
   },
 };
