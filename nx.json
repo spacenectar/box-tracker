@@ -5,7 +5,10 @@
     "libsDir": "libs"
   },
   "namedInputs": {
-    "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "default": [
+      "{projectRoot}/**/*",
+      "sharedGlobals"
+    ],
     "production": [
       "default",
       "!{projectRoot}/**/*.stories.@(js|jsx|ts|tsx|mdx)",
@@ -19,7 +22,9 @@
       "!{projectRoot}/src/test-setup.[jt]s",
       "!{projectRoot}/test-setup.[jt]s"
     ],
-    "sharedGlobals": ["{workspaceRoot}/.github/workflows/ci.yml"]
+    "sharedGlobals": [
+      "{workspaceRoot}/.github/workflows/ci.yml"
+    ]
   },
   "nxCloudId": "67a3801c1884752a7b9a3e5e",
   "plugins": [
@@ -48,7 +53,9 @@
       "options": {
         "targetName": "test"
       },
-      "exclude": ["projects/backend-e2e/**/*"]
+      "exclude": [
+        "projects/backend-e2e/**/*"
+      ]
     },
     {
       "plugin": "@nx/webpack/plugin",
@@ -72,10 +79,14 @@
   ],
   "targetDefaults": {
     "install": {
-      "dependsOn": ["^install"]
+      "dependsOn": [
+        "^install"
+      ]
     },
     "exec": {
-      "dependsOn": ["^exec"]
+      "dependsOn": [
+        "^exec"
+      ]
     },
     "dev": {
       "cache": false
@@ -84,40 +95,69 @@
       "cache": false
     },
     "test": {
-      "inputs": ["default", "^default"],
-      "dependsOn": ["^build"]
+      "inputs": [
+        "default",
+        "^default"
+      ],
+      "dependsOn": [
+        "^build"
+      ]
     },
     "lint": {
-      "inputs": ["default", "^default"]
+      "inputs": [
+        "default",
+        "^default"
+      ]
     },
     "format": {
-      "inputs": ["default", "^default"]
+      "inputs": [
+        "default",
+        "^default"
+      ]
     }
   },
   "projects": {
     "backend": {
       "root": "projects/backend",
-      "tags": ["scope:api, scope:backend, scope:webapp"]
+      "tags": [
+        "scope:api, scope:backend, scope:webapp"
+      ]
     },
     "webapp": {
       "root": "projects/webapp",
-      "tags": ["scope:ui, scope:webapp, scope:website"]
+      "tags": [
+        "scope:ui, scope:webapp, scope:website"
+      ]
     },
     "theme": {
       "root": "libs/theme",
-      "tags": ["scope:ui, scope:webapp, scope:website"]
+      "tags": [
+        "scope:ui, scope:webapp, scope:website"
+      ]
     },
     "storybook-host": {
       "root": "libs/storybook-host",
-      "tags": ["scope:ui, scope:webapp, scope:website"]
+      "tags": [
+        "scope:ui, scope:webapp, scope:website"
+      ]
     },
     "components": {
       "root": "projects/components",
-      "tags": ["scope:ui, scope:webapp, scope:website"]
+      "tags": [
+        "scope:ui, scope:webapp, scope:website"
+      ]
     },
     "assets": {
       "root": "libs/assets",
-      "tags": ["scope:ui, scope:webapp, scope:website"]
+      "tags": [
+        "scope:ui, scope:webapp, scope:website"
+      ]
+    },
+    "mocks": {
+      "root": "libs/mocks",
+      "tags": [
+        "scope:api, scope:backend, scope:webapp"
+      ]
     },
     "types": {
       "root": "libs/types",
