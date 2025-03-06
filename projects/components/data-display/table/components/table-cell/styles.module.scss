@@ -1,0 +1,43 @@
+.table-cell {
+  display: block;
+  padding: padding();
+  position: relative;
+
+  @include util.dark-mode() {
+    color: col.$body-text-inverse;
+  }
+
+  @include util.mq(bp.$medium) {
+    display: table-cell;
+    padding: padding();
+  }
+}
+
+.with-context {
+  @include util.mq(bp.$medium) {
+    &::before {
+      display: none !important;
+    }
+
+    th {
+      display: table-cell;
+    }
+  }
+
+  &::before {
+    border-bottom: 1px dashed col.$grey-500;
+    content: attr(data-heading) ": ";
+    display: block;
+    font-weight: bold;
+    margin-bottom: margin(1);
+    padding-bottom: padding(1);
+  }
+
+  th {
+    display: none;
+  }
+}
+
+.th {
+  font-weight: bold;
+}

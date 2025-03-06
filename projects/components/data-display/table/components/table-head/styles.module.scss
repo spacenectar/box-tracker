@@ -1,0 +1,12 @@
+.thead {
+  display: none;
+
+  @include util.mq(bp.$medium) {
+    display: table-header-group;
+  }
+}
+
+.solid th {
+  background-color: col.$primary;
+  color: col.$light;
+}

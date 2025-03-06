@@ -1,0 +1,26 @@
+
+.table {
+  background-color: col.$grey-100;
+  width: 100%;
+
+  @include util.dark-mode() {
+    color: col.$grey-200;
+  }
+
+  @include util.mq(bp.$medium) {
+    border-collapse: collapse;
+    border-spacing: 0;
+    color: col.$grey-900;
+    margin-bottom: margin(1);
+  }
+}
+
+.striped tr:nth-child(odd) td {
+  @include util.mq(bp.$medium) {
+    background-color: col.$grey-200;
+
+    @include util.dark-mode() {
+      background-color: col.$grey-700;
+    }
+  }
+}
