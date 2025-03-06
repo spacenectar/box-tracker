@@ -2,11 +2,9 @@
 
 export default function Home() {
   return (
-    <div className="dashboard-layout">
-      <main className="ta-c">
-
-        <p>Sup!</p>
-
+    <div>
+      <main className="flex ta-c items-center content-center h-full w-full">
+        <p className="ta-c">Sup!</p>
       </main>
     </div>
   );

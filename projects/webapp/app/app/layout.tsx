@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { setToken } from '@/lib/store/auth-slice'
 import Masthead from "@components/layout/masthead"
 import { useGetUserQuery } from '@/lib/services/user'
+import Footer from '@components/layout/footer'
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const { getToken, isSignedIn, isLoaded } = useAuth()
@@ -68,9 +69,10 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <>
+    <div className='app-layout'>
       <Masthead user={data!}/>
       {children}
-    </>
+      <Footer />
+    </div>
   )
 }
