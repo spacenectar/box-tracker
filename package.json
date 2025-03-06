@@ -95,6 +95,7 @@
     "postcss-scss": "^4.0.9",
     "prettier": "^3.5.2",
     "prisma": "^6.4.1",
+    "react-docgen-typescript": "^2.2.2",
     "react-redux": "^9.2.0",
     "resolve-url-loader": "^5.0.0",
     "sass": "^1.85.0",

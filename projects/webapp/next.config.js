@@ -1,9 +1,18 @@
+/** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  output: 'standalone',
+  webpack: function (config) {
+    config.module.rules.push({
+      test: /\.md$/,
+      use: 'markdown-loader'
+    });
+    return config;
+  },
   sassOptions: {
     quietDeps: true,
-    outputStyle: "expanded",
-    indentWidth: 2,
+    outputStyle: 'expanded',
+    indentWidth: 4,
     additionalData: `
       @use '@theme/vars' as *;
       @use '@theme/breakpoints' as bp;
@@ -11,7 +20,7 @@ const nextConfig = {
       @use '@theme/colours' as col;
       @use '@theme/utilities' as util;
       @use '@theme/animations' as animate;
-    `,
+    `
   },
   async rewrites() {
     return [
@@ -21,6 +30,7 @@ const nextConfig = {
       },
     ];
   },
+
 };
 
-export default nextConfig;
+module.exports = nextConfig;
