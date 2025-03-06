@@ -26,7 +26,9 @@ export default function LoginPage() {
           formFieldLabel: styles["form-field-label"],
           formFieldInput: styles["form-field-input"],
         }
-      }}/>
+      }}
+      fallbackRedirectUrl="/app"
+      />
     </div>
   );
 }
