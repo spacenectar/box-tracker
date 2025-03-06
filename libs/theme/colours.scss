@@ -11,9 +11,9 @@ $main-panel-bg: hsl(0, 0%, 98%);
 $alt-panel-bg: hsl(0, 0%, 91%);
 
 /* Brand Colours */
-$primary: hsl(253, 78%, 29%);
-$secondary: hsl(254, 90%, 12%);
-$tertiary: hsl(253, 78%, 29%);
+$primary: hsl(260, 100%, 44%);
+$secondary: hsl(272, 76%, 53%);
+$tertiary: hsl(260, 100%, 23%);
 
 /* Dark and light base colours */
 $dark: hsl(0, 0%, 7%);
@@ -42,17 +42,18 @@ $info: hsl(214, 60%, 48%);
 $error: $danger;
 
 /* Buttons */
-$primary-button: hsl(281, 93%, 49%);
+$primary-button: $primary;
 $primary-button-hover: color.adjust($primary-button, $lightness: -6%);
 $primary-button-text: hsl(0, 0%, 100%);
 
-$secondary-button: hsl(281, 100%, 93%);
+$secondary-button: $secondary;
 $secondary-button-hover: color.adjust($secondary-button, $lightness: 2%);
-$secondary-button-text: hsl(281, 93%, 49%);
+$secondary-button-text: $light;
 
-$availability-button: hsla(0, 0%, 0%, 0.4);
-$unavailable-button-hover: hsla(0, 0%, 0%, 0.6);
-$unavailable-button-text: hsl(0, 0%, 100%);
+$tertiary-button: hsl(281, 100%, 93%);
+$tertiary-button-hover: color.adjust($secondary-button, $lightness: 2%);
+$tertiary-button-text: hsl(281, 93%, 49%);
+
 
 /* Inputs */
 $input-bg: $bg;
