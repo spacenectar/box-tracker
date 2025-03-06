@@ -23,7 +23,6 @@
   },
   "nxCloudId": "67a3801c1884752a7b9a3e5e",
   "plugins": [
-    "@nxlv/python",
     {
       "plugin": "@nx/js/typescript",
       "options": {
@@ -36,15 +35,6 @@
           "buildDepsName": "build-deps",
           "watchDepsName": "watch-deps"
         }
-      }
-    },
-    {
-      "plugin": "@nx/storybook/plugin",
-      "options": {
-        "serveStorybookTargetName": "storybook",
-        "buildStorybookTargetName": "build-storybook",
-        "testStorybookTargetName": "test-storybook",
-        "staticStorybookTargetName": "static-storybook"
       }
     },
     {
@@ -68,6 +58,15 @@
         "previewTargetName": "preview",
         "buildDepsTargetName": "build-deps",
         "watchDepsTargetName": "watch-deps"
+      }
+    },
+    {
+      "plugin": "@nx/storybook/plugin",
+      "options": {
+        "serveStorybookTargetName": "serve:storybook",
+        "buildStorybookTargetName": "build:storybook",
+        "testStorybookTargetName": "test-storybook",
+        "staticStorybookTargetName": "static-storybook"
       }
     }
   ],
@@ -108,6 +107,10 @@
       "root": "libs/theme",
       "tags": ["scope:ui, scope:webapp, scope:website"]
     },
+    "storybook-host": {
+      "root": "libs/storybook-host",
+      "tags": ["scope:ui, scope:webapp, scope:website"]
+    },
     "components": {
       "root": "projects/components",
       "tags": ["scope:ui, scope:webapp, scope:website"]
@@ -122,6 +125,13 @@
     },
     "scripts": {
       "root": "projects/scripts"
+    }
+  },
+  "generators": {
+    "@nx/react": {
+      "library": {
+        "unitTestRunner": "none"
+      }
     }
   }
 }

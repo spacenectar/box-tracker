@@ -11,6 +11,9 @@
     },
     {
       "path": "./projects/backend"
+    },
+    {
+      "path": "./libs/storybook-host"
     }
   ],
   "ts-node": {

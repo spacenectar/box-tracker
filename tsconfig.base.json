@@ -23,7 +23,7 @@
       "@assets/*": ["libs/assets/*"],
       "@components/*": ["projects/components/*"],
       "@theme/*": ["libs/theme/*"],
-      "@types/*": ["libs/types/*"],
+      "@types/*": ["libs/types/*"]
     }
   }
 }

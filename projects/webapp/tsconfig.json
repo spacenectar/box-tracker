@@ -23,10 +23,5 @@
     ".next/types/**/*.ts",
     "../../projects/components/**/*"
   ],
-  "exclude": ["node_modules", "**/*.stories.ts", "**/*.stories.js"],
-  "references": [
-    {
-      "path": "./tsconfig.storybook.json"
-    }
-  ]
+  "exclude": ["node_modules", "**/*.stories.ts", "**/*.stories.js"]
 }
