@@ -1,0 +1,22 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/storybook-host/src",
+  "projectType": "library",
+  "tags": [
+    "type:storybook"
+  ],
+  "targets": {
+    "storybook": {
+      "executor": "@nx/storybook:storybook",
+      "options": {
+        "configDir": "libs/storybook-host/.storybook"
+      }
+    }
+  },
+  "implicitDependencies": [
+    "theme",
+    "components",
+    "assets",
+    "webapp"
+  ]
+}

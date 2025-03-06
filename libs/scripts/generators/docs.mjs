@@ -22,14 +22,14 @@ import camelCase from 'camelcase';
 // import config from '../../components/package.json' assert { type: 'json' };
 
 // Replaces the old CJS __dirname with a variable mapped to the project root
-const componentsProject = path.dirname(path.resolve('../components/package.json'));
+const storybookPath = path.dirname(path.resolve('../storybook-host/package.json'));
 // const versionNumber = config.version;
 
 // Includes and excludes should be relative to the root of the project
 export const includes = ['../../docs'];
 const excludes = ['.DS_Store', 'database.dbml'];
 
-const sbRoot = path.resolve(componentsProject, '.storybook');
+const sbRoot = path.resolve(storybookPath, '.storybook');
 const output = path.resolve(sbRoot, '.docs');
 
 // If the output directory doesn't exist, create it
@@ -72,7 +72,7 @@ const recurseDirectories = (file) => {
     return dirs.forEach((dir) => {
       // If the directory is the images folder, copy it to the output and return
       if (dir === 'images') {
-        cpSync(path.join(file, dir), path.resolve(componentsProject, output, 'images'), {
+        cpSync(path.join(file, dir), path.resolve(storybookPath, output, 'images'), {
           recursive: true
         });
         return;
@@ -82,12 +82,12 @@ const recurseDirectories = (file) => {
   }
 
   // Get the file path from the repo root
-  const filePath = path.resolve(componentsProject, file);
+  const filePath = path.resolve(storybookPath, file);
   const baseFileName = path.parse(filePath).name;
   console.log('Processing file: ', filePath);
 
   // Define the docs folder as the base to strip from the file path
-  const docsFolder = path.resolve(componentsProject, '../../docs');
+  const docsFolder = path.resolve(storybookPath, '../../docs');
   let dirName = path.parse(filePath).dir.replace(docsFolder, '').trim();
   if (dirName.startsWith(path.sep)) {
     dirName = dirName.slice(1);
@@ -99,7 +99,7 @@ const recurseDirectories = (file) => {
     directory = '';
   }
 
-  const outputDir = path.resolve(componentsProject, output, directory);
+  const outputDir = path.resolve(storybookPath, output, directory);
   if (!existsSync(outputDir)) {
     mkdirSync(outputDir, { recursive: true });
   }
@@ -152,11 +152,11 @@ const recurseDirectories = (file) => {
 
 const updateStorybookLogo = () => {
   const logo = readFileSync(
-    path.resolve(componentsProject, `${sbRoot}/jackanory-storybook-logo.svg`),
+    path.resolve(storybookPath, `${sbRoot}/jackanory-storybook-logo.svg`),
     'utf8'
   );
   writeFileSync(
-    path.resolve(componentsProject, `${output}/images/jackanory-storybook-logo.svg`),
+    path.resolve(storybookPath, `${output}/images/jackanory-storybook-logo.svg`),
     logo,
     'utf8'
   );
@@ -169,10 +169,10 @@ const runGenerator = () => {
   }
   mkdirSync(output, { recursive: true });
   // Create the root README file
-  writeFileSync(path.resolve(componentsProject, output, 'README.md'), rootReadMe, 'utf8');
+  writeFileSync(path.resolve(storybookPath, output, 'README.md'), rootReadMe, 'utf8');
 
   // Process each directory listed in includes
-  includes.map((d) => recurseDirectories(path.resolve(componentsProject, d)));
+  includes.map((d) => recurseDirectories(path.resolve(storybookPath, d)));
 
   // Update the Storybook logo
   updateStorybookLogo();
@@ -185,7 +185,7 @@ const runGenerator = () => {
   if (process.argv.includes('--watch') || process.argv.includes('-w')) {
     chokidar
       .watch(includes.map((i) => path.resolve(i)), {
-        ignored: /(^|[\/\\])\../,
+        ignored: /(^|[/\\])\../,
         ignoreInitial: true
       })
       .on('ready', () => {
