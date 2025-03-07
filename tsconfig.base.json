@@ -21,7 +21,7 @@
     "paths": {
       "@/*": ["projects/webapp/*"],
       "@assets/*": ["libs/assets/*"],
-      "@components/*": ["projects/components/*"],
+      "@components/*": ["libs/components/*"],
       "@theme/*": ["libs/theme/*"],
       "@types/*": ["libs/types/*"],
       "@mocks/*": ["libs/mocks/*"]

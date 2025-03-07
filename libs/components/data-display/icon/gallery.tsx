@@ -23,6 +23,10 @@ const Gallery = () => (
       <Icon use="barcode" />
     </IconItem>
 
+    <IconItem name="Briefcase">
+      <Icon use="briefcase" />
+    </IconItem>
+
     <IconItem name="Camera">
       <Icon use="camera" />
     </IconItem>
@@ -185,6 +189,10 @@ const Gallery = () => (
 
     <IconItem name="Upload">
       <Icon use="upload" />
+    </IconItem>
+
+    <IconItem name="Users">
+      <Icon use="users" />
     </IconItem>
 
     <IconItem name="Warning">

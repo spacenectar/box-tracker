@@ -1,7 +1,7 @@
 {
   "name": "components",
-  "root": "projects/components",
-  "sourceRoot": "projects/components",
+  "root": "libs/components",
+  "sourceRoot": "libs/components",
   "projectType": "library",
   "tags": [
     "scope:ui, scope:webapp, scope:website"

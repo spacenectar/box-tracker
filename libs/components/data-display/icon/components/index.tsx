@@ -3,6 +3,7 @@ import Address from './address';
 import AppLogo from './app-logo';
 import Arrow from './arrow';
 import Barcode from './barcode';
+import Briefcase from './briefcase';
 import Camera from './camera';
 import Chevron from './chevron';
 import Clipboard from './clipboard';
@@ -44,6 +45,7 @@ import Success from './success';
 import Sun from './sun';
 import Tag from './tag';
 import Upload from './upload';
+import Users from './users';
 import Warning from './warning';
 
 const icons = {
@@ -52,6 +54,7 @@ const icons = {
   applogo: AppLogo,
   arrow: Arrow,
   barcode: Barcode,
+  briefcase: Briefcase,
   camera: Camera,
   chevron: Chevron,
   clipboard: Clipboard,
@@ -93,6 +96,7 @@ const icons = {
   sun: Sun,
   tag: Tag,
   upload: Upload,
+  users: Users,
   warning: Warning
 };
 

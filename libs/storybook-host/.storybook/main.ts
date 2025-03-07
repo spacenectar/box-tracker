@@ -16,7 +16,7 @@ const config: StorybookConfig = {
     },
     {
       titlePrefix: 'Library',
-      directory: '../../../projects/components',
+      directory: '../../components',
       files: '**/*.@(mdx|stories.@(ts|tsx))',
     },
     {
@@ -58,7 +58,7 @@ const config: StorybookConfig = {
   config.resolve = config.resolve || {};
   config.resolve.alias = {
     ...config?.resolve?.alias,
-    '@theme': path.resolve(__dirname, '../../../libs/theme'),
+    '@theme': path.resolve(__dirname, '../../theme'),
   };
 
   // NOTE: I don't care about the use of 'any' here as it's just a Storybook config
