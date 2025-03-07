@@ -142,7 +142,7 @@
       ]
     },
     "components": {
-      "root": "projects/components",
+      "root": "libs/components",
       "tags": [
         "scope:ui, scope:webapp, scope:website"
       ]
@@ -164,7 +164,7 @@
       "tags": []
     },
     "scripts": {
-      "root": "projects/scripts"
+      "root": "libs/scripts"
     }
   },
   "generators": {

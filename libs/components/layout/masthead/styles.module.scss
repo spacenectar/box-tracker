@@ -1,7 +1,6 @@
 .masthead {
   background: linear-gradient(90deg, col.$primary, col.$secondary);
   background-color: col.$primary;
-  border-bottom: 1px solid col.$dark;
 }
 
 .top-bar {
@@ -18,10 +17,11 @@
 }
 
 .logo {
+  font-family: var(--font-archivo-black);
   display: flex;
   align-items: center;
   margin-left: margin(1);
-  gap: spacing(1);
+  gap: spacing(1.5);
 }
 
 .title {

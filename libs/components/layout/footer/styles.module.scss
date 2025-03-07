@@ -5,6 +5,7 @@
   gap: spacing(1);
   padding: padding(1);
   background: linear-gradient(90deg, col.$primary, col.$secondary);
+  color: col.$light;
   background-color: col.$primary;
   border-bottom: 1px solid col.$dark;
 }
@@ -13,7 +14,7 @@
   display: flex;
   width: 100%;
   flex-direction: row;
-  gap: 1rem;
+  gap: spacing(1);
   justify-content: space-between;
 }
 
@@ -21,13 +22,14 @@
   display: flex;
   width: 100%;
   flex-direction: row;
-  gap: 1rem;
+  gap: spacing(1);
   justify-content: space-between;
 }
 
 .logo {
+  font-family: var(--font-archivo-black);
   display: flex;
-  gap: 1rem;
+  gap: spacing(.7);
   align-items: center;
   color: col.$light;
   font-size: 2rem;
@@ -36,7 +38,7 @@
 
 .nav {
   display: flex;
-  gap: 1rem;
+  gap: spacing(1)
 }
 
 .nav-item {

@@ -23,14 +23,6 @@ body {
   font-size: type.$body-text-size;
 }
 
-// Sets global dark mode styles (note: most styles are handled automatically by
-// 'next-themes' so only styles that need to be overridden are included here).
-@media (prefers-color-scheme: dark) {
-  body {
-    background: col.$grey-900;
-    color: col.$body-text-inverse;
-  }
-}
 
 // Makes application full height.
 /* stylelint-disable-next-line selector-max-id -- This is a Next.js id and can't be changed.*/
