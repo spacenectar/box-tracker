@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { UserProfile } from './index';
-import { User } from '@types/user';
+import { User } from '@typeDefs/user';
 
 const meta: Meta<typeof UserProfile> = {
   component: UserProfile,

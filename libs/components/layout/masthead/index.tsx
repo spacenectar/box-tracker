@@ -2,9 +2,9 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './styles.module.scss';
-import { User } from '@types/user';
+import { User } from '@typeDefs/user';
 
-import Logo from '@assets/branding/box-tracker-logo-white.svg';
+import Logo from '@assets/branding/box-tracker-logo-white.svg?url';
 import UserProfile from '../../data-display/user-profile';
 import Navigation from '../navigation';
 
@@ -26,6 +26,7 @@ const navItems = [
     href: '/contact'
   }
 ];
+
 
 export const Masthead: React.FC<Props> = ({ user, ...props }: Props) => {
   return (

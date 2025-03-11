@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import styles from './styles.module.scss';
-import { User } from '@types/user';
+import { User } from '@typeDefs/user';
 import { SignOutButton } from "@clerk/nextjs";
 
 export interface Props extends React.HTMLAttributes<HTMLElement> {

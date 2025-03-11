@@ -7,6 +7,15 @@
       "path": "./libs/components"
     },
     {
+      "path": "./libs/scripts"
+    },
+    {
+      "path": "./libs/types"
+    },
+    {
+      "path": "./libs/assets"
+    },
+    {
       "path": "./projects/webapp"
     },
     {

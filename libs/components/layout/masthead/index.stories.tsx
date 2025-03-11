@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { within, expect } from '@storybook/test';
 import Masthead from './index';
-import { User } from '@types/user';
+import { User } from '@typeDefs/user';
 
 const meta: Meta<typeof Masthead> = {
   component: Masthead,
