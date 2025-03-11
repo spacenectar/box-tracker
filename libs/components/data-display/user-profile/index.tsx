@@ -10,7 +10,7 @@ export interface Props extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement
 
 export const UserProfile: React.FC<Props> = ({ user, ...props }: Props) => {
   return (
-    <Link className={styles['user-profile']} href="/app/profile" {...props}>
+    <Link className={styles['user-profile']} href="/profile" {...props}>
       <div className={styles['text-info']}>
         <span><strong>Logged in as</strong> <br /> {user.username}</span>
       </div>
