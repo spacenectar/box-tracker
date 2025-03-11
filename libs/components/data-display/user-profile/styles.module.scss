@@ -1,0 +1,19 @@
+.user-profile {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: spacing(1.5);
+  color: col.$light;
+  padding: padding(1);
+  padding-left: padding(1.4);
+  border-radius: $border-radius;
+  
+  &:hover {
+    background-color: rgba(col.$tertiary, .3);
+  }
+}
+
+.text-info {
+  text-align: right;
+  line-height: 1.5;
+}

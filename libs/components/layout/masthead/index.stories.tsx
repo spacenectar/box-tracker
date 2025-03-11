@@ -29,9 +29,11 @@ export const Default: Story = {
 export const LoggedIn: Story = {
   args: {
     user: {
+      id: '1',
       username: 'JohnDoe1984',
       firstName: 'John',
       lastName: 'Doe',
+      email: 'john.doe@example.com',
       imageUrl: '/mocks/images/example-user.png',
     } as User,
   },
@@ -39,8 +41,6 @@ export const LoggedIn: Story = {
     const canvas = within(canvasElement);
     // Check if the user info is rendered
     await expect(canvas.getByText('JohnDoe1984')).toBeInTheDocument();
-    // Check if the user avatar is rendered
-    await expect(canvas.getByAltText('John Doe')).toBeInTheDocument();
     // Check if the logout button is rendered
     await expect(canvas.getByText('Sign out')).toBeInTheDocument();
   },

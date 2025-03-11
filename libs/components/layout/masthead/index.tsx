@@ -3,10 +3,10 @@ import Link from 'next/link';
 import Image from 'next/image';
 import styles from './styles.module.scss';
 import { User } from '@types/user';
-import { SignOutButton } from "@clerk/nextjs";
 
-import Logo from '@assets/branding/box-tracker-logo-white.svg'
-import Avatar from '../../data-display/avatar';
+import Logo from '@assets/branding/box-tracker-logo-white.svg';
+import UserProfile from '../../data-display/user-profile';
+import Navigation from '../navigation';
 
 export interface Props extends React.HTMLAttributes<HTMLElement> {
   user: User
@@ -39,12 +39,7 @@ export const Masthead: React.FC<Props> = ({ user, ...props }: Props) => {
         </h1>
         <div>
           {user ? (
-            <Link className={styles['user-info']} href="/app/profile">
-              <div className={styles['text-info']}>
-                <span><strong>Logged in as</strong> <br /> {user.username}</span>
-              </div>
-              <Avatar name={`${user.firstName} ${user.lastName}`} imagePath={user.imageUrl} size='60px'/>
-            </Link>
+            <UserProfile user={user} />
           ) : (
             <div className={styles['user-info']}>
               <Link href="/login" className='btn-primary'>
@@ -57,25 +52,11 @@ export const Masthead: React.FC<Props> = ({ user, ...props }: Props) => {
           )}
         </div>
       </div>
-      <nav className={styles.nav}>
-        <ul>
-          {navItems.map((item) => (
-            <li key={item.label}>
-              <Link
-              className={styles['nav-item']}
-              href={item.href }>
-                {item.label}
-              </Link>
-            </li>
-          ))}
-          {user && (
-            // @ts-expect-error 2322 - Classname isn't on props but it does work
-            <SignOutButton className="btn-tertiary" redirectUrl='/'/>
-          )}
-        </ul>
-      </nav>
+      <Navigation user={user} navItems={navItems} />
     </header>
   );
 };
+
+Masthead.displayName = 'Masthead';
 
 export default Masthead;
