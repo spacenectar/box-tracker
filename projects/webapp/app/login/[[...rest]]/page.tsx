@@ -27,7 +27,7 @@ export default function LoginPage() {
           formFieldInput: styles["form-field-input"],
         }
       }}
-      fallbackRedirectUrl="/app"
+      fallbackRedirectUrl="/"
       />
     </div>
   );
