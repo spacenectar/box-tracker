@@ -1,0 +1,31 @@
+<Meta title="Profile Page" />
+
+# Profile page
+
+This page uses Clerk's third-party authentication components and does not have a dedicated Storybook story.
+
+## Implementation Details
+
+The profile page leverages Clerk's `UserProfile` component, which provides a complete authentication flow including:
+
+- Social login options
+- Password reset functionality
+- Account verification
+
+In addition, the page also includes references to other custom partials (Not yet implemented)
+
+## Why No Story?
+
+The `UserProfile` component from Clerk requires specific context providers and router functionality that are challenging to mock in a Storybook environment. Additionally, the component makes API calls to Clerk's authentication services during rendering, which would not work properly in isolation.
+
+For testing and development of this page, please use the actual application environment where all required contexts and services are properly configured.
+
+## Component Source
+
+The profile page is implemented in `projects/webapp/app/profile/[[...rest]]/page.tsx` and uses the following key components:
+
+```tsx
+import { UserProfile } from "@clerk/nextjs";
+```
+
+For more information on Clerk's authentication components, please refer to [Clerk's documentation](https://clerk.com/docs).
