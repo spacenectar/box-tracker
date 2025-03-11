@@ -33,6 +33,13 @@
   }
 }
 
+.user-nav-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: spacing(.5);
+}
+
 .user-info {
   display: flex;
   flex-direction: row;

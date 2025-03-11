@@ -38,7 +38,7 @@ export const Masthead: React.FC<Props> = ({ user, ...props }: Props) => {
             <span className={styles.title}>Box Tracker</span>
           </Link>
         </h1>
-        <div>
+        <div className={styles['user-nav-container']}>
           {user ? (
             <UserProfile user={user} />
           ) : (
@@ -51,9 +51,9 @@ export const Masthead: React.FC<Props> = ({ user, ...props }: Props) => {
               </Link>
             </div>
           )}
+          <Navigation user={user} navItems={navItems} />
         </div>
       </div>
-      <Navigation user={user} navItems={navItems} />
     </header>
   );
 };
