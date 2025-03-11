@@ -4,7 +4,7 @@ import styles from './styles.module.scss';
 import { User } from '@typeDefs/user';
 import Avatar from '../avatar';
 
-export interface Props extends React.HTMLAttributes<HTMLDivElement> {
+export interface Props extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href'> {
   user: User;
 }
 
