@@ -70,3 +70,6 @@ logs/
 
 storybook-static
 test-output
+
+# windsurf rules
+.windsurfrules
