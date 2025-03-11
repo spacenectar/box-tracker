@@ -4,7 +4,6 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { Archivo, Archivo_Black, Archivo_Narrow } from "next/font/google";
 import StoreProvider from "./store-provider";
 import "@theme/index.scss";
-import { ClientLayout } from "./client-layout";
 
 const ArchivoFont = Archivo({
   variable: "--font-archivo",
@@ -41,7 +40,7 @@ export default function RootLayout({
       <html lang="en">
         <body className={`${ArchivoFont.variable} ${ArchivoBlackFont.variable} ${ArchivoNarrowFont.variable}`}>
           <StoreProvider>
-            <ClientLayout>{children}</ClientLayout>
+            {children}
           </StoreProvider>
         </body>
       </html>

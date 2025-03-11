@@ -1,0 +1,18 @@
+.card-box {
+  width: fit-content;
+  background-color: col.$input-focus-bg;
+}
+
+.social-buttons-provider-icon {
+  width: 2rem;
+  height: 2rem;
+  margin: margin(.5);
+}
+
+.form-field-input {
+  padding: padding(1.5) padding(1);
+}
+
+.form-field-label {
+  margin-bottom: margin(.5);
+}
