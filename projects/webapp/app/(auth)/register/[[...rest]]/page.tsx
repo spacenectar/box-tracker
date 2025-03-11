@@ -30,6 +30,7 @@ export default function RegisterPage() {
           }
         }}
         fallbackRedirectUrl="/"
+        signInUrl="/login"
       />
     </div>
   );
