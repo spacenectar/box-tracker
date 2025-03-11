@@ -16,9 +16,9 @@ export default function Home() {
   }
 
   return (
-    <div className="dashboard-layout">
-      <main className="ta-c">
-        <h1 className="heading-large">Welcome to Box Tracker</h1>
+    <main className="app-layout ta-c">
+      <h1 className="heading-large">Welcome to Box Tracker</h1>
+      <section className="ta-c">
         <p>
           This is a simple web application that allows you to track the location of boxes and items across multiple locations.
         </p>
@@ -31,7 +31,7 @@ export default function Home() {
         <p>
           To use the application, you will need to <Link className="link" href="/login">login</Link> or <Link className="link" href="/register">register</Link> for an account.
         </p>
-      </main>
-    </div>
+      </section>
+    </main>
   );
 }
