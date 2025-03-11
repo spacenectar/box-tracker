@@ -16,7 +16,6 @@ import {
 } from '@storybook/blocks';
 import { initialize, mswLoader } from 'msw-storybook-addon';
 import { Archivo, Archivo_Black, Archivo_Narrow } from "next/font/google";
-import { ClerkProvider } from "@clerk/nextjs";
 
 import Badge from './doc-blocks/badge';
 import Tip from './doc-blocks/tip';
@@ -152,15 +151,9 @@ const preview: Preview = {
   loaders: [mswLoader],
   decorators: [
     (Story) => (
-      <ClerkProvider appearance={{
-        variables: {
-          fontSize: "1.6rem",
-        },
-      }}>
       <div className={`${ArchivoFont.variable} ${ArchivoBlackFont.variable} ${ArchivoNarrowFont.variable}`}>
         <Story />
-      </div>
-      </ClerkProvider>
+      </div>     
     )
   ]
 };
