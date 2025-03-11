@@ -23,7 +23,7 @@ export default function AuthLayout({
   if (!isLoaded) {
     return (
       <div className='auth-layout'>
-        <Loader />
+        <Loader helpText="Checking authentication status..." />
       </div>
     )
   }

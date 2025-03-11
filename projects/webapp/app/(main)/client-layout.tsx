@@ -41,7 +41,7 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
 
   // Show a loader while Clerk is still determining authentication status
   if (!isLoaded) {
-    return <div className='dashboard-layout'><Loader /></div>
+    return <div className='dashboard-layout'><Loader helpText="Checking authentication status..." /></div>
   }
 
   // Once Clerk is loaded, but the user isn't signed in, show access denied message
@@ -59,7 +59,7 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
   if (isSignedIn && (!isTokenFetched || isLoading || !data)) {
     return (
       <div className='dashboard-layout'>
-        <Loader />
+        <Loader helpText="Loading user data..." />
       </div>
     )
   }

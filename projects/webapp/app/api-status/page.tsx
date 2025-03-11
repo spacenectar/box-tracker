@@ -11,7 +11,7 @@ export default function APIStatus() {
   const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/api`;
 
   if (isLoading) {
-    return <div className="dashboard-layout"><Loader /></div>;
+    return <div className="dashboard-layout"><Loader helpText="Checking API status..." /></div>;
   }
 
   if (error) {

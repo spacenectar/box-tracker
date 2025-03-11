@@ -9,7 +9,7 @@ export default function Home() {
   const { data, error, isLoading } = useGetHealthcheckQuery();
 
   if (isLoading) {
-    return <div className="dashboard-layout"><Loader /></div>;
+    return <div className="dashboard-layout"><Loader helpText="Loading application data..." /></div>;
   }
 
   if (error) {
