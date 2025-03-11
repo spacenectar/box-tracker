@@ -1,0 +1,113 @@
+$pink-500: hsl(340, 82%, 52%);
+$purple-500: hsl(291, 64%, 42%);
+$purple-700: hsl(262, 52%, 47%);
+$purple-300: hsl(288, 45%, 68%);
+$pink-300: hsl(350, 100%, 88%);
+
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: spacing(1);
+  padding: padding(2);
+}
+
+.square {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  animation-duration: 1.5s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+.square1 {
+  background-color: $pink-500;
+  animation-name: bounce1, color-cycle1;
+}
+
+.square2 {
+  background-color: $purple-500;
+  animation-name: bounce2, color-cycle2;
+  animation-delay: 0.1s;
+}
+
+.square3 {
+  background-color: $purple-700;
+  animation-name: bounce3, color-cycle3;
+  animation-delay: 0.2s;
+}
+
+.square4 {
+  background-color: $purple-300;
+  animation-name: bounce4, color-cycle4;
+  animation-delay: 0.3s;
+}
+
+.square5 {
+  background-color: $pink-300;
+  animation-name: bounce5, color-cycle5;
+  animation-delay: 0.4s;
+}
+
+// Bounce animations
+@keyframes bounce1 {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+@keyframes bounce2 {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes bounce3 {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-25px); }
+}
+
+@keyframes bounce4 {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+@keyframes bounce5 {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+// Color cycle animations
+@keyframes color-cycle1 {
+  0%, 100% { background-color: $pink-500; }
+  25% { background-color: $purple-500; }
+  50% { background-color: $purple-700; }
+  75% { background-color: $purple-300; }
+}
+
+@keyframes color-cycle2 {
+  0%, 100% { background-color: $purple-500; }
+  25% { background-color: $purple-700; }
+  50% { background-color: $purple-300; }
+  75% { background-color: $pink-300; }
+}
+
+@keyframes color-cycle3 {
+  0%, 100% { background-color: $purple-700; }
+  25% { background-color: $purple-300; }
+  50% { background-color: $pink-300; }
+  75% { background-color: $pink-500; }
+}
+
+@keyframes color-cycle4 {
+  0%, 100% { background-color: $purple-300; }
+  25% { background-color: $pink-300; }
+  50% { background-color: $pink-500; }
+  75% { background-color: $purple-500; }
+}
+
+@keyframes color-cycle5 {
+  0%, 100% { background-color: $pink-300; }
+  25% { background-color: $pink-500; }
+  50% { background-color: $purple-500; }
+  75% { background-color: $purple-700; }
+}

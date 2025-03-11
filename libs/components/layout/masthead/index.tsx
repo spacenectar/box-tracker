@@ -2,11 +2,11 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './styles.module.scss';
-import { User } from '@types/user';
-import { SignOutButton } from "@clerk/nextjs";
+import { User } from '@typeDefs/user';
 
-import Logo from '@assets/branding/box-tracker-logo-white.svg'
-import Avatar from '../../data-display/avatar';
+import Logo from '@assets/branding/box-tracker-logo-white.svg?url';
+import UserProfile from '../../data-display/user-profile';
+import Navigation from '../navigation';
 
 export interface Props extends React.HTMLAttributes<HTMLElement> {
   user: User
@@ -27,6 +27,7 @@ const navItems = [
   }
 ];
 
+
 export const Masthead: React.FC<Props> = ({ user, ...props }: Props) => {
   return (
     <header className={styles.masthead} {...props}>
@@ -37,14 +38,9 @@ export const Masthead: React.FC<Props> = ({ user, ...props }: Props) => {
             <span className={styles.title}>Box Tracker</span>
           </Link>
         </h1>
-        <div>
+        <div className={styles['user-nav-container']}>
           {user ? (
-            <Link className={styles['user-info']} href="/app/profile">
-              <div className={styles['text-info']}>
-                <span><strong>Logged in as</strong> <br /> {user.username}</span>
-              </div>
-              <Avatar name={`${user.firstName} ${user.lastName}`} imagePath={user.imageUrl} size='60px'/>
-            </Link>
+            <UserProfile user={user} />
           ) : (
             <div className={styles['user-info']}>
               <Link href="/login" className='btn-primary'>
@@ -55,27 +51,13 @@ export const Masthead: React.FC<Props> = ({ user, ...props }: Props) => {
               </Link>
             </div>
           )}
+          <Navigation user={user} navItems={navItems} />
         </div>
       </div>
-      <nav className={styles.nav}>
-        <ul>
-          {navItems.map((item) => (
-            <li key={item.label}>
-              <Link
-              className={styles['nav-item']}
-              href={item.href }>
-                {item.label}
-              </Link>
-            </li>
-          ))}
-          {user && (
-            // @ts-expect-error 2322 - Classname isn't on props but it does work
-            <SignOutButton className="btn-tertiary" redirectUrl='/'/>
-          )}
-        </ul>
-      </nav>
     </header>
   );
 };
+
+Masthead.displayName = 'Masthead';
 
 export default Masthead;

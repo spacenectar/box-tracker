@@ -13,7 +13,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (isSignedIn) {
-      router.push("/app");
+      router.push("/");
     }
   }, [isSignedIn, router]);
 
@@ -27,7 +27,8 @@ export default function LoginPage() {
           formFieldInput: styles["form-field-input"],
         }
       }}
-      fallbackRedirectUrl="/app"
+      fallbackRedirectUrl="/"
+      signUpUrl="/register"
       />
     </div>
   );

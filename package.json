@@ -128,7 +128,13 @@
       "git add"
     ]
   },
-  "scripts": {},
+  "scripts": {
+    "lint": "stylelint \"**/*.{css,scss}\" --fix",
+    "storybook": "nx storybook storybook-host",
+    "frontend": "nx run-many --target=serve --projects=webapp",
+    "backend": "nx run-many --target=serve --projects=backend",
+    "start": "nx run-many --target=build --projects=backend, webapp"
+  },
   "msw": {
     "workerDirectory": [
       "projects/components/.storybook/public"
