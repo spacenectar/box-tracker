@@ -1,6 +1,7 @@
 'use client'
 
 import { useGetHealthcheckQuery } from "@/lib/services";
+import Loader from "@components/feedback/loader";
 import Link from "next/link";
 
 export default function Home() {
@@ -8,7 +9,7 @@ export default function Home() {
   const { data, error, isLoading } = useGetHealthcheckQuery();
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div className="dashboard-layout"><Loader /></div>;
   }
 
   if (error) {

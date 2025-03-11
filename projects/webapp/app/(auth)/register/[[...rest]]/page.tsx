@@ -13,7 +13,7 @@ export default function RegisterPage() {
 
   useEffect(() => {
     if (isSignedIn) {
-      router.push("/app");
+      router.push("/");
     }
   }, [isSignedIn, router]);
 

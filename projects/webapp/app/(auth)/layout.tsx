@@ -1,11 +1,36 @@
 'use client'
 
-import { AuthLayout } from "../auth-layout";
+import { useEffect } from 'react'
+import { useAuth } from '@clerk/clerk-react'
+import { useRouter } from 'next/navigation'
+import Loader from '@components/feedback/loader'
 
-export default function AuthPagesLayout({
+export default function AuthLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <AuthLayout>{children}</AuthLayout>;
+  const { isSignedIn, isLoaded } = useAuth()
+  const router = useRouter()
+
+  useEffect(() => {
+    if (isLoaded && isSignedIn) {
+      router.push('/')
+    }
+  }, [isLoaded, isSignedIn, router])
+
+  // Show a loader while Clerk is still determining authentication status
+  if (!isLoaded) {
+    return (
+      <div className='auth-layout'>
+        <Loader />
+      </div>
+    )
+  }
+
+  return (
+    <div className='auth-layout'>
+      {children}
+    </div>
+  )
 }

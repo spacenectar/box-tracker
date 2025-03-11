@@ -77,7 +77,11 @@ const config: StorybookConfig = {
               @use '@theme/colours' as col;
               @use '@theme/utilities' as util;
               @use '@theme/animations' as animate;
-            `
+            `,
+            sassOptions: {
+              ...(loader.options?.sassOptions || {}),
+              silenceDeprecations: ['legacy-js-api']
+            },
           };
         }
       });

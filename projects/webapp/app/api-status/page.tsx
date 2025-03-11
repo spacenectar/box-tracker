@@ -2,6 +2,7 @@
 
 import { useGetHealthcheckQuery } from "@/lib/services";
 import Link from "next/link";
+import Loader from "@components/feedback/loader";
 
 export default function APIStatus() {
 
@@ -10,11 +11,11 @@ export default function APIStatus() {
   const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/api`;
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div className="dashboard-layout"><Loader /></div>;
   }
 
   if (error) {
-    return <div>Error: {error instanceof Error ? error.message : 'An unknown error occurred'}</div>;
+    return <div className="dashboard-layout">Error: {error instanceof Error ? error.message : 'An unknown error occurred'}</div>;
   }
 
   return (

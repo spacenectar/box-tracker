@@ -13,7 +13,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (isSignedIn) {
-      router.push("/app");
+      router.push("/");
     }
   }, [isSignedIn, router]);
 

@@ -8,6 +8,7 @@ import { setToken } from '@/lib/store/auth-slice'
 import Masthead from "@components/layout/masthead"
 import { useGetUserQuery } from '@/lib/services/user'
 import Footer from '@components/layout/footer'
+import Loader from '@components/feedback/loader'
 
 export function ClientLayout({ children }: { children: React.ReactNode }) {
   const { getToken, isSignedIn, isLoaded } = useAuth()
@@ -40,11 +41,11 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
 
   // Show a loader while Clerk is still determining authentication status
   if (!isLoaded) {
-    return <div className='dashboard-layout'>Checking authentication...</div>
+    return <div className='dashboard-layout'><Loader /></div>
   }
 
   // Once Clerk is loaded, but the user isn't signed in, show access denied message
-  if (!isSignedIn && isLoaded && !isLoading && !isTokenFetched && !data) {
+  if (!isSignedIn && isLoaded) {
     return (
       <div className='dashboard-layout ta-c flex flex-column gap-2 items-center'>
         <h1 className='heading-large'>Access Denied</h1>
@@ -54,8 +55,13 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
     )
   }
 
-  if (!isTokenFetched || isLoading || !data) {
-    return <div className='dashboard-layout'>Loading...</div>
+  // Show loading indicator only if we're still fetching data
+  if (isSignedIn && (!isTokenFetched || isLoading || !data)) {
+    return (
+      <div className='dashboard-layout'>
+        <Loader />
+      </div>
+    )
   }
 
   if (error && !isLoaded) {
