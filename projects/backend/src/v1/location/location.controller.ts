@@ -1,32 +1,56 @@
-import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Put, Delete, UseGuards } from '@nestjs/common';
 import { LocationService } from './location.service';
+import { ClerkAuthGuard } from '../../auth/clerk-auth.guard';
+import { UserService } from '../user/user.service';
+import { GetUser } from '../../decorators/getuser.decorator';
 
 @Controller({ path: 'location', version: '1' })
 export class LocationController {
-  constructor(private readonly locationService: LocationService) {}
+  constructor(
+    private readonly locationService: LocationService,
+    private readonly userService: UserService
+  ) {}
 
   @Get()
-  async findAll() {
-    return this.locationService.findAll();
+  @UseGuards(ClerkAuthGuard)
+  async findAll(@GetUser() user: any) {
+    const dbUser = await this.userService.getUserByAuthId(user.id);
+    return this.locationService.findAll(dbUser.id);
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string) {
-    return this.locationService.findOne(id);
+  @UseGuards(ClerkAuthGuard)
+  async findOne(@Param('id') id: string, @GetUser() user: any) {
+    const dbUser = await this.userService.getUserByAuthId(user.id);
+    return this.locationService.findOne(id, dbUser.id);
   }
 
   @Post()
-  async create(@Body() data: any) {
-    return this.locationService.create(data);
+  @UseGuards(ClerkAuthGuard)
+  async create(@Body() data: any, @GetUser() user: any) {
+    // Get the database user ID from the auth ID
+    const dbUser = await this.userService.getUserByAuthId(user.id);
+    
+    // Add the user ID to the data
+    const locationData = {
+      ...data,
+      userId: dbUser.id
+    };
+    
+    return this.locationService.create(locationData);
   }
 
   @Put(':id')
-  async update(@Param('id') id: string, @Body() data: any) {
-    return this.locationService.update(id, data);
+  @UseGuards(ClerkAuthGuard)
+  async update(@Param('id') id: string, @Body() data: any, @GetUser() user: any) {
+    const dbUser = await this.userService.getUserByAuthId(user.id);
+    return this.locationService.update(id, data, dbUser.id);
   }
 
   @Delete(':id')
-  async delete(@Param('id') id: string) {
-    return this.locationService.delete(id);
+  @UseGuards(ClerkAuthGuard)
+  async delete(@Param('id') id: string, @GetUser() user: any) {
+    const dbUser = await this.userService.getUserByAuthId(user.id);
+    return this.locationService.delete(id, dbUser.id);
   }
 }

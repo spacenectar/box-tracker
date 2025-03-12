@@ -31,18 +31,46 @@ export class SpaceService {
   }
 
   async create(data: any, userId: string) {
-    const createdSpace = await this.prisma.space.create({
-      data: {
-        ...data,
-        createdBy: userId, // Store just the UUID, not a relation
-      },
+    // Generate a slug from the name if not provided
+    if (!data.slug && data.name) {
+      data.slug = data.name
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+    }
+    
+    // Set date fields
+    const now = new Date();
+    data.dateLastModified = now;
+    data.dateLastAccessed = now;
+    
+    // Create the space and associate it with the user in a transaction
+    const result = await this.prisma.$transaction(async (prisma) => {
+      // Create the space
+      const createdSpace = await prisma.space.create({
+        data: {
+          ...data,
+          createdBy: userId,
+        },
+      });
+
+      // Create the association in the SpaceUser join table
+      await prisma.spaceUser.create({
+        data: {
+          userId: userId,
+          spaceId: createdSpace.id,
+          role: 'OWNER', // Assuming there's a role field, if not you can remove this
+        },
+      });
+
+      return createdSpace;
     });
 
     return {
-      id: createdSpace.id,
-      name: createdSpace.name,
-      slug: createdSpace.slug,
-      createdBy: createdSpace.createdBy, // Ensure a flat ID is returned
+      id: result.id,
+      name: result.name,
+      slug: result.slug,
+      createdBy: result.createdBy,
     };
   }
 
@@ -56,6 +84,9 @@ export class SpaceService {
     });
 
     if (!userHasAccess) throw new ForbiddenException('Access denied');
+    
+    // Set dateLastModified to current date
+    data.dateLastModified = new Date();
 
     return this.prisma.space.update({
       where: { id },
