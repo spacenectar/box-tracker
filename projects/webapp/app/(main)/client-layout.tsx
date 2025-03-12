@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback, useRef } from 'react'
 import { useAuth } from '@clerk/clerk-react'
 import { useDispatch } from 'react-redux'
 import { useRouter } from 'next/navigation'
@@ -15,21 +15,59 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
   const dispatch = useDispatch()
   const router = useRouter()
   const [isTokenFetched, setIsTokenFetched] = useState(false)
+  const refreshTimerRef = useRef<NodeJS.Timeout | null>(null)
 
   const { data, error, isLoading, refetch } = useGetUserQuery();
 
-  useEffect(() => {
-    async function fetchToken() {
-      if (!isSignedIn) return // Don't try to get the token if not signed in
+  const fetchAndSetToken = useCallback(async () => {
+    if (!isSignedIn) return false
+    try {
+      // Get a fresh token without any options
       const token = await getToken()
       if (token) {
         dispatch(setToken(token))
+        return true
       }
-      setIsTokenFetched(true)
+    } catch (error) {
+      console.error('Error fetching token:', error)
     }
-    fetchToken()
-
+    return false
   }, [getToken, dispatch, isSignedIn])
+
+  // Initial token fetch
+  useEffect(() => {
+    async function initialFetchToken() {
+      if (await fetchAndSetToken()) {
+        setIsTokenFetched(true)
+      }
+    }
+    initialFetchToken()
+  }, [fetchAndSetToken])
+
+  // Set up token refresh mechanism
+  useEffect(() => {
+    if (!isSignedIn) return
+
+    // Refresh token every 15 minutes to prevent expiration
+    const setupRefreshTimer = () => {
+      if (refreshTimerRef.current) {
+        clearInterval(refreshTimerRef.current)
+      }
+      
+      refreshTimerRef.current = setInterval(async () => {
+        await fetchAndSetToken()
+      }, 15 * 60 * 1000) // 15 minutes
+    }
+
+    setupRefreshTimer()
+
+    return () => {
+      if (refreshTimerRef.current) {
+        clearInterval(refreshTimerRef.current)
+        refreshTimerRef.current = null
+      }
+    }
+  }, [isSignedIn, fetchAndSetToken])
 
 
   useEffect(() => {
