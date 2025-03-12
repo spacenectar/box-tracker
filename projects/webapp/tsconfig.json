@@ -21,7 +21,9 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "../../libs/components/**/*"
-, "next.config.js"  ],
+    "../../libs/components/**/*",
+    "../../libs/types/**/*",
+    "next.config.js"
+  ],
   "exclude": ["node_modules", "**/*.stories.ts", "**/*.stories.js"]
 }
