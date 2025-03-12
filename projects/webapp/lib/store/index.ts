@@ -1,6 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { healthcheckApi } from '../services'
 import { userApi } from '../services'
+import { spaceApi } from '../services/space'
+import { locationApi } from '../services/location'
 import { authReducer } from './auth-slice'
 
 export const makeStore = () => {
@@ -8,10 +10,17 @@ export const makeStore = () => {
     reducer: {
       auth: authReducer,
       [healthcheckApi.reducerPath]: healthcheckApi.reducer,
-      [userApi.reducerPath]: userApi.reducer
+      [userApi.reducerPath]: userApi.reducer,
+      [spaceApi.reducerPath]: spaceApi.reducer,
+      [locationApi.reducerPath]: locationApi.reducer
     },
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(healthcheckApi.middleware, userApi.middleware),
+      getDefaultMiddleware().concat(
+        healthcheckApi.middleware,
+        userApi.middleware,
+        spaceApi.middleware,
+        locationApi.middleware
+      ),
   })
 }
 
