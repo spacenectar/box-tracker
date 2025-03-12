@@ -8,8 +8,8 @@ Table users {
 
 Table spaces {
   id uuid [primary key] // Unique space id
-  name varchar [unique, not null] // The name of the space
-  slug varchar [unique, not null] // The slug for the space
+  name varchar [not null] // The name of the space
+  slug varchar [not null] // The slug for the space
   date_added timestamp [not null, default: "CURRENT_TIMESTAMP"] // When the space was added
   date_last_modified timestamp // When the space was last modified
   date_last_accessed timestamp // When the space was last accessed
@@ -29,6 +29,7 @@ Table locations {
   id uuid [primary key] // Unique location ID
   space_id uuid [not null, ref: > spaces.id] // The space this location belongs to
   name varchar [not null] // Location name
+  slug varchar [not null] // URL-friendly identifier
   address varchar // Optional: Physical address
   what_three_words varchar // Optional: What3Words location
   photo varchar // Optional: URL to a photo of the location
@@ -48,7 +49,7 @@ Table user_locations {
 Table rooms {
   id               uuid       [primary key] // Unique room ID
   name             text       [not null] // The friendly name for the room
-  slug             text       [unique, not null] // The slug
+  slug             text       [not null] // The slug
   location_id      uuid       [not null, ref: > locations.id] // The location it belongs to
   colour           text       [not null]  // Hex color value (e.g., "#6699cc")
   date_added       timestamp [not null, default: "CURRENT_TIMESTAMP"]
@@ -59,7 +60,7 @@ Table rooms {
 Table boxes {
   id uuid [primary key] // Unique box ID
   name varchar [not null] // Box name
-  slug varchar [not null, unique] // URL-friendly identifier
+  slug varchar [not null] // URL-friendly identifier
   location_id uuid [not null] // Foreign key referencing locations
   description text // Optional: Box details (e.g., fragile, special instructions)
   sealed boolean [not null, default: false] // Whether the box is sealed
@@ -71,7 +72,7 @@ Table boxes {
 Table items {
   id uuid [primary key] // Unique item ID
   name varchar [not null] // Item name
-  slug varchar [not null, unique] // URL-friendly identifier
+  slug varchar [not null] // URL-friendly identifier
   description text // Optional: Item details
   photo varchar // Optional: URL to item photo
   condition int // Optional: Condition rating (e.g., 1-5 scale)
