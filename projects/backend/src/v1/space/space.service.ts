@@ -100,11 +100,42 @@ export class SpaceService {
     if (!space) throw new ForbiddenException('Space not found');
 
     const userHasAccess = await this.prisma.spaceUser.findFirst({
-      where: { spaceId: id, userId },
+      where: { spaceId: id, userId, role: 'OWNER' },
     });
 
-    if (!userHasAccess) throw new ForbiddenException('Access denied');
+    if (!userHasAccess) throw new ForbiddenException('Access denied or not an owner');
 
-    return this.prisma.space.delete({ where: { id } });
+    // Use a transaction to delete related records first, then the space
+    return this.prisma.$transaction(async (prisma) => {
+      // Delete all space_users associations
+      await prisma.spaceUser.deleteMany({
+        where: { spaceId: id },
+      });
+      
+      // Delete all locations associated with this space
+      const locations = await prisma.location.findMany({
+        where: { spaceId: id },
+        select: { id: true },
+      });
+      
+      const locationIds = locations.map(loc => loc.id);
+      
+      // Delete all items associated with locations in this space
+      if (locationIds.length > 0) {
+        await prisma.item.deleteMany({
+          where: { locationId: { in: locationIds } },
+        });
+      }
+      
+      // Delete all locations in this space
+      if (locationIds.length > 0) {
+        await prisma.location.deleteMany({
+          where: { id: { in: locationIds } },
+        });
+      }
+      
+      // Finally delete the space itself
+      return prisma.space.delete({ where: { id } });
+    });
   }
 }

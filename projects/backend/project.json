@@ -20,6 +20,13 @@
         "command": "node dist/main.js"
       }
     },
+    "studio": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "prisma studio",
+        "cwd": "projects/backend"
+      }
+    },
     "migrate": {
       "executor": "nx:run-commands",
       "options": {
