@@ -27,8 +27,28 @@ export const spaceApi = createApi({
         body: { name }
       }),
       invalidatesTags: ['Space']
+    }),
+    updateSpace: builder.mutation<Space, { id: string; name: string }>({
+      query: ({ id, name }) => ({
+        url: `space/${id}`,
+        method: 'PUT',
+        body: { name }
+      }),
+      invalidatesTags: ['Space']
+    }),
+    deleteSpace: builder.mutation<void, string>({
+      query: (id) => ({
+        url: `space/${id}`,
+        method: 'DELETE'
+      }),
+      invalidatesTags: ['Space']
     })
   })
 });
 
-export const { useCreateSpaceMutation, useGetSpacesQuery } = spaceApi;
+export const { 
+  useCreateSpaceMutation, 
+  useGetSpacesQuery, 
+  useUpdateSpaceMutation, 
+  useDeleteSpaceMutation 
+} = spaceApi;
