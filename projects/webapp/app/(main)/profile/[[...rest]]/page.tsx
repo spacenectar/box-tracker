@@ -3,6 +3,7 @@
 import { UserProfile } from "@clerk/nextjs";
 
 import { Icon } from "@components/data-display/icon";
+import ManageSpaces from "./partials/manage-spaces";
 
 import styles from "./styles.module.scss";
 
@@ -25,6 +26,7 @@ export default function ProfilePage() {
           <div className={styles['page-content']}>
             <h1 className="heading-small">Manage spaces</h1>
             <p>Spaces are where you can organise your locations, boxes and items.</p>
+            <ManageSpaces />
           </div>
         </UserProfile.Page>
         <UserProfile.Page label="Manage Users" url="/app/profile/manage-users" labelIcon={<Icon use="users" />}>

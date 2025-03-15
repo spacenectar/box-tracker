@@ -1,0 +1,35 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.progress {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.step {
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius-small);
+  background-color: var(--color-background-default);
+  color: var(--color-text-secondary);
+  
+  &.active {
+    background-color: var(--color-primary-main);
+    color: var(--color-text-contrast);
+  }
+  
+  &.completed {
+    background-color: var(--color-success-light);
+    color: var(--color-success-dark);
+  }
+}
+
+.content {
+  background-color: var(--color-background-paper);
+  border-radius: var(--border-radius-medium);
+  padding: 2rem;
+  box-shadow: var(--elevation-z1);
+}

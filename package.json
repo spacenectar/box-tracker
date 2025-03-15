@@ -132,8 +132,10 @@
     "lint": "stylelint \"**/*.{css,scss}\" --fix",
     "storybook": "nx storybook storybook-host",
     "frontend": "nx run-many --target=serve --projects=webapp",
-    "backend": "nx run-many --target=serve --projects=backend",
-    "start": "nx run-many --target=build --projects=backend, webapp"
+    "backend": "nx run-many --target=dev --projects=backend",
+    "prisma-studio": "nx run-many --target=studio --projects=backend",
+    "start": "yarn backend & yarn frontend",
+    "dev": "yarn frontend && yarn backend && yarn storybook && yarn prisma-studio"
   },
   "msw": {
     "workerDirectory": [
