@@ -1,6 +1,7 @@
 @use '../vars' as *;
 @use '../colours' as col;
 @use 'focus-visible' as *;
+@use 'sass:color';
 
 $statuses: (
   error: col.$error,
@@ -11,7 +12,7 @@ $statuses: (
 
 @mixin statuses($type, $child: '') {
   @each $status, $color in $statuses {
-    &.status-#{$status} #{unquote($child)} {
+    &.status-#{$status} #{$child} {
       @if $type == 'border' {
         border-color: $color;
       }
@@ -25,17 +26,17 @@ $statuses: (
       }
 
       @if $type == 'background-faded' {
-        background-color: lighten($color, 40%);
+        background-color: color.scale($color, $lightness: 40%);
       }
       // Use this if you want the element to have a hover state
       @if $type == 'border-hover' {
         border-color: $color;
 
         &:hover {
-          @if lightness($color) > 50 {
-            border-color: darken($color, 10%);
+          @if color.lightness($color) > 50 {
+            border-color: color.scale($color, $lightness: -10%);
           } @else {
-            border-color: lighten($color, 10%);
+            border-color: color.scale($color, $lightness: 10%);
           }
 
           border-color: $color;
@@ -46,10 +47,10 @@ $statuses: (
         color: $color;
 
         &:hover {
-          @if lightness($color) > 50 {
-            color: darken($color, 10%);
+          @if color.lightness($color) > 50 {
+            color: color.scale($color, $lightness: -10%);
           } @else {
-            color: lighten($color, 10%);
+            color: color.scale($color, $lightness: 10%);
           }
         }
       }
@@ -58,10 +59,10 @@ $statuses: (
         background-color: $color;
 
         &:hover {
-          @if lightness($color) > 50 {
-            background-color: darken($color, 10%);
+          @if color.lightness($color) > 50 {
+            background-color: color.scale($color, $lightness: -10%);
           } @else {
-            background-color: lighten($color, 10%);
+            background-color: color.scale($color, $lightness: 10%);
           }
         }
       }
@@ -73,12 +74,12 @@ $statuses: (
         border-color: $color;
 
         &:hover {
-          background-color: lighten($color, 45%);
+          background-color: color.scale($color, $lightness: 45%);
 
-          @if lightness($color) > 50 {
-            border-color: darken($color, 10%);
+          @if color.lightness($color) > 50 {
+            border-color: color.scale($color, $lightness: -10%);
           } @else {
-            border-color: lighten($color, 10%);
+            border-color: color.scale($color, $lightness: 10%);
           }
         }
       }
