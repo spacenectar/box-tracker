@@ -1312,10 +1312,10 @@
     "@types/tough-cookie" "^4.0.5"
     tough-cookie "^4.1.4"
 
-"@chromatic-com/storybook@^3.2.4":
-  version "3.2.4"
-  resolved "https://registry.yarnpkg.com/@chromatic-com/storybook/-/storybook-3.2.4.tgz#8cb44d9475be18675498b17a6c6ad479872a35f1"
-  integrity sha512-5/bOOYxfwZ2BktXeqcCpOVAoR6UCoeART5t9FVy22hoo8F291zOuX4y3SDgm10B1GVU/ZTtJWPT2X9wZFlxYLg==
+"@chromatic-com/storybook@^3.2.6":
+  version "3.2.6"
+  resolved "https://registry.yarnpkg.com/@chromatic-com/storybook/-/storybook-3.2.6.tgz#24fd1a2536311c7538145ccc4d971e90c202e43b"
+  integrity sha512-FDmn5Ry2DzQdik+eq2sp/kJMMT36Ewe7ONXUXM2Izd97c7r6R/QyGli8eyh/F0iyqVvbLveNYFyF0dBOJNwLqw==
   dependencies:
     chromatic "^11.15.0"
     filesize "^10.0.12"
@@ -6899,6 +6899,11 @@ chromatic@^11.15.0:
   version "11.25.2"
   resolved "https://registry.yarnpkg.com/chromatic/-/chromatic-11.25.2.tgz#cb93dc1332d8f6b70d97a3ef126bc6d03429d396"
   integrity sha512-/9eQWn6BU1iFsop86t8Au21IksTRxwXAl7if8YHD05L2AbuMjClLWZo5cZojqrJHGKDhTqfrC2X2xE4uSm0iKw==
+
+chromatic@^11.27.0:
+  version "11.27.0"
+  resolved "https://registry.yarnpkg.com/chromatic/-/chromatic-11.27.0.tgz#9450fe1acfc55022d18c7096efcb57509a20d712"
+  integrity sha512-jQ2ufjS+ePpg+NtcPI9B2eOi+pAzlRd2nhd1LgNMsVCC9Bzf5t8mJtyd8v2AUuJS0LdX0QVBgkOnlNv9xviHzA==
 
 chrome-trace-event@^1.0.2:
   version "1.0.4"

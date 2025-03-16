@@ -11,6 +11,25 @@
       "options": {
         "configDir": "libs/storybook-host/.storybook"
       }
+    },
+    "build": {
+      "executor": "@nx/storybook:build",
+      "options": {
+        "configDir": "libs/storybook-host/.storybook",
+        "outputDir": "dist/storybook/storybook-host"
+      }
+    },
+    "publish": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "npx chromatic --project-token=${CHROMATIC_PROJECT_TOKEN} --storybook-build-dir=dist/storybook/storybook-host"
+        ],
+        "cwd": "."
+      },
+      "dependsOn": [
+        "build"
+      ]
     }
   },
   "implicitDependencies": [
