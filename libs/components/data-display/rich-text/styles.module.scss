@@ -1,0 +1,92 @@
+.rich-text {
+  h2 {
+    @include type.heading-large();
+
+    margin-bottom: margin(2);
+  }
+
+  h3 {
+    @include type.heading-medium();
+
+
+    & {
+      font-weight: bold;
+      margin-bottom: margin(2);
+    }
+  }
+
+  h4 {
+    @include type.heading-small();
+
+    & {
+      margin-bottom: margin(2);
+    }
+  }
+
+  h5 {
+    @include type.body-text();
+
+    & {
+      font-weight: bold;
+      margin-bottom: margin(2);
+    }
+  }
+
+  p {
+    @include type.body-text();
+
+    & {
+      line-height: 1.8;
+      margin-bottom: margin(2);
+    }
+  }
+
+  blockquote {
+    background-color: col.$main-panel-bg;
+    border-left: 5px solid col.$grey-500;
+    margin-bottom: margin(2);
+    padding: padding(1) padding(2);
+
+    p:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+
+  /**
+     * Only one H1 is allowed per page, so we can use this to prevent
+     * the rich text component displaying any H1s.
+     */
+  h1 {
+    color: col.$danger;
+    font-size: type.$heading-large-size;
+    font-weight: bold;
+    line-height: 1.2;
+    padding: 1rem;
+
+    &::before {
+      background-color: col.$danger;
+      color: col.$light;
+      content: "!";
+      float: left;
+      font-size: 2rem;
+      margin-right: 1rem;
+      padding: padding(1);
+      text-align: center;
+    }
+
+    &::after {
+      color: col.$danger;
+      content: "H1 tags are not allowed in rich text";
+      display: block;
+      font-size: 2rem;
+    }
+  }
+
+  a {
+    @include util.link();
+  }
+
+  p a {
+    text-decoration: underline;
+  }
+}
