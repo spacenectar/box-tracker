@@ -1,0 +1,7 @@
+{
+  "name": "helpers",
+  "version": "0.0.1",
+  "type": "commonjs",
+  "main": "./index.js",
+  "typings": "./index.d.ts"
+}
