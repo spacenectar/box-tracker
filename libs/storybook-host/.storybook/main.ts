@@ -51,6 +51,10 @@ const config: StorybookConfig = {
     {
       from: '../../mocks',
       to: '/mocks'
+    },
+    {
+      from: './.docs/images',
+      to: '/images'
     }
   ],
   webpackFinal: async (config) => {

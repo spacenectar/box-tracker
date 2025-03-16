@@ -135,6 +135,28 @@ export const parameters: any = {
     storySort: {
       method: 'configure',
       includeName: true,
+      order: [
+        'Documentation',
+        [
+          'Introduction',
+          'Coding Guidelines',
+          ['General'],
+          'Infrastructure Guidelines',
+          'Design Guidelines',
+          ['Introduction'],
+          'Architectural Decisions',
+          ['Introduction'],
+          'Roadmap',
+          'Known Issues',
+          'Changelog'
+        ],
+        'Library',
+        ['Docs', ['Docs']],
+        'Webapp',
+        ['Docs', ['Docs']],
+        'Website',
+        ['Docs', ['Docs']]
+      ]
     }
   },
   layout: 'centered',
