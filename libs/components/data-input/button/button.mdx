@@ -1,0 +1,128 @@
+import * as Stories from './button.stories';
+
+import { Button } from './index';
+
+<Meta of={Stories} />
+
+<Title of={Button} />
+
+<Description of={Button} />
+
+<Tip>
+  It's also possible to turn a regular button element or link into a basic
+  button by adding the `button` utility to it although that method is cosmetic
+  only and lacks the more advanced features of this component.
+</Tip>
+
+<Primary />
+
+<Controls />
+
+## Button content
+
+The button component can accept any content as a child, including other components or you can use
+the `label` and `icon` props to add a label and icon to the button.
+
+Most examples in this documentation use the `label` and `icon` props to make it easier to
+see what is happening. However here is an example of a button which uses children instead.
+
+<Canvas withToolbar sourceState="shown" of={Stories.WithChildren} />
+
+<Tip>Whilst we don't recommend it, you can use this method to add icons which are not in the icon library. You will need to pass 'custom' to the `icon` prop if you wish to take advantage of the existing item styling</Tip>
+
+## Variants
+
+### Primary
+
+<Canvas sourceState="shown" of={Stories.Secondary} />
+
+### Secondary
+
+<Canvas sourceState="shown" of={Stories.Secondary} />
+
+### Create
+
+<Canvas withToolbar sourceState="shown" of={Stories.Create} />
+
+### Destroy
+
+<Canvas withToolbar sourceState="shown"  of={Stories.Destroy} />
+
+## Text only buttons
+
+You have two options if you want to display a text button:
+
+### Transparent button
+
+The 'transparent' button will render a button with the
+same padding and sizing as a normal button but with no background. To use this
+button, pass the 'transparent' prop to the button.
+
+<Canvas withToolbar sourceState="shown" of={Stories.Transparent} />
+
+### Link button
+
+The text variant will display the same as a link but will still be a button with
+all the same functionality. To use this button, pass the 'link' prop to the button.
+
+<Canvas withToolbar sourceState="shown" of={Stories.DisplayAsLink} />
+
+## Circular button
+
+A button can also be circular. Protip: Limit the amount of text you
+put in a circular button or better yet, use only an icon. This avoids creating
+huge buttons.
+
+<Canvas withToolbar sourceState="shown" of={Stories.Circular} />
+
+## Icon buttons
+
+You can also use any icon from the icon library as a button by passing the
+`icon` prop with the name of the icon you want to use.
+
+<Canvas withToolbar sourceState="shown" of={Stories.WithIcon} />
+
+By default the icon will be aligned to the left of the button, you can change this by
+passing the `alignIcon` prop with either 'left' or 'right'.
+
+<Canvas withToolbar sourceState="shown" of={Stories.IconLeft} />
+
+<Canvas withToolbar sourceState="shown" of={Stories.IconRight} />
+
+
+## Small button
+
+Sometimes you need a smaller button, you can use the 'small' prop to make the button
+smaller.
+
+<Canvas withToolbar sourceState="shown" of={Stories.Small} />
+
+Icons also work with small buttons.
+
+<Canvas withToolbar sourceState="shown" of={Stories.SmallWithIcon} />
+<Canvas withToolbar sourceState="shown" of={Stories.SmallWithIconAndLabel} />
+
+## Loading state
+
+You can pass a 'loading' prop to the button to show a loading state. This will
+add a spinner to the button and disable it, you can also pass a 'loadingText'
+prop to show a custom loading text. By default the loading text is 'Loading...'
+
+<Canvas withToolbar sourceState="shown" of={Stories.Loading} />
+
+## Usage
+
+### Use as a link
+
+A Button component can be used to style a link, however you must wrap the component
+in the correct routing method of your framework for it to work.
+
+e.g.
+
+```jsx
+<Link href="/marketplace">
+  <Button alignIcon="left">
+    <Icon name="back" /> Return to Home page
+  </Button>
+</Link>
+```
