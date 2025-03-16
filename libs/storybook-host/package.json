@@ -3,5 +3,8 @@
   "version": "0.0.1",
   "exports": {
     "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build-storybook": "build-storybook"
   }
 }

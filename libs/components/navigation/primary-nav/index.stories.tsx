@@ -1,16 +1,24 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Navigation } from './index';
+import { PrimaryNav } from './index';
+import { ClerkProvider } from '@clerk/nextjs';
 
-const meta: Meta<typeof Navigation> = {
-  component: Navigation,
+const meta: Meta<typeof PrimaryNav> = {
+  component: PrimaryNav,
   parameters: {
     layout: 'centered',
   },
   tags: ['autodocs'],
+  decorators: [
+    (Story) => (
+      <ClerkProvider>
+        <Story />
+      </ClerkProvider>
+    ),
+  ],
 };
 
 export default meta;
-type Story = StoryObj<typeof Navigation>;
+type Story = StoryObj<typeof PrimaryNav>;
 
 const navItems = [
   {
@@ -38,13 +46,15 @@ export const WithUser: Story = {
     navItems,
     user: {
       id: '1',
+      authId: 'auth_123',
       username: 'johndoe',
+      subscriber: false,
+      dateRegistered: new Date(),
+      dateLastLoggedIn: new Date(),
       firstName: 'John',
       lastName: 'Doe',
       email: 'john.doe@example.com',
       imageUrl: '',
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
     },
   },
 };

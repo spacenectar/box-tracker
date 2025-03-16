@@ -1,0 +1,51 @@
+.tooltip {
+  background-color: col.$grey-800;
+  border-radius: $border-radius;
+  color: col.$light;
+  display: flex;
+  filter: drop-shadow(0 0.2rem 0.5rem rgba(0, 0, 0, 0.2));
+  font-size: type.$button-size;
+  padding: padding(0.5) padding(2) padding(0.6);
+  place-items: center;
+  width: max-content;
+  z-index: 2000;
+
+  @include util.dark-mode() {
+    background-color: col.$grey-100;
+    color: col.$dark;
+  }
+
+  .arrow {
+    background-color: inherit;
+    height: 1rem;
+    position: absolute;
+    visibility: hidden;
+    width: 1rem;
+
+    &::before {
+      background-color: inherit;
+      content: '';
+      height: 1rem;
+      position: absolute;
+      transform: rotate(45deg);
+      visibility: visible;
+      width: 1rem;
+    }
+
+    &.top {
+      bottom: -0.5rem;
+    }
+
+    &.bottom {
+      top: -0.5rem;
+    }
+
+    &.left {
+      right: -0.4rem;
+    }
+
+    &.right {
+      left: -0.5rem;
+    }
+  }
+}

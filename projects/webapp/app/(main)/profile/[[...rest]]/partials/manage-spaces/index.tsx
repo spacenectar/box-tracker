@@ -129,7 +129,7 @@ export function ManageSpaces() {
                   type="text"
                   className={styles['input']}
                   value={newSpaceName}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewSpaceName(e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewSpaceName(e.currentTarget.value)}
                   placeholder="Enter space name"
                 />
               </div>

@@ -1,0 +1,10 @@
+.search {
+  display: grid;
+  gap: spacing(0.5);
+  grid-template-columns: auto 30px;
+  height: 40px;
+}
+
+.button {
+  height: 40px;
+}

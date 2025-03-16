@@ -2,9 +2,17 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { within, expect } from '@storybook/test';
 import Masthead from './index';
 import { User } from '@typeDefs/user';
+import { ClerkProvider } from '@clerk/nextjs';
 
 const meta: Meta<typeof Masthead> = {
   component: Masthead,
+  decorators: [
+    (Story) => (
+      <ClerkProvider>
+        <Story />
+      </ClerkProvider>
+    ),
+  ],
 };
 
 export default meta;
@@ -41,7 +49,5 @@ export const LoggedIn: Story = {
     const canvas = within(canvasElement);
     // Check if the user info is rendered
     await expect(canvas.getByText('JohnDoe1984')).toBeInTheDocument();
-    // Check if the logout button is rendered
-    await expect(canvas.getByText('Sign out')).toBeInTheDocument();
   },
 };

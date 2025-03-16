@@ -6,7 +6,7 @@ import { User } from '@typeDefs/user';
 
 import Logo from '@assets/branding/box-tracker-logo-white.svg?url';
 import UserProfile from '../../data-display/user-profile';
-import Navigation from '../navigation';
+import PrimaryNav from '../../navigation/primary-nav';
 
 export interface Props extends React.HTMLAttributes<HTMLElement> {
   user: User
@@ -51,7 +51,7 @@ export const Masthead: React.FC<Props> = ({ user, ...props }: Props) => {
               </Link>
             </div>
           )}
-          <Navigation user={user} navItems={navItems} />
+          <PrimaryNav user={user} navItems={navItems} />
         </div>
       </div>
     </header>

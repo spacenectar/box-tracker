@@ -1,0 +1,50 @@
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  min-height: padding(2);
+}
+
+.tab {
+  @include util.button-text();
+
+  color: col.$grey-900;
+  font-size: type.$body-text-size;
+  font-weight: bold;
+  padding: padding(1) padding(1.5);
+  position: relative;
+  text-align: left;
+  text-transform: none;
+  width: 100%;
+
+  @include util.mq(bp.$small) {
+    text-align: center;
+    width: unset;
+  }
+
+  @include util.dark-mode() {
+    color: col.$grey-200;
+  }
+
+  &:hover {
+    background: none;
+  }
+
+  &.active {
+    background: none;
+    border-color: transparent;
+    color: col.$dark;
+
+    @include util.dark-mode() {
+      color: col.$light;
+    }
+  }
+
+  .active-indicator {
+    background-color: col.$action;
+    bottom: 0;
+    height: 2px;
+    left: 0;
+    position: absolute;
+    width: 100%;
+  }
+}

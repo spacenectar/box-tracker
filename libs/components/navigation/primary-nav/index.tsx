@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback } from 'react';
 import Link from 'next/link';
-import styles from './styles.module.scss';
+import styles from './style.module.scss';
 import { User } from '@typeDefs/user';
 import { SignOutButton } from "@clerk/nextjs";
 
@@ -12,7 +12,7 @@ export interface Props extends React.HTMLAttributes<HTMLElement> {
   }>;
 }
 
-export const Navigation: React.FC<Props> = ({ user, navItems, ...props }: Props) => {
+export const PrimaryNav: React.FC<Props> = ({ user, navItems, ...props }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const navRef = useRef<HTMLDivElement>(null);
   
@@ -50,35 +50,34 @@ export const Navigation: React.FC<Props> = ({ user, navItems, ...props }: Props)
         style={bodyStyle}
         className={`${styles['nav-container']} ${isOpen ? styles.open : ''}`}
       >
-        <nav className={styles.nav} {...props}>
-          <ul>
-            {navItems.map((item) => (
-              <li key={item.label}>
-                <Link
-                  className={styles['nav-item']}
-                  href={item.href}
-                  onClick={() => setIsOpen(false)}
-                >
+        <nav className={styles.navigation} {...props}>
+          <ul className={styles['nav-list']}>
+            {navItems.map((item, index) => (
+              <li key={index} className={styles['nav-item']}>
+                <Link href={item.href} className={styles['nav-link']}>
                   {item.label}
                 </Link>
               </li>
             ))}
-            {user && (
-              <li>
-                <div className={styles['sign-out-button-wrapper']}>
-                  <SignOutButton>
-                    <button type="button" className={styles['sign-out-button']}>Sign Out</button>
-                  </SignOutButton>
-                </div>
-              </li>
-            )}
           </ul>
+          
+          {user && (
+            <div className={styles['user-section']}>
+              <div className={styles['user-info']}>
+                <span className={styles.username}>{user.firstName} {user.lastName}</span>
+                <span className={styles.email}>{user.email}</span>
+              </div>
+              <SignOutButton>
+                <button className={styles['sign-out']}>Sign Out</button>
+              </SignOutButton>
+            </div>
+          )}
         </nav>
       </div>
     </div>
   );
 };
 
-Navigation.displayName = 'Navigation';
+PrimaryNav.displayName = 'PrimaryNav';
 
-export default Navigation;
+export default PrimaryNav;
