@@ -22,9 +22,12 @@
       "@/*": ["projects/webapp/*"],
       "@assets/*": ["libs/assets/*"],
       "@components/*": ["libs/components/*"],
+      "@mocks/*": ["libs/mocks/*"],
       "@theme/*": ["libs/theme/*"],
       "@typeDefs/*": ["libs/types/*"],
-      "@mocks/*": ["libs/mocks/*"]
+      "@helpers": ["libs/helpers"],
+      "@helpers/*": ["libs/helpers/*"],
+      "lib/helpers": ["libs/helpers"]
     }
   }
 }

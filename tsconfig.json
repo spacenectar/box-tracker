@@ -23,6 +23,9 @@
     },
     {
       "path": "./libs/storybook-host"
+    },
+    {
+      "path": "./libs/helpers"
     }
   ],
   "ts-node": {
