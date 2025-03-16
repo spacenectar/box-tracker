@@ -2,7 +2,9 @@
   h2 {
     @include type.heading-large();
 
-    margin-bottom: margin(2);
+    & {
+      margin-bottom: margin(2);
+    }
   }
 
   h3 {
