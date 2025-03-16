@@ -93,7 +93,7 @@ $colours: (
 );
 
 @each $name, $colour in $colours {
-  .colour-choice-#{$name} {
+  .colour-choice-#{"#{$name}"} {
     .box-location {
       color: #{$colour};
     }

@@ -32,11 +32,15 @@
   list-style: none;
   padding: 0;
   margin: 0;
+  width: 100%;
+  display: grid;
 }
 
 .space-item {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr max-content;
+  width: 100%;
+  max-width: unset;
   align-items: center;
   padding: 1rem;
   border-radius: 0.5rem;
@@ -66,7 +70,8 @@
 
 .space-actions {
   display: flex;
-  gap: 0.5rem;
+  width: max-content;
+  justify-content: flex-end;
 }
 
 .edit-button,

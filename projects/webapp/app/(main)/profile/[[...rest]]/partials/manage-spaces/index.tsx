@@ -8,9 +8,13 @@ import {
   useDeleteSpaceMutation 
 } from '@/lib/services/space';
 import { Space } from '@typeDefs/space';
-import { Icon } from "@components/data-display/icon";
-import styles from './style.module.scss';
+import { Button } from "@components/data-input/button";
+import { InputFactory } from "@components/factories/input-factory";
+import Modal from "@components/layout/modal";
+import { DialogBox } from "@components/feedback/dialog-box";
 import { Loader } from '@components/feedback/loader';
+import { Tooltip } from '@components/feedback/tooltip';
+import styles from './style.module.scss';
 
 export function ManageSpaces() {
   const { data: spaces, isLoading, refetch } = useGetSpacesQuery();
@@ -23,6 +27,11 @@ export function ManageSpaces() {
   const [editingSpace, setEditingSpace] = useState<Space | null>(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [spaceToDelete, setSpaceToDelete] = useState<Space | null>(null);
+  
+  const handleInputChange = (e: React.ChangeEvent<Element>) => {
+    const target = e.target as unknown as { value: string };
+    setNewSpaceName(target.value);
+  };
 
   const handleCreateSpace = async () => {
     if (newSpaceName.trim()) {
@@ -60,15 +69,15 @@ export function ManageSpaces() {
     <div className={styles['manage-spaces']}>
       <div className={styles['header']}>
         {/* TODO: Add create space when we've worked out the subscription stuff */}
-        {/* <button 
+        {/* <Button 
           className={styles['create-button']} 
           onClick={() => {
             setNewSpaceName('');
             setIsCreateModalOpen(true);
           }}
-        >
-          <Icon use="plus" /> Create New Space
-        </button> */}
+          icon="plus"
+          label="Create New Space"
+        /> */}
       </div>
 
       {spaces && spaces.length > 0 ? (
@@ -82,20 +91,31 @@ export function ManageSpaces() {
                 </p>
               </div>
               <div className={styles['space-actions']}>
-                <button 
-                  className={styles['edit-button']} 
-                  onClick={() => handleEditSpace(space)}
-                  aria-label={`Edit ${space.name}`}
-                >
-                  <Icon use="edit" />
-                </button>
-                <button 
-                  className={styles['delete-button']} 
-                  onClick={() => handleDeleteSpace(space)}
-                  aria-label={`Delete ${space.name}`}
-                >
-                  Delete
-                </button>
+                <Tooltip content={`Edit ${space.name}`} placement="top">
+                  <Button 
+                    className={styles['edit-button']} 
+                    onClick={() => handleEditSpace(space)}
+                    icon="edit"
+                    hideLabel
+                    label={`Edit ${space.name}`}
+                    variant="secondary"
+                    circular
+                    small
+                    data-testid={`edit-space-${space.id}`}
+                  />
+                </Tooltip>
+                <Tooltip content={`Delete ${space.name}`} placement="top">
+                  <Button 
+                    className={styles['delete-button']} 
+                    onClick={() => handleDeleteSpace(space)}
+                    icon="delete"
+                    hideLabel
+                    label={`Delete ${space.name}`}
+                    variant="destroy"
+                    small
+                    data-testid={`delete-space-${space.id}`}
+                  />
+                </Tooltip>
               </div>
             </li>
           ))}
@@ -106,104 +126,83 @@ export function ManageSpaces() {
         </div>
       )}
 
-      {isCreateModalOpen || !!editingSpace && (
-        <div className={styles['modal-overlay']}>
-          <div className={styles['modal']}>
-            <div className={styles['modal-header']}>
-              <h3>{editingSpace ? "Edit Space" : "Create New Space"}</h3>
-              <button 
-                className={styles['close-button']} 
-                onClick={() => {
-                  setIsCreateModalOpen(false);
-                  setEditingSpace(null);
-                }}
-              >
-                <Icon use="close" />
-              </button>
-            </div>
-            <div className={styles['modal-content']}>
-              <div className={styles['input-group']}>
-                <label htmlFor="space-name" className={styles['input-label']}>Space Name</label>
-                <input
-                  id="space-name"
-                  type="text"
-                  className={styles['input']}
-                  value={newSpaceName}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewSpaceName(e.currentTarget.value)}
-                  placeholder="Enter space name"
-                />
-              </div>
-              <div className={styles['modal-actions']}>
-                <button 
-                  className={styles['button-secondary']} 
-                  onClick={() => {
-                    setIsCreateModalOpen(false);
-                    setEditingSpace(null);
-                  }}
-                >
-                  Cancel
-                </button>
-                <button 
-                  className={styles['button-primary']} 
-                  onClick={editingSpace ? handleSaveSpace : handleCreateSpace}
-                  disabled={!newSpaceName.trim()}
-                >
-                  {editingSpace ? "Save Changes" : "Create Space"}
-                </button>
-              </div>
-            </div>
+      <Modal
+        isOpen={isCreateModalOpen || !!editingSpace}
+        modalName={editingSpace ? "Edit Space" : "Create New Space"}
+        onDismiss={() => {
+          setIsCreateModalOpen(false);
+          setEditingSpace(null);
+        }}
+        size="md"
+      >
+        <div className={styles['modal-content']}>
+          <h3>{editingSpace ? "Edit Space" : "Create New Space"}</h3>
+          <div className={styles['input-container']}>
+            <InputFactory
+              name="space-name"
+              id="space-name"
+              label="Space Name"
+              variant="text"
+              value={newSpaceName}
+              onChange={handleInputChange}
+              placeholder="Enter space name"
+            />
+          </div>
+          <div className={styles['modal-actions']}>
+            <Button 
+              variant="secondary"
+              label="Cancel"
+              onClick={() => {
+                setIsCreateModalOpen(false);
+                setEditingSpace(null);
+              }}
+            />
+            <Button 
+              variant="primary"
+              label={editingSpace ? "Save Changes" : "Create Space"}
+              onClick={editingSpace ? handleSaveSpace : handleCreateSpace}
+              disabled={!newSpaceName.trim()}
+            />
           </div>
         </div>
-      )}
+      </Modal>
 
-      {isDeleteModalOpen && (
-        <div className={styles['modal-overlay']}>
-          <div className={styles['modal']}>
-            <div className={styles['modal-header']}>
-              <h3>Delete Space</h3>
-              <button 
-                className={styles['close-button']} 
-                onClick={() => {
-                  setIsDeleteModalOpen(false);
-                  setSpaceToDelete(null);
-                }}
-              >
-                <Icon use="close" />
-              </button>
-            </div>
-            <div className={styles['modal-content']}>
-              <p>
-                Are you sure you want to delete the space "{spaceToDelete?.name}"? 
-                This action cannot be undone and all associated locations and items will be deleted.
-              </p>
-              <div className={styles['modal-actions']}>
-                <button 
-                  className={styles['button-secondary']} 
-                  onClick={() => {
-                    setIsDeleteModalOpen(false);
-                    setSpaceToDelete(null);
-                  }}
-                >
-                  Cancel
-                </button>
-                <button 
-                  className={styles['button-danger']} 
-                  onClick={async () => {
-                    if (spaceToDelete) {
-                      await deleteSpace(spaceToDelete.id);
-                      refetch();
-                    }
-                    setIsDeleteModalOpen(false);
-                    setSpaceToDelete(null);
-                  }}
-                >
-                  Confirm deletion
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      <Modal
+        isOpen={isDeleteModalOpen}
+        modalName="Delete Space"
+        onDismiss={() => {
+          setIsDeleteModalOpen(false);
+          setSpaceToDelete(null);
+        }}
+        size="md"
+        isAlert
+      >
+        <DialogBox
+          title="Delete Space"
+          message={
+            <>
+              Are you sure you want to delete the space "{spaceToDelete?.name}"? 
+              This action cannot be undone and all associated locations and items will be deleted.
+            </>
+          }
+          confirmLabel="Confirm deletion"
+          cancelLabel="Cancel"
+          confirmVariant="destroy"
+          cancelVariant="secondary"
+          confirmAction={async () => {
+            if (spaceToDelete) {
+              await deleteSpace(spaceToDelete.id);
+              refetch();
+            }
+            setIsDeleteModalOpen(false);
+            setSpaceToDelete(null);
+          }}
+          cancelAction={() => {
+            setIsDeleteModalOpen(false);
+            setSpaceToDelete(null);
+          }}
+        />
+      </Modal>
     </div>
   );
 }

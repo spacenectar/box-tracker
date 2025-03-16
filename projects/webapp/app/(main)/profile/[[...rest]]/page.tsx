@@ -9,7 +9,7 @@ import styles from "./styles.module.scss";
 
 export default function ProfilePage() {
   return (
-    <div className={["flex ta-c items-center content-center h-full w-full", styles['profile-page']].join(' ')}>
+    <div className={["flex items-center content-center h-full w-full", styles['profile-page']].join(' ')}>
       <UserProfile appearance={
         {
           elements: {
