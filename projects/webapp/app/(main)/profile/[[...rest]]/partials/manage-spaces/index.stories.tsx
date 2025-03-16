@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { within, userEvent, expect } from '@storybook/test';
+import { within, userEvent, expect, screen } from '@storybook/test';
 import { http, HttpResponse } from 'msw';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
@@ -156,19 +156,19 @@ export const EditSpace: Story = {
     expect(mySpace).toBeInTheDocument();
     
     // Find and click the edit button for the first space
-    const editButtons = await canvas.findAllByLabelText(/Edit .*/);
+    const editButtons = await canvas.findAllByTestId(/edit-space-.*/);
     await userEvent.click(editButtons[0]);
     
-    // Check if the edit modal is open
-    await expect(canvas.getByText('Edit Space')).toBeInTheDocument();
+    // Check if the edit modal is open - use screen which has access to the entire document
+    await expect(screen.getByText('Edit Space')).toBeInTheDocument();
     
     // Change the space name
-    const input = canvas.getByLabelText('Space Name');
+    const input = screen.getByLabelText('Space Name');
     await userEvent.clear(input);
     await userEvent.type(input, 'Updated Space');
     
     // Click the save button
-    await userEvent.click(canvas.getByText('Save Changes'));
+    await userEvent.click(screen.getByText('Save Changes'));
   }
 };
 
@@ -182,15 +182,15 @@ export const DeleteSpace: Story = {
     expect(anotherSpace).toBeInTheDocument();
     
     // Find and click the delete button for the second space
-    const deleteButtons = await canvas.findAllByText('Delete');
+    const deleteButtons = await canvas.findAllByTestId(/delete-space-.*/);
     await userEvent.click(deleteButtons[1]);
     
-    // Check if the delete confirmation modal is open
-    await expect(canvas.getByText('Delete Space')).toBeInTheDocument(); // This is the modal title
-    await expect(canvas.getByText(/Are you sure you want to delete the space "Another Space"/)).toBeInTheDocument();
+    // Check if the delete confirmation modal is open - use screen which has access to the entire document
+    await expect(screen.getByText('Delete Space')).toBeInTheDocument(); // This is the modal title
+    await expect(screen.getByText(/Are you sure you want to delete the space "Another Space"/)).toBeInTheDocument();
     
     // Click the delete confirmation button
-    const deleteButton = canvas.getByText('Confirm deletion');
+    const deleteButton = screen.getByText('Confirm deletion');
     await userEvent.click(deleteButton);
   }
 };
