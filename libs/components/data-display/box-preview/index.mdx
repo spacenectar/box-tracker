@@ -1,0 +1,31 @@
+import * as Stories from './index.stories';
+
+import { BoxPreview } from './index';
+
+<Meta of={Stories} />
+
+<Title type="alpha">Box Preview</Title>
+
+<Description of={BoxPreview} />
+
+## Basic Box Preview
+The BoxPreview component displays a visual representation of a box, showing its number, location, contents, and filled status.
+
+<Canvas withToolbar sourceState="shown" of={Stories.Default} />
+
+## Sealed Box Preview
+When a box is sealed, it will display a "SEALED" indicator.
+
+<Canvas withToolbar sourceState="shown" of={Stories.Sealed} />
+
+## Box Fill Level
+The fill level of a box is represented by a progress bar.
+
+<Canvas withToolbar sourceState="shown" of={Stories.HighlyFilled} />
+
+## Box Color Options
+Boxes can be displayed in different colors to help with visual organization.
+
+<Canvas withToolbar sourceState="shown" of={Stories.OrangeColour} />
+<Canvas withToolbar sourceState="shown" of={Stories.RedColour} />
+<Canvas withToolbar sourceState="shown" of={Stories.GreenColour} />
