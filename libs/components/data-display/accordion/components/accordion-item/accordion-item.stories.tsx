@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import { within, userEvent } from '@storybook/testing-library';
-import { expect } from '@storybook/jest';
+import { within, userEvent, expect, fn } from '@storybook/test';
 
 // Import component files
 import { AccordionItem } from './index';
@@ -55,7 +54,7 @@ export const ClickHandlerWithEvent: Story = {
 
 export const WithPlayFunction: Story = {
   args: {
-    onClick: action('onClick')
+    onClick: fn()
   },
   play: async ({ args, canvasElement, step }) => {
     const itemHeader = within(canvasElement).getByRole('button');

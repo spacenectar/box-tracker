@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { within } from '@storybook/testing-library';
-import { expect } from '@storybook/jest';
+import { within, expect } from '@storybook/test';
 
 import Grid from './index';
 

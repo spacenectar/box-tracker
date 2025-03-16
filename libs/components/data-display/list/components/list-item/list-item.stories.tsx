@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { within } from '@storybook/testing-library';
-import { expect } from '@storybook/jest';
+import { within, expect } from '@storybook/test';
 import { action } from '@storybook/addon-actions';
 
 import { ListItem } from './index';
@@ -51,9 +50,12 @@ export const IsActive: Story = {
   decorators: [(Story) => <List>{Story()}</List>],
   play: async ({ canvasElement, step }) => {
     const listItem = within(canvasElement).getByRole('listitem');
-    await step('The list item has an "active" class', async () => {
-      // Expect the list item to be active
-      expect(listItem.getAttribute('class')).toContain('active');
+    await step('The list item has an active class', async () => {
+      // Check if the element has a class that contains 'is-active'
+      const hasActiveClass = Array.from(listItem.classList).some(className => 
+        className.includes('is-active')
+      );
+      expect(hasActiveClass).toBe(true);
     });
   }
 };
@@ -65,9 +67,9 @@ export const IsClickable: Story = {
   decorators: [(Story) => <List>{Story()}</List>],
   play: async ({ canvasElement, step }) => {
     const listItem = within(canvasElement).getByRole('listitem');
-    await step('The list item has a "clickable" class', async () => {
-      // Expect the list item to be active
-      expect(listItem.getAttribute('class')).toContain('clickable');
+    await step('The list item has an "is-clickable" class', async () => {
+      // Expect the list item to have the is-clickable class
+      expect(listItem.className).toContain('is-clickable');
     });
   }
 };

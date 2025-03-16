@@ -4,9 +4,10 @@ import {
   within,
   userEvent,
   waitFor,
-  fireEvent
-} from '@storybook/testing-library';
-import { expect } from '@storybook/jest';
+  fireEvent,
+  expect,
+  fn
+} from '@storybook/test';
 
 import { simpleForm, customStyledForm, bigForm } from './mocks/forms';
 import {
@@ -300,7 +301,7 @@ export const ValidFormInput: Story = {
 export const SubmitForm: Story = {
   args: {
     ...ValidFormInput.args,
-    onSubmit: action('onSubmit')
+    onSubmit: fn()
   },
   play: async (context) => {
     await ValidFormInput?.play?.(context);

@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import { within, userEvent, waitFor } from '@storybook/testing-library';
-import { expect } from '@storybook/jest';
+import { within, userEvent, waitFor, expect } from '@storybook/test';
 import { useArgs } from '@storybook/preview-api';
 // Import component files
 import Pagination from './index';

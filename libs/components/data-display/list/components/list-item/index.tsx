@@ -34,12 +34,13 @@ export const ListItem = React.forwardRef<HTMLLIElement, Props>(
   ) => {
     return (
       <li
-        className={[styles['list-item'], {
-          [styles['is-active']]: isActive,
-          [styles['is-clickable']]: onClick,
-          [styles[`in-${type}-list`]]: type !== 'none',
-          [styles['is-loading']]: isLoading
-        }].join(' ')}
+        className={[
+          styles['list-item'],
+          isActive ? styles['is-active'] : '',
+          onClick ? styles['is-clickable'] : '',
+          type !== 'none' ? styles[`in-${type}-list`] : '',
+          isLoading ? styles['is-loading'] : ''
+        ].filter(Boolean).join(' ')}
         role="listitem"
         ref={ref}
         aria-busy={isLoading}

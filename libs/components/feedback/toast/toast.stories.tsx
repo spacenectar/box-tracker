@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { within, userEvent } from '@storybook/testing-library';
-import { expect } from '@storybook/jest';
+import { within, userEvent, expect, fn } from '@storybook/test';
 import { action } from '@storybook/addon-actions';
 
 import { Toast } from './index';
@@ -52,7 +51,7 @@ export const Warning: Story = {
 export const Info: Story = {
   args: {
     type: 'info',
-    closeToast: action('Toast closed.')
+    closeToast: fn()
   },
   play: async ({ args, canvasElement, step }) => {
     const toast = within(canvasElement).getByRole('alert');

@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { PrimaryNav } from './index';
+import { ClerkProvider } from '@clerk/nextjs';
 
 const meta: Meta<typeof PrimaryNav> = {
   component: PrimaryNav,
@@ -7,6 +8,13 @@ const meta: Meta<typeof PrimaryNav> = {
     layout: 'centered',
   },
   tags: ['autodocs'],
+  decorators: [
+    (Story) => (
+      <ClerkProvider>
+        <Story />
+      </ClerkProvider>
+    ),
+  ],
 };
 
 export default meta;

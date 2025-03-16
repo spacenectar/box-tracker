@@ -1,7 +1,6 @@
 import { action } from '@storybook/addon-actions';
 import type { Meta, StoryObj } from '@storybook/react';
-import { within, userEvent } from '@storybook/testing-library';
-import { expect } from '@storybook/jest';
+import { within, userEvent, expect, fn } from '@storybook/test';
 
 // Import component files
 import DialogBox from './index';
@@ -129,8 +128,8 @@ export const FitContainer: Story = {
 
 export const WithPlayFunction: Story = {
   args: {
-    confirmAction: action('confirmAction'),
-    cancelAction: action('cancelAction')
+    confirmAction: fn(),
+    cancelAction: fn()
   },
   play: async ({ args, canvasElement, step }) => {
     const dialgoue = within(canvasElement).getByRole('dialog');

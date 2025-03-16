@@ -17,6 +17,6 @@
     "noEmit": true,
     "esModuleInterop": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "@types/**/*", "../../libs/types/**/*.ts", "../../libs/assets/**/*", "../../libs/mocks/**/*.ts", "svg.d.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "@types/**/*", "../../libs/types/**/*.ts", "../../libs/helpers/**/*.ts", "../../libs/assets/**/*", "../../libs/mocks/**/*.ts", "../../libs/mocks/**/*.tsx", "svg.d.ts"],
   "exclude": ["node_modules"]
 }

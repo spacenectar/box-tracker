@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { changeCase } from 'lib/helpers';
+import changeCase from '@helpers/change-case';
 import { useArgs } from '@storybook/preview-api';
 import Accordion from './index';
 

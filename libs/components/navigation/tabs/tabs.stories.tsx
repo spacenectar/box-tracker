@@ -1,7 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { action } from '@storybook/addon-actions';
-import { within, userEvent } from '@storybook/testing-library';
-import { expect } from '@storybook/jest';
+import { within, userEvent, expect, fn } from '@storybook/test';
 
 // Import component files
 import Tabs from './index';
@@ -51,7 +49,7 @@ export const WithPlayFunction: Story = {
       }
     ],
     selectedTab: 1,
-    handleChange: action('handleChange')
+    handleChange: fn()
   },
   play: async ({ args, canvasElement, step }) => {
     const tabList = within(canvasElement).getByRole('tablist');
