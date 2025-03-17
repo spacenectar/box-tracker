@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs" width="1000" height="1000"><style>
+    #light-icon {
+      display: inline;
+    }
+    #dark-icon {
+      display: none;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      #light-icon {
+        display: none;
+      }
+      #dark-icon {
+        display: inline;
+      }
+    }
+  </style><g id="light-icon"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs" width="1000" height="1000"><g><g transform="matrix(6.568575932737782,0,0,6.568575932737782,0,0)"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs" width="152.24" height="152.24"><svg id="a" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 152.24 152.24">
+  <defs>
+    <linearGradient id="b" x1="0" y1="76.12" x2="152.24" y2="76.12" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#bd5ca3"></stop>
+      <stop offset=".81" stop-color="#983794"></stop>
+    </linearGradient>
+    <linearGradient id="c" x1="37.29" x2="114.96" xlink:href="#b"></linearGradient>
+  </defs>
+  <path d="M122.11,30.13v91.98H30.13V30.13h91.98M139.61,0H12.63C5.66,0,0,5.66,0,12.63v126.98c0,6.98,5.66,12.63,12.63,12.63h126.98c6.98,0,12.63-5.66,12.63-12.63V12.63c0-6.98-5.66-12.63-12.63-12.63h0Z" fill="url(#b)"></path>
+  <polygon points="114.96 78.35 76.12 39.52 37.29 78.35 60.48 78.35 67.37 71.46 67.37 112.73 84.88 112.73 84.88 71.46 91.77 78.35 114.96 78.35" fill="url(#c)"></polygon>
+</svg></svg></g></g></svg></g><g id="dark-icon"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs" width="1000" height="1000"><g clip-path="url(#SvgjsClipPath1168)"><rect width="1000" height="1000" fill="#ffffff"></rect><g transform="matrix(5.254860746190226,0,0,5.254860746190226,100,100)"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs" width="152.24" height="152.24"><svg id="a" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 152.24 152.24">
+  <defs>
+    <linearGradient id="b" x1="0" y1="76.12" x2="152.24" y2="76.12" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#bd5ca3"></stop>
+      <stop offset=".81" stop-color="#983794"></stop>
+    </linearGradient>
+    <linearGradient id="c" x1="37.29" x2="114.96" xlink:href="#b"></linearGradient>
+  <clipPath id="SvgjsClipPath1168"><rect width="1000" height="1000" x="0" y="0" rx="50" ry="50"></rect></clipPath></defs>
+  <path d="M122.11,30.13v91.98H30.13V30.13h91.98M139.61,0H12.63C5.66,0,0,5.66,0,12.63v126.98c0,6.98,5.66,12.63,12.63,12.63h126.98c6.98,0,12.63-5.66,12.63-12.63V12.63c0-6.98-5.66-12.63-12.63-12.63h0Z" fill="url(#b)"></path>
+  <polygon points="114.96 78.35 76.12 39.52 37.29 78.35 60.48 78.35 67.37 71.46 67.37 112.73 84.88 112.73 84.88 71.46 91.77 78.35 114.96 78.35" fill="url(#c)"></polygon>
+</svg></svg></g></g></svg></g></svg>
