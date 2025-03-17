@@ -38,6 +38,9 @@ export default function RootLayout({
         },
       }}>
       <html lang="en">
+        <head>
+          <meta name="apple-mobile-web-app-title" content="Box Tracker" />
+        </head>
         <body className={`${ArchivoFont.variable} ${ArchivoBlackFont.variable} ${ArchivoNarrowFont.variable}`}>
           <StoreProvider>
             {children}
