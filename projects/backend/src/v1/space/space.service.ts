@@ -13,11 +13,19 @@ export class SpaceService {
           some: { userId },
         },
       },
+      include: {
+        locations: true,
+      },
     });
   }
 
   async findOne(id: string, userId: string) {
-    const space = await this.prisma.space.findUnique({ where: { id } });
+    const space = await this.prisma.space.findUnique({
+      where: { id },
+      include: {
+        locations: true,
+      },
+    });
 
     if (!space) throw new ForbiddenException('Space not found');
 
@@ -66,12 +74,15 @@ export class SpaceService {
       return createdSpace;
     });
 
-    return {
-      id: result.id,
-      name: result.name,
-      slug: result.slug,
-      createdBy: result.createdBy,
-    };
+    // Fetch the space with locations included
+    const spaceWithLocations = await this.prisma.space.findUnique({
+      where: { id: result.id },
+      include: {
+        locations: true,
+      },
+    });
+
+    return spaceWithLocations;
   }
 
   async update(id: string, data: Prisma.SpaceUpdateInput, userId: string) {
@@ -91,6 +102,9 @@ export class SpaceService {
     return this.prisma.space.update({
       where: { id },
       data,
+      include: {
+        locations: true,
+      },
     });
   }
 

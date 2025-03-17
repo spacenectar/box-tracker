@@ -2,11 +2,18 @@
 import { useState } from 'react';
 import { useCreateSpaceMutation } from '@/lib/services/space';
 import styles from './style.module.scss';
+import InputFactory from '@components/factories/input-factory';
+import Button from '@components/data-input/button';
 
 export const CreateSpaceStep = ({ onCompleteAction }: { onCompleteAction: (spaceId: string) => void }) => {
   const [spaceName, setSpaceName] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [createSpace, { isLoading }] = useCreateSpaceMutation();
+  
+  const handleInputChange = (e: React.ChangeEvent<Element>) => {
+    const target = e.target as unknown as { value: string };
+    setSpaceName(target.value);
+  };
 
   const isValidSpaceName = spaceName.trim().length >= 3;
 
@@ -32,25 +39,25 @@ export const CreateSpaceStep = ({ onCompleteAction }: { onCompleteAction: (space
       <p>A workspace represents a group of locations.</p><p>Free users can have only one workspace but our Pro plan will allow for unlimited workspaces, allowing you to manage multiple moving or storage projects at once.</p>
       
       <div className={styles['form-group']}>
-        <label htmlFor="space-name">Workspace Name</label>
-        <input
-          id="space-name"
-          type="text"
+        <InputFactory
+          name="space-name"
+          label="Workspace Name"
+          variant="text"
           value={spaceName}
-          onChange={(e) => setSpaceName(e.currentTarget.value)}
+          onChange={handleInputChange}
           placeholder="e.g. Default, My Move, My Storage"
-          className={error && !isValidSpaceName ? styles.error : ''}
+          status={error && !isValidSpaceName ? 'error' : 'default'}
+          statusMessage={error && !isValidSpaceName ? error : ''}
         />
-        {error && <div className={styles['error-message']}>{error}</div>}
       </div>
 
-      <button 
-        className={styles.button}
+      <Button 
+        variant="primary"
         onClick={handleCreateSpace}
         disabled={isLoading || !isValidSpaceName}
-      >
-        {isLoading ? 'Creating...' : 'Create Space'}
-      </button>
+        isLoading={isLoading}
+        label="Create Space"
+      />
     </div>
   );
 };

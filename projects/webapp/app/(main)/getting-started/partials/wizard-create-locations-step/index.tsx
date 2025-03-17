@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { useCreateLocationMutation } from '@/lib/services/location';
 import { useRouter } from 'next/navigation';
 import styles from './style.module.scss';
+import InputFactory from '@components/factories/input-factory';
+import Button from '@components/data-input/button';
 
 export const CreateLocationsStep = ({ spaceId }: { spaceId: string }) => {
   const router = useRouter();
@@ -19,9 +21,10 @@ export const CreateLocationsStep = ({ spaceId }: { spaceId: string }) => {
     }
   };
 
-  const handleLocationChange = (index: number, value: string) => {
+  const handleLocationChange = (index: number) => (e: React.ChangeEvent<Element>) => {
+    const target = e.target as unknown as { value: string };
     const newLocations = [...locations];
-    newLocations[index] = value;
+    newLocations[index] = target.value;
     setLocations(newLocations);
   };
 
@@ -62,39 +65,38 @@ export const CreateLocationsStep = ({ spaceId }: { spaceId: string }) => {
       <div className={styles.locations}>
         {locations.map((location, index) => (
           <div key={index} className={styles["form-group"]}>
-            <label htmlFor={`location-${index}`}>Location {index + 1}</label>
-            <input
-              id={`location-${index}`}
-              type="text"
+            <InputFactory
+              name={`location-${index}`}
+              label={`Location ${index + 1}`}
+              variant="text"
               value={location}
-              onChange={(e) => handleLocationChange(index, e.currentTarget.value)}
+              onChange={handleLocationChange(index)}
               placeholder="e.g. '123 Meteor Street'"
-              className={error && !isValidLocations ? styles.error : ''}
+              status={error && !isValidLocations ? 'error' : 'default'}
             />
           </div>
         ))}
         
         {locations.length < 2 && (
-          <button 
+          <Button 
             type="button"
-            className={styles["add-button"]}
+            variant="secondary"
             onClick={handleAddLocation}
-          >
-            Add Another Location
-          </button>
+            label="Add Another Location"
+          />
         )}
       </div>
       
       {error && <div className={styles["error-message"]}>{error}</div>}
       
       <div className={styles.actions}>
-        <button 
-          className={styles.button}
+        <Button 
+          variant="primary"
           onClick={handleSubmitLocations}
           disabled={isLoading || !hasAtLeastOneLocation || !isValidLocations}
-        >
-          {isLoading ? 'Saving...' : 'Complete Setup'}
-        </button>
+          isLoading={isLoading}
+          label="Complete Setup"
+        />
       </div>
     </div>
   );
