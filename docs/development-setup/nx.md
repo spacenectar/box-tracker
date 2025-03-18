@@ -1,0 +1,143 @@
+# NX Monorepo Setup for Box Tracker
+
+Box Tracker uses [NX](https://nx.dev) as a monorepo build system that helps manage multiple projects within the same repository.
+
+## What is NX?
+
+NX is a build system with built-in tooling that enables developers to work with multiple applications and libraries in a single workspace. It provides features like:
+
+- Powerful code generation
+- Smart task running
+- Dependency graph visualization
+- Caching and incremental builds
+- Consistent tooling across projects
+
+## Project Structure
+
+The Box Tracker monorepo is organized as follows:
+
+```
+box-tracker/
+├── libs/                  # Shared libraries and components
+│   ├── components/        # Reusable UI components
+│   ├── storybook-host/    # Global storybook instance
+│   ├── assets/            # Shared assets
+│   ├── helpers/           # Shared helper functions
+│   ├── mocks/             # Shared mock data
+│   ├── theme/             # SCSS design system
+│   ├── scripts/           # Build scripts and generators
+│   └── types/             # Shared TypeScript types
+├── projects/              # Main applications
+│   ├── backend/           # NestJS backend API service
+│   └── webapp/            # Next.js frontend application
+├── nx.json                # NX configuration
+└── package.json           # Workspace package configuration
+```
+
+## Key Commands
+
+### General Development
+
+```bash
+# Install dependencies for the entire workspace
+yarn install
+
+# Start the development environment with all services (except database)
+yarn dev
+
+# Start the database
+docker-compose up postgres
+
+# Start a tmux-based development environment
+yarn devkit
+```
+
+### Running Projects
+
+```bash
+# Run the frontend (Next.js) application
+yarn frontend
+# or
+nx run-many --target=serve --projects=webapp
+
+# Run the backend (NestJS) application
+yarn backend
+# or
+nx run-many --target=dev --projects=backend
+```
+
+### Development Tools
+
+```bash
+# Run watchers for automatically generating assets
+yarn watch
+
+# Run Storybook for component development
+yarn storybook
+# or
+nx storybook storybook-host
+
+# Run Prisma Studio (database management)
+yarn prisma-studio
+# or
+nx run-many --target=studio --projects=backend
+```
+
+### Building and Testing
+
+```bash
+# Build projects
+nx build <project-name>
+
+# Lint projects
+nx lint <project-name>
+
+# Test projects
+nx test <project-name>
+```
+
+## Adding New Components or Features
+
+When extending the codebase:
+
+1. Determine if the new code should be a library (in `libs/`) or part of an existing application (in `projects/`)
+2. For reusable components, add them to the appropriate library
+3. For application-specific features, add them to the respective project
+
+## Advanced Usage
+
+### Dependency Graph
+
+NX provides a powerful dependency graph visualization:
+
+```bash
+nx dep-graph
+```
+
+This command launches a web interface showing how projects depend on each other, which is useful for understanding the architecture.
+
+### Running Tasks with Affected
+
+NX can run tasks only on projects affected by your changes:
+
+```bash
+nx affected --target=build
+nx affected --target=test
+```
+
+These commands are useful in CI/CD pipelines to optimize build and test times.
+
+### Using Generators
+
+NX includes generators for creating new components and features with consistent patterns:
+
+```bash
+nx generate @nx/react:component --name=MyComponent --project=components
+```
+
+This creates a new React component with the appropriate structure and tests.
+
+## Learn More
+
+- [Official NX Documentation](https://nx.dev/getting-started/intro)
+- [NX GitHub Repository](https://github.com/nrwl/nx)
