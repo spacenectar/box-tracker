@@ -1,14 +1,25 @@
 'use client'
 
 import { useGetHealthcheckQuery } from "@/lib/services";
+import { useUserSetup } from "@/lib/hooks";
 import Loader from "@components/feedback/loader";
 import Link from "next/link";
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
+  const router = useRouter();
+  const { data, error, isLoading: healthCheckLoading } = useGetHealthcheckQuery();
+  const { hasSpaces, isSetupComplete, isLoading: setupLoading } = useUserSetup();
+  const [loading, setLoading] = useState(true);
 
-  const { data, error, isLoading } = useGetHealthcheckQuery();
+  useEffect(() => {
+    if (!healthCheckLoading && !setupLoading) {
+      setLoading(false);
+    }
+  }, [healthCheckLoading, setupLoading]);
 
-  if (isLoading) {
+  if (loading) {
     return <div className="dashboard-layout"><Loader helpText="Loading application data..." /></div>;
   }
 
@@ -16,6 +27,33 @@ export default function Home() {
     return <div>Error: {error instanceof Error ? error.message : 'An unknown error occurred'}</div>;
   }
 
+  // User has not completed setup
+  if (!isSetupComplete) {
+    return (
+      <main className="app-layout ta-c">
+        <h1 className="heading-large">Welcome to Box Tracker</h1>
+        <div className="content-section">
+          <p className="text-large mb-4">
+            {!hasSpaces 
+              ? "You haven't created any workspaces yet." 
+              : "You have workspaces but no locations set up yet."}
+          </p>
+          <p className="mb-6">
+            To get started with Box Tracker, you'll need to set up your workspaces and locations.
+            This will help you organize and track your items effectively.
+          </p>
+          <button 
+            className="btn-primary" 
+            onClick={() => router.push('/getting-started')}
+          >
+            Get Started
+          </button>
+        </div>
+      </main>
+    );
+  }
+
+  // User has completed setup
   return (
     <main className="app-layout ta-c">
       <h1 className="heading-large">Welcome to Box Tracker</h1>
