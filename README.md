@@ -35,9 +35,9 @@ Welcome to Box Tracker, the ultimate solution for organizing and tracking all yo
 repo/
 ├─ projects/
 │  ├─ backend/        # NestJS backend service
-│  └─ webapp/         # Next.js frontend service
+│  ├─ webapp/         # Next.js frontend service
+│  └─ storybook/      # Storybook documentation
 ├─ libs/
-│  ├─ storybook-host/ # Global storybook instance
 │  ├─ assets/         # Shared assets
 │  ├─ components/     # Shared UI components 
 │  ├─ helpers/        # Shared helper functions

@@ -24,7 +24,6 @@ The Box Tracker monorepo is organized as follows:
 box-tracker/
 ├── libs/                  # Shared libraries and components
 │   ├── components/        # Reusable UI components
-│   ├── storybook-host/    # Global storybook instance
 │   ├── assets/            # Shared assets
 │   ├── helpers/           # Shared helper functions
 │   ├── mocks/             # Shared mock data
@@ -33,7 +32,8 @@ box-tracker/
 │   └── types/             # Shared TypeScript types
 ├── projects/              # Main applications
 │   ├── backend/           # NestJS backend API service
-│   └── webapp/            # Next.js frontend application
+│   ├── webapp/            # Next.js frontend application
+│   └── storybook/         # Storybook documentation
 ├── nx.json                # NX configuration
 └── package.json           # Workspace package configuration
 ```
@@ -79,7 +79,7 @@ yarn watch
 # Run Storybook for component development
 yarn storybook
 # or
-nx storybook storybook-host
+nx storybook storybook
 
 # Run Prisma Studio (database management)
 yarn prisma-studio

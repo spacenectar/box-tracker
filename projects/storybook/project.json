@@ -1,7 +1,7 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/storybook-host/src",
-  "projectType": "library",
+  "sourceRoot": "projects/storybook/src",
+  "projectType": "application",
   "tags": [
     "type:storybook"
   ],
@@ -9,21 +9,21 @@
     "storybook": {
       "executor": "@nx/storybook:storybook",
       "options": {
-        "configDir": "libs/storybook-host/.storybook"
+        "configDir": "projects/storybook/.storybook"
       }
     },
     "build": {
       "executor": "@nx/storybook:build",
       "options": {
-        "configDir": "libs/storybook-host/.storybook",
-        "outputDir": "dist/storybook/storybook-host"
+        "configDir": "projects/storybook/.storybook",
+        "outputDir": "dist/storybook"
       }
     },
     "publish": {
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "npx chromatic --project-token=${CHROMATIC_PROJECT_TOKEN} --storybook-build-dir=dist/storybook/storybook-host"
+          "npx chromatic --project-token=${CHROMATIC_PROJECT_TOKEN} --storybook-build-dir=dist/storybook"
         ],
         "cwd": "."
       },

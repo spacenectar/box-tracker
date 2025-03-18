@@ -5,7 +5,7 @@ const config: StorybookConfig = {
   framework: {
     name: '@storybook/nextjs',
     options: {
-      nextConfigPath: '../../../projects/webapp/next.config.ts'
+      nextConfigPath: '../../webapp/next.config.ts'
     }
   },
   stories: [
@@ -16,12 +16,12 @@ const config: StorybookConfig = {
     },
     {
       titlePrefix: 'Library',
-      directory: '../../components',
+      directory: '../../../libs/components',
       files: '**/*.@(mdx|stories.@(ts|tsx))',
     },
     {
       titlePrefix: 'Webapp',
-      directory: '../../../projects/webapp',
+      directory: '../../webapp',
       files: '**/*.@(mdx|stories.@(ts|tsx))',
     }
   ],
@@ -49,7 +49,7 @@ const config: StorybookConfig = {
       to: '/'
     },
     {
-      from: '../../mocks',
+      from: '../../../libs/mocks',
       to: '/mocks'
     },
     {
@@ -62,7 +62,7 @@ const config: StorybookConfig = {
   config.resolve = config.resolve || {};
   config.resolve.alias = {
     ...config?.resolve?.alias,
-    '@theme': path.resolve(__dirname, '../../theme'),
+    '@theme': path.resolve(__dirname, '../../../libs/theme'),
   };
 
   // NOTE: I don't care about the use of 'any' here as it's just a Storybook config
