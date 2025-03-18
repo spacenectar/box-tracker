@@ -68,6 +68,13 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
       }
     }
   }, [isSignedIn, fetchAndSetToken])
+  
+  // Handle redirect to login page if user is not signed in
+  useEffect(() => {
+    if (!isSignedIn && isLoaded) {
+      router.push('/login');
+    }
+  }, [isSignedIn, isLoaded, router])
 
 
   useEffect(() => {
@@ -80,17 +87,6 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
   // Show a loader while Clerk is still determining authentication status
   if (!isLoaded) {
     return <div className='dashboard-layout'><Loader helpText="Checking authentication status..." /></div>
-  }
-
-  // Once Clerk is loaded, but the user isn't signed in, show access denied message
-  if (!isSignedIn && isLoaded) {
-    return (
-      <div className='dashboard-layout ta-c flex flex-column gap-2 items-center'>
-        <h1 className='heading-large'>Access Denied</h1>
-        <p>You must be logged in to access this page.</p>
-        <button className='btn-primary' onClick={() => router.push('/login')}>Go to Login</button>
-      </div>
-    )
   }
 
   // Show loading indicator only if we're still fetching data
