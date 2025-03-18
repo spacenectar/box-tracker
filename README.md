@@ -1,4 +1,5 @@
-# Box Tracker 📦
+![Box Tracker Logo](/libs/assets/branding/box-tracker-logo-square.png)
+# Box Tracker
 
 Welcome to Box Tracker, the ultimate solution for organizing and tracking all your stuff in boxes, across multiple locations, and even with multiple users! This repo is structured as a monorepo managed by `Nx`, with separate folders for the backend (`NestJS`) and the frontend (`NextJS`).
 

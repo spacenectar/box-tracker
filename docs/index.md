@@ -1,5 +1,5 @@
 
-![Box Tracker Logo](/libs/assets/branding/box-tracker-logo-square.png)
+![Jackanory Logo](/docs/images/jackanory-logo.png)
 # Jackanory - The Box Tracker edition
 
 This repository contains the guidelines for building applications using the Jackanory
