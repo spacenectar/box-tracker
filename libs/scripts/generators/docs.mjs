@@ -22,7 +22,7 @@ import camelCase from 'camelcase';
 // import config from '../../components/package.json' assert { type: 'json' };
 
 // Replaces the old CJS __dirname with a variable mapped to the project root
-const storybookPath = path.dirname(path.resolve('../storybook-host/package.json'));
+const storybookPath = path.dirname(path.resolve('../../projects/storybook/package.json'));
 // const versionNumber = config.version;
 
 // Includes and excludes should be relative to the root of the project

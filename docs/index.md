@@ -1,9 +1,17 @@
+
+![Jackanory Logo](/docs/images/jackanory-logo.png)
 # Jackanory - The Box Tracker edition
 
 This repository contains the guidelines for building applications using the Jackanory
 boilerplate codebase.
 
 It is a living document and will be updated as and when new guidelines are agreed.
+
+## Development Setup
+
+- [NX Monorepo](./development-setup/nx.md) - Guide to the NX monorepo structure and commands
+- [Docker Setup](./development-setup/docker.md) - Instructions for using Docker with Box Tracker
+- [DevKit](./development-setup/devkit.md) - Guide to using the DevKit tmux development environment
 
 ## Storybook
 
@@ -13,9 +21,6 @@ app's business logic, data, and context.
 
 That makes it easy to develop hard-to-reach states. Save these UI states as **stories**
 to revisit during development, testing, or QA.
-
-We recommend building UIs with a [**component-driven**](https://componentdriven.org)
-process starting with atomic components and ending with organisms.
 
 ## Browser Support
 

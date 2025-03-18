@@ -1,0 +1,53 @@
+# Docker Setup for Box Tracker
+
+This document describes how to run the Box Tracker application using Docker.
+
+## Prerequisites
+
+- [Docker](https://www.docker.com/)
+- [Docker Compose](https://docs.docker.com/compose/)
+
+## Getting Started
+
+### Development Environment
+
+1. Ensure you have a `.env` file in the project root with all necessary environment variables.
+
+2. To use Docker for database services only (recommended setup):
+
+```bash
+# Start just the Postgres database
+docker-compose up postgres
+```
+
+This will start the PostgreSQL database service which can be used by your locally running application.
+
+### Services
+
+The Docker setup includes the following services:
+
+- **postgres**: PostgreSQL database service available on port 5432
+
+## Environment Variables
+
+All environment variables are sourced from the `.env` file in the project root. This file is not committed to version control.
+
+The database service is configured with the following key environment variables:
+
+- `POSTGRES_USER`: Database username
+- `POSTGRES_PASSWORD`: Database password
+- `POSTGRES_DB`: Database name
+
+When connecting to the database from your local machine, use:
+
+```
+DATABASE_URL="postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@localhost:5432/${POSTGRES_DB}"
+```
+
+## Ports
+
+- PostgreSQL: 5432 - Maps to your local machine on the same port
+
+## Volumes
+
+- **pgdata**: Persists PostgreSQL data

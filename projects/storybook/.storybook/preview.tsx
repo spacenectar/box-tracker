@@ -25,7 +25,7 @@ import Version from './doc-blocks/version';
 
 import { Preview } from '@storybook/react';
 
-import '@theme/index.scss';
+import '../../../libs/theme/index.scss';
 
 initialize({ onUnhandledRequest: 'bypass' });
 

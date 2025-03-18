@@ -137,13 +137,17 @@
   },
   "scripts": {
     "lint": "stylelint \"**/*.{css,scss}\" --fix",
-    "storybook": "nx storybook storybook-host",
+    "storybook": "nx storybook storybook",
     "build-storybook": "node ./libs/scripts/chromatic-build.mjs",
     "frontend": "nx run-many --target=serve --projects=webapp",
-    "backend": "nx run-many --target=dev --projects=backend",
-    "prisma-studio": "nx run-many --target=studio --projects=backend",
+    "backend": "nx run-many --target=dev,studio --projects=backend",
+    "watch": "nx run scripts:generate:icons --watch & nx run scripts:generate:docs --watch",
     "start": "yarn backend & yarn frontend",
-    "dev": "yarn frontend && yarn backend && yarn storybook && yarn prisma-studio"
+    "dev": "yarn frontend && yarn backend && yarn storybook && yarn prisma-studio",
+    "devkit": "sh ./devkit.sh",
+    "docker:dev": "./docker-start.sh",
+    "docker:dev:detached": "./docker-start.sh -d",
+    "docker:stop": "docker-compose down"
   },
   "msw": {
     "workerDirectory": [
