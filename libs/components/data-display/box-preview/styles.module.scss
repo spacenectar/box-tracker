@@ -32,13 +32,13 @@
   padding: padding(1);
 }
 
-.box-number {
-  font-size: type.$large-text-size;
+.box-name {
+  font-size: type.$heading-medium-size;
   font-weight: 800;
   text-transform: uppercase;
 }
 
-.box-location {
+.box-room {
   font-size: type.$large-text-size;
   font-weight: 700;
   text-transform: uppercase;
@@ -94,7 +94,7 @@ $colours: (
 
 @each $name, $colour in $colours {
   .colour-choice-#{"#{$name}"} {
-    .box-location {
+    .box-room {
       color: #{$colour};
     }
     .box-items-count {

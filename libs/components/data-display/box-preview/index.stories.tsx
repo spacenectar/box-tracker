@@ -2,36 +2,22 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import BoxPreview from './index';
 
-// Use the same color choices as defined in the component
-enum ColourChoices {
-  ORANGE = 'orange',
-  BLUE = 'blue',
-  TURQUOISE = 'turquoise',
-  RED = 'red',
-  PINK = 'pink',
-  INDIGO = 'indigo',
-  PURPLE = 'purple',
-  GREEN = 'green',
-  BROWN = 'brown',
-  HOTPINK = 'hotpink'
-}
-
 const meta: Meta<typeof BoxPreview> = {
   component: BoxPreview,
   args: {
-    boxNumber: 1,
-    location: 'Kitchen',
+    name: "Box 1",
+    room: 'Kitchen',
     itemNames: ['Item 1', 'Item 2', 'Item 3', 'Item 4'],
     itemCount: 33,
     filled: 20,
     sealed: false,
-    colour: ColourChoices.BLUE
+    colour: 'hotpink'
   },
   argTypes: {
     colour: {
       control: {
         type: 'select',
-        options: Object.values(ColourChoices)
+        options: ['orange',  'blue',  'turquoise', 'red', 'pink',  'indigo',  'purple',  'green',  'brown', 'hotpink']
       }
     }
   },
@@ -65,18 +51,18 @@ export const HighlyFilled: Story = {
 
 export const OrangeColour: Story = {
   args: {
-    colour: ColourChoices.ORANGE
+    colour: 'orange'
   }
 };
 
 export const RedColour: Story = {
   args: {
-    colour: ColourChoices.RED
+    colour: 'red'
   }
 };
 
 export const GreenColour: Story = {
   args: {
-    colour: ColourChoices.GREEN
+    colour: 'green'
   }
 };
