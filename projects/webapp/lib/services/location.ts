@@ -28,8 +28,16 @@ export const locationApi = createApi({
         body: { name, spaceId }
       }),
       invalidatesTags: ['Location', 'Space']
+    }),
+    getLocations: builder.query<Location[], void>({
+      query: () => 'location',
+      providesTags: ['Location']
+    }),
+    getLocation: builder.query<Location, string>({
+      query: (id) => `location/${id}`,
+      providesTags: ['Location']
     })
   })
 });
 
-export const { useCreateLocationMutation } = locationApi;
+export const { useCreateLocationMutation, useGetLocationsQuery, useGetLocationQuery } = locationApi;
