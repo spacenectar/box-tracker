@@ -105,3 +105,6 @@ $purple: hsl(265, 100%, 46%);
 $green: hsl(105, 40%, 44%);
 $brown: hsl(27, 47%, 38%);
 $hotpink: hsl(314, 100%, 31%);
+
+/* Gradients */
+$gradient-primary: linear-gradient(90deg, $primary, $secondary);
