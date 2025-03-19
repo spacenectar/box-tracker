@@ -1,23 +1,25 @@
 'use client'
 
-import { useGetHealthcheckQuery } from "@/lib/services";
+
 import { useUserSetup } from "@/lib/hooks";
 import Loader from "@components/feedback/loader";
-import Link from "next/link";
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useGetLocationsQuery } from '@/lib/services/location';
+import Grid from "@components/layout/grid";
+import { LocationPane } from "@components/data-display/location-pane";
 
 export default function Home() {
   const router = useRouter();
-  const { data, error, isLoading: healthCheckLoading } = useGetHealthcheckQuery();
   const { hasSpaces, isSetupComplete, isLoading: setupLoading } = useUserSetup();
   const [loading, setLoading] = useState(true);
+  const { data, error, isLoading } = useGetLocationsQuery();
 
   useEffect(() => {
-    if (!healthCheckLoading && !setupLoading) {
+    if (!setupLoading && !isLoading) {
       setLoading(false);
     }
-  }, [healthCheckLoading, setupLoading]);
+  }, [setupLoading, isLoading]);
 
   if (loading) {
     return <div className="dashboard-layout"><Loader helpText="Loading application data..." /></div>;
@@ -30,7 +32,7 @@ export default function Home() {
   // User has not completed setup
   if (!isSetupComplete) {
     return (
-      <main className="app-layout ta-c">
+      <main className="app-content">
         <h1 className="heading-large">Welcome to Box Tracker</h1>
         <div className="content-section">
           <p className="text-large mb-4">
@@ -55,22 +57,15 @@ export default function Home() {
 
   // User has completed setup
   return (
-    <main className="app-layout ta-c">
-      <h1 className="heading-large">Welcome to Box Tracker</h1>
-      <section className="ta-c">
-        <p>
-          This is a simple web application that allows you to track the location of boxes and items across multiple locations.
-        </p>
-        <p>
-          This is a pre-alpha version of the application and is not yet ready for production use.
-        </p>
-        <p>
-          The status of the API is: <strong style={data?.status === 'ok' ? {color: 'green'} : { color: 'red'}}>{data?.status === 'ok' ? 'Online' : 'Offline'}</strong>
-        </p>
-        <p>
-          To use the application, you will need to <Link className="link" href="/login">login</Link> or <Link className="link" href="/register">register</Link> for an account.
-        </p>
-      </section>
+    <main className="app-content">
+      <Grid columns={2} className="m-4">
+        {data?.map((location) => (
+          <LocationPane
+            key={location.id}
+            locationData={location}
+          />
+        ))}
+      </Grid>
     </main>
   );
 }
