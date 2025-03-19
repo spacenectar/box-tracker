@@ -1,6 +1,5 @@
 .masthead {
-  background: linear-gradient(90deg, col.$primary, col.$secondary);
-  background-color: col.$primary;
+  background:col.$gradient-primary;
 }
 
 .top-bar {
