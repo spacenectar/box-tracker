@@ -1,4 +1,5 @@
 ![Box Tracker Logo](/libs/assets/branding/box-tracker-logo-square.png)
+
 # Box Tracker
 
 Welcome to Box Tracker, the ultimate solution for organizing and tracking all your stuff in boxes, across multiple locations, and even with multiple users! This repo is structured as a monorepo managed by `Nx`, with separate folders for the backend (`NestJS`) and the frontend (`NextJS`).
@@ -39,7 +40,7 @@ repo/
 │  └─ storybook/      # Storybook documentation
 ├─ libs/
 │  ├─ assets/         # Shared assets
-│  ├─ components/     # Shared UI components 
+│  ├─ components/     # Shared UI components
 │  ├─ helpers/        # Shared helper functions
 │  ├─ mocks/          # Shared mock data
 │  ├─ theme/          # SCSS design system
@@ -121,10 +122,10 @@ Box Tracker provides several ways to run the development environment:
    ```bash
    # Start just the database
    docker-compose up postgres
-   
+
    # In another terminal, start the backend
    yarn backend
-   
+
    # In another terminal, start the frontend
    yarn frontend
    ```
@@ -134,6 +135,17 @@ For more detailed information about running the project, see the documentation:
 - [NX Monorepo Guide](./docs/development-setup/nx.md)
 - [Docker Setup](./docs/development-setup/docker.md)
 - [DevKit Environment](./docs/development-setup/devkit.md)
+
+---
+
+### Database Setup
+
+If you need to initialize or reset your database schema and seed it with initial data, you can use the following command:
+
+```bash
+# Generate Prisma client, apply migrations, and seed the database
+yarn db-setup
+```
 
 ---
 
