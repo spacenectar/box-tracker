@@ -1,0 +1,15 @@
+1. SCSS/CSS class names and file/folder names should all be in lower kebab-case.
+2. Don't add excessive code comments and never use emoji in code comments
+3. This project is an NX monorepo. Please bear that in mind when making changes or running commands
+4. I use a concept I call 'partials' in this project. A Partial is a component which is also a partial page, it has access to props in the same way a regular component has but unlike regular components, it doesn't have to be pure. As in, it can take information from global state/store/localstorage etc... Partials live inside each project's folder under /partials.
+5. When using variables, mixins or functions from the sass theme, you don't need to add a `@use` declaration at the top as that has already been done in the next.config.js file. However any sass functions (e.g. sass:color) WILL need to be imported.
+6. SCSS module files should be named 'style.module.scss' and not after the partial/page/component
+7. Storybook files should be named index.stories.tsx and not after the partial/page/component
+8. We have our own SCSS design system in libs/theme, please use variables and mixins from there wherever possible rather than making your own values. Also they are SCSS variables, so don't use CSS variables. Check the next.config.js file to see how the variable should be prefixed and use that prefix if needed and read the `/docs/coding-guidelines/stylesheets.md` file to work out which ones to use.
+9. If you are adding a brand new colour, please add it to the SCSS design system in libs/themes if it's likely to be reused, otherwise, create a new variable at the top of the file you are working in for the current styling.
+10. Before adding an import, check the tsconfig.json in the current project / lib folder AND the tsconfig.base.json in the repo root to ensure you are referencing the import correctly.
+11. In the context of this project a 'space' is a workspace and is not tied to a physical location. A 'location' is an address (for example a house or a storage unit) and a location can have 'rooms'.
+12. NEVER under any circumstances use `any` in typescript
+13. Inputs, Modals, Forms etc... should use the component library in libs/components
+14. Forms should use react-hook-form along with the FormFactory from libs/components
+15. Rather than using individual Label and Input components, use the InputFactory from libs/components
