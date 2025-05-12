@@ -1,3 +1,5 @@
+import type { Box } from './box'; // Assuming Box type is in ./box.ts
+
 export type Location = {
   id: string;
   name: string;
@@ -11,4 +13,5 @@ export type Location = {
   dateAdded?: Date;
   dateLastModified?: Date | null;
   dateLastAccessed?: Date | null;
+  boxes?: Box[]; // Add the boxes field
 };
