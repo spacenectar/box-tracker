@@ -17,21 +17,6 @@ import {
 /* Import Stylesheet */
 import styles from './styles.module.scss';
 
-function setRef<T>(
-  ref:
-    | React.MutableRefObject<T | null>
-    | ((instance: T | null) => void)
-    | null
-    | undefined,
-  value: T | null
-): void {
-  if (typeof ref === 'function') {
-    ref(value);
-  } else if (ref) {
-    ref.current = value;
-  }
-}
-
 export interface Props extends Omit<React.HTMLAttributes<HTMLDivElement>, 'content'> {
   /**
    * The placement of the tooltip relative to the trigger
