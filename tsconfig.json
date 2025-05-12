@@ -22,7 +22,7 @@
       "path": "./projects/backend"
     },
     {
-      "path": "./libs/storybook-host"
+      "path": "./projects/storybook"
     },
     {
       "path": "./libs/helpers"
