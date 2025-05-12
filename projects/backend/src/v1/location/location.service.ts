@@ -4,7 +4,7 @@ import { PrismaService } from '../../prisma/prisma.service';
 @Injectable()
 export class LocationService {
   constructor(private readonly prisma: PrismaService) {}
-  
+
   // Helper method to generate a slug from a name
   private generateSlug(name: string): string {
     return name
@@ -19,46 +19,54 @@ export class LocationService {
         userLocations: {
           some: { userId }
         }
+      },
+      include: {
+        boxes: true
       }
     });
   }
 
   async findOne(id: string, userId: string) {
-    const location = await this.prisma.location.findUnique({ 
+    const location = await this.prisma.location.findUnique({
       where: { id },
-      include: { userLocations: true }
+      include: {
+        userLocations: true,
+        boxes: true
+      }
     });
-    
+
     if (!location) return null;
-    
+
     // Check if user has access to this location
     const hasAccess = location.userLocations.some(ul => ul.userId === userId);
     if (!hasAccess) return null;
-    
-    return location;
+
+    // We don't need to return userLocations to the client
+    const { userLocations, ...locationWithoutJoin } = location;
+    return locationWithoutJoin;
   }
 
 async create(data: any) {
   // Get the user ID from the data and remove it from the location data
   const userId = data.userId;
   const { userId: _, ...locationData } = data;
-  
+
   // Generate a slug from the name if not provided
   if (!locationData.slug) {
     locationData.slug = this.generateSlug(locationData.name);
   }
-  
+
   // Set date fields
   const now = new Date();
   locationData.dateLastModified = now;
   locationData.dateLastAccessed = now;
-  
+
   // Use a transaction to ensure all operations succeed or fail together
   const result = await this.prisma.$transaction(async (prisma) => {
     // Check if the slug already exists in this space
     let locationSlug = locationData.slug;
     let locationCounter = 1;
-    
+
     // Check if the slug already exists in this space
     let locationWithSlug = await prisma.location.findFirst({
       where: {
@@ -68,7 +76,7 @@ async create(data: any) {
         }
       },
     });
-    
+
     // If the slug exists, append a number until we find a unique one
     while (locationWithSlug) {
       locationSlug = `${locationData.slug}-${locationCounter}`;
@@ -82,21 +90,21 @@ async create(data: any) {
         },
       });
     }
-    
+
     // Update the slug if it was changed
     locationData.slug = locationSlug;
-    
+
     // Create the location
     const createdLocation = await prisma.location.create({
       data: locationData,
     });
-    
+
     // Generate a unique slug for the default room
     const locationId = createdLocation.id;
     const baseSlug = 'default-room';
     let roomSlug = baseSlug;
     let counter = 1;
-    
+
     // Check if the slug already exists in this location
     let roomWithSlug = await prisma.room.findFirst({
       where: {
@@ -106,7 +114,7 @@ async create(data: any) {
         }
       },
     });
-    
+
     // If the slug exists, append a number until we find a unique one
     while (roomWithSlug) {
       roomSlug = `${baseSlug}-${counter}`;
@@ -120,7 +128,7 @@ async create(data: any) {
         },
       });
     }
-    
+
     // Create the default room with the unique slug
     const now = new Date();
     await prisma.room.create({
@@ -133,7 +141,7 @@ async create(data: any) {
         dateLastAccessed: now,
       },
     });
-    
+
     // Create the association in the UserLocation join table if userId is provided
     if (userId) {
       await prisma.userLocation.create({
@@ -143,10 +151,10 @@ async create(data: any) {
         },
       });
     }
-    
+
     return createdLocation;
   });
-  
+
   return {
     id: result.id,
     name: result.name,
@@ -159,13 +167,16 @@ async create(data: any) {
     // Check if user has access to this location
     const location = await this.findOne(id, userId);
     if (!location) throw new Error('Location not found or access denied');
-    
+
     // Set dateLastModified to current date
     data.dateLastModified = new Date();
-    
-    return this.prisma.location.update({ 
-      where: { id }, 
-      data 
+
+    return this.prisma.location.update({
+      where: { id },
+      data,
+      include: {
+        boxes: true
+      }
     });
   }
 
@@ -173,9 +184,9 @@ async create(data: any) {
     // Check if user has access to this location
     const location = await this.findOne(id, userId);
     if (!location) throw new Error('Location not found or access denied');
-    
-    return this.prisma.location.delete({ 
-      where: { id } 
+
+    return this.prisma.location.delete({
+      where: { id }
     });
   }
 }
