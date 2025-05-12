@@ -1,6 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import ReactDOM from 'react-dom';
-import { usePopper } from 'react-popper';
+import React, { useEffect, useRef, useState } from 'react';
+import {
+  arrow,
+  autoUpdate,
+  flip,
+  FloatingPortal,
+  offset,
+  shift,
+  Side,
+  useFloating,
+  useFocus,
+  useHover,
+  useInteractions,
+  useRole
+} from '@floating-ui/react';
 
 /* Import Stylesheet */
 import styles from './styles.module.scss';
@@ -18,27 +30,6 @@ function setRef<T>(
   } else if (ref) {
     ref.current = value;
   }
-}
-
-function useForkRef<Instance>(
-  ...refs: Array<React.Ref<Instance> | undefined>
-): React.RefCallback<Instance> | null {
-  /**
-   * This will create a new function if the refs passed to this hook change and are all defined.
-   * This means react will call the old forkRef with `null` and the new forkRef
-   * with the ref. Cleanup naturally emerges from this behavior.
-   */
-  return React.useMemo(() => {
-    if (refs.every((ref) => ref == null)) {
-      return null;
-    }
-
-    return (instance) => {
-      refs.forEach((ref) => {
-        setRef(ref, instance);
-      });
-    };
-  }, refs);
 }
 
 export interface Props extends Omit<React.HTMLAttributes<HTMLDivElement>, 'content'> {
@@ -75,100 +66,103 @@ export const Tooltip: React.FC<Props> = ({
     throw new Error('Tooltip: Must have exactly one child');
   }
 
-  const [showTooltip, setShowTooltip] = useState(isVisible ?? false);
-  const [referenceElement, setReferenceElement] =
-    useState<HTMLDivElement | null>(null);
-  const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(
-    null
-  );
-  const [arrowElement, setArrowElement] = useState<HTMLDivElement | null>(null);
+  const [isOpen, setIsOpen] = useState(isVisible ?? false);
+  const arrowRef = useRef<HTMLDivElement | null>(null);
+
   const {
-    styles: popperStyles,
-    attributes,
-    state
-  } = usePopper(referenceElement, popperElement, {
-    modifiers: [
-      { name: 'arrow', options: { element: arrowElement } },
-      {
-        name: 'offset',
-        options: {
-          offset: [0, 8]
-        }
-      }
-    ],
-    placement
+    refs,
+    floatingStyles,
+    context,
+    middlewareData: { arrow: { x: arrowX, y: arrowY } = {} },
+    placement: finalPlacement
+  } = useFloating<HTMLElement>({
+    open: isOpen,
+    onOpenChange: setIsOpen,
+    placement,
+    whileElementsMounted: autoUpdate,
+    middleware: [
+      offset(8),
+      flip(),
+      shift(),
+      arrow({
+        element: arrowRef
+      })
+    ]
   });
+
+  const hover = useHover(context, {
+    enabled: isVisible === undefined,
+    move: false
+  });
+  const focus = useFocus(context, {
+    enabled: isVisible === undefined
+  });
+  const role = useRole(context, { role: 'tooltip' });
+
+  const { getReferenceProps, getFloatingProps } = useInteractions([
+    hover,
+    focus,
+    role
+  ]);
 
   useEffect(() => {
     if (isVisible === undefined) return;
 
-    setShowTooltip(isVisible);
+    setIsOpen(isVisible);
   }, [isVisible]);
 
-  useEffect(() => {
-    if (!referenceElement || isVisible !== undefined) return;
+  const staticSideMap: Record<string, Side> = {
+    top: 'bottom',
+    right: 'left',
+    bottom: 'top',
+    left: 'right'
+  };
+  const staticSide = staticSideMap[finalPlacement.split('-')[0]];
 
-    const showFn = () => {
-      setShowTooltip(true);
-    };
-
-    const hideFn = () => {
-      setShowTooltip(false);
-    };
-
-    referenceElement.addEventListener('mouseenter', showFn);
-    referenceElement.addEventListener('mouseleave', hideFn);
-    referenceElement.addEventListener('focus', showFn);
-    referenceElement.addEventListener('blur', hideFn);
-    referenceElement.addEventListener('keydown', (e: KeyboardEvent) => {
-      if (e.key === 'Escape' || e.key === 'Esc') {
-        hideFn();
-      }
-    });
-
-    return () => {
-      referenceElement.removeEventListener('mouseenter', showFn);
-      referenceElement.removeEventListener('mouseleave', hideFn);
-      referenceElement.removeEventListener('focus', showFn);
-      referenceElement.removeEventListener('blur', hideFn);
-    };
-  }, [referenceElement, isVisible]);
-
-  let arrowClassNames = [
+  const arrowClassNames = [
     styles['arrow'],
-    state !== null ? styles[placement] : ''
+    styles[finalPlacement.split('-')[0]]
   ].filter(Boolean).join(' ');
 
-  const childrenProps = {
-    // @ts-ignore - any is required to allow for ref forwarding on an unknown element
-    ref: useForkRef(children?.ref, setReferenceElement)
-  };
+  const childrenElement = React.isValidElement(children) ? children : null;
+
+  const childrenProps = getReferenceProps({
+    ref: refs.setReference,
+    ...(childrenElement && typeof childrenElement.props === 'object'
+      ? childrenElement.props
+      : {})
+  });
 
   return (
     <>
       {React.isValidElement(children) &&
         React.cloneElement(children, childrenProps)}
-      {ReactDOM.createPortal(
-        showTooltip && (
+      <FloatingPortal>
+        {isOpen && (
           <div
             data-testid="tooltip"
-            ref={setPopperElement}
-            style={popperStyles.popper}
-            {...attributes.popper}
-            className={[styles['tooltip'], className || ''].filter(Boolean).join(' ')}
-            role="tooltip"
+            ref={refs.setFloating}
+            style={floatingStyles}
+            {...getFloatingProps()}
+            className={[styles['tooltip'], className || '']
+              .filter(Boolean)
+              .join(' ')}
             {...props}
           >
             {content}
             <div
-              ref={setArrowElement}
-              style={popperStyles.arrow}
+              ref={arrowRef}
               className={arrowClassNames}
+              style={{
+                position: 'absolute',
+                left: arrowX != null ? `${arrowX}px` : '',
+                top: arrowY != null ? `${arrowY}px` : '',
+                ...(staticSide && { [staticSide]: '-4px' })
+              }}
             />
           </div>
-        ),
-        document.body
-      )}
+        )}
+      </FloatingPortal>
     </>
   );
 };
