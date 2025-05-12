@@ -1,117 +1,75 @@
 'use client'
 
-import { useEffect, useState, useCallback, useRef } from 'react'
+import { useEffect } from 'react'
 import { useAuth } from '@clerk/clerk-react'
-import { useDispatch } from 'react-redux'
 import { useRouter } from 'next/navigation'
-import { setToken } from '@/lib/store/auth-slice'
 import Masthead from "@components/layout/masthead"
 import { useGetUserQuery } from '@/lib/services/user'
 import Footer from '@components/layout/footer'
 import Loader from '@components/feedback/loader'
 
 export function ClientLayout({ children }: { children: React.ReactNode }) {
-  const { getToken, isSignedIn, isLoaded } = useAuth()
-  const dispatch = useDispatch()
+  const { isSignedIn, isLoaded } = useAuth()
   const router = useRouter()
-  const [isTokenFetched, setIsTokenFetched] = useState(false)
-  const refreshTimerRef = useRef<NodeJS.Timeout | null>(null)
 
-  const { data, error, isLoading, refetch } = useGetUserQuery();
+  // Conditionally fetch user data: Skip if Clerk isn't loaded or user isn't signed in
+  const { data: userData, error, isLoading: isUserLoading } = useGetUserQuery(undefined, {
+    skip: !isLoaded || !isSignedIn,
+  });
 
-  const fetchAndSetToken = useCallback(async () => {
-    if (!isSignedIn) return false
-    try {
-      // Get a fresh token without any options
-      const token = await getToken()
-      if (token) {
-        dispatch(setToken(token))
-        return true
-      }
-    } catch (error) {
-      console.error('Error fetching token:', error)
-    }
-    return false
-  }, [getToken, dispatch, isSignedIn])
-
-  // Initial token fetch
+  // Handle redirect to login page if Clerk is loaded and user is not signed in
   useEffect(() => {
-    async function initialFetchToken() {
-      if (await fetchAndSetToken()) {
-        setIsTokenFetched(true)
-      }
-    }
-    initialFetchToken()
-  }, [fetchAndSetToken])
-
-  // Set up token refresh mechanism
-  useEffect(() => {
-    if (!isSignedIn) return
-
-    // Refresh token every 15 minutes to prevent expiration
-    const setupRefreshTimer = () => {
-      if (refreshTimerRef.current) {
-        clearInterval(refreshTimerRef.current)
-      }
-      
-      refreshTimerRef.current = setInterval(async () => {
-        await fetchAndSetToken()
-      }, 15 * 60 * 1000) // 15 minutes
-    }
-
-    setupRefreshTimer()
-
-    return () => {
-      if (refreshTimerRef.current) {
-        clearInterval(refreshTimerRef.current)
-        refreshTimerRef.current = null
-      }
-    }
-  }, [isSignedIn, fetchAndSetToken])
-  
-  // Handle redirect to login page if user is not signed in
-  useEffect(() => {
-    if (!isSignedIn && isLoaded) {
+    if (isLoaded && !isSignedIn) {
       router.push('/login');
     }
-  }, [isSignedIn, isLoaded, router])
+  }, [isLoaded, isSignedIn, router])
 
-
-  useEffect(() => {
-    if (isTokenFetched && isSignedIn && !data) {
-      refetch()
-    }
-  }, [isTokenFetched, isSignedIn, data, refetch])
-
-
-  // Show a loader while Clerk is still determining authentication status
+  // Show loader while Clerk is loading
   if (!isLoaded) {
     return <div className='dashboard-layout'><Loader helpText="Checking authentication status..." /></div>
   }
 
-  // Show loading indicator only if we're still fetching data
-  if (isSignedIn && (!isTokenFetched || isLoading || !data)) {
-    return (
-      <div className='dashboard-layout'>
-        <Loader helpText="Loading user data..." />
-      </div>
-    )
+  // If Clerk is loaded, but user is not signed in (and redirect hasn't happened yet)
+  // or if the user query is loading, show a loader.
+  if (!isSignedIn || isUserLoading) {
+     // Only show loading for user data *after* clerk is loaded and user is signed in
+     if (isSignedIn && isUserLoading) {
+        return (
+          <div className='dashboard-layout'>
+            <Loader helpText="Loading user data..." />
+          </div>
+        )
+     }
+     // Otherwise, Clerk is likely handling the redirect or the user is signed out
+     // You might want a generic loading or null render here while redirect happens
+     return <div className='dashboard-layout'><Loader helpText="Loading..." /></div> // Or null
   }
 
-  if (error && !isLoaded) {
+  // Handle error fetching user data after authentication is confirmed
+  if (error) {
+    console.error("Error fetching user:", error); // Log the error for debugging
     return <div className='dashboard-layout ta-c flex flex-column gap-2 items-center'>
       <h1 className='heading-large'>Error</h1>
       <p>There was an error fetching your user data.</p>
-      <button className='btn-primary' onClick={() => router.refresh()}>Try Again</button>
+      {/* Consider offering sign-out or just refresh */}
+      <button className='btn-primary' onClick={() => window.location.reload()}>Try Again</button>
       <p>
         If the problem persists, please try again later.
       </p>
     </div>
   }
 
+  // If we reach here: Clerk is loaded, user is signed in, and user data query is finished without error.
+  // We should have userData.
+  if (!userData) {
+     // This case might indicate an unexpected issue if error is not set.
+     console.error("User data is missing after successful load.");
+     return <div className='dashboard-layout'><Loader helpText="Preparing dashboard..." /></div>
+  }
+
   return (
     <div className='app-layout'>
-      <Masthead user={data!}/>
+      <Masthead user={userData}/>
       {children}
       <Footer />
     </div>

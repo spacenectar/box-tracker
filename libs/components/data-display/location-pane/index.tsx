@@ -31,7 +31,7 @@ export const LocationPane: React.FC<Props> = ({ className, locationData, boxes, 
       setBoxList(boxes)
 
     }, [locationData, boxes]);
-  
+
   return (
     <section
       className={[
@@ -46,18 +46,7 @@ export const LocationPane: React.FC<Props> = ({ className, locationData, boxes, 
       </header>
       <div className={styles['pane-contents']}>
         <Grid columns={3}>
-          {boxList.map((box) => (
-            <BoxPreview
-              key={box.id}
-              name={box.name}
-              room={box.room}
-              itemNames={box.items.map((item) => item.name)}
-              itemCount={box.items.length}
-              filled={box.items.length / 100}
-              sealed={box.sealed}
-              colour='blue'
-            />
-          ))}
+
         </Grid>
       </div>
     </section>

@@ -1,54 +1,53 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { Space } from '@typeDefs/space';
-import type { RootState } from '../store';
+import { api } from './baseApi';
+import type { Space } from '@typeDefs/space';
 
-export const spaceApi = createApi({
-  reducerPath: 'spaceApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: '/api/v1/',
-    prepareHeaders: (headers, { getState }) => {
-      const token = (getState() as RootState).auth.token;
-      if (token) {
-        headers.set('Authorization', `Bearer ${token}`);
-      }
-      return headers;
-    },
-  }),
-  tagTypes: ['Space'],
+export const spaceApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getSpaces: builder.query<Space[], void>({
       query: () => 'space',
-      providesTags: ['Space']
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ id }) => ({ type: 'Space' as const, id })),
+              { type: 'Space', id: 'LIST' },
+            ]
+          : [{ type: 'Space', id: 'LIST' }],
     }),
-    createSpace: builder.mutation<Space, string>({
-      query: (name) => ({
+    getSpace: builder.query<Space, string>({
+      query: (id) => `space/${id}`,
+      providesTags: (result, error, id) => [{ type: 'Space', id }],
+    }),
+    addSpace: builder.mutation<Space, Partial<Space>>({
+      query: (body) => ({
         url: 'space',
         method: 'POST',
-        body: { name }
+        body,
       }),
-      invalidatesTags: ['Space']
+      invalidatesTags: [{ type: 'Space', id: 'LIST' }],
     }),
-    updateSpace: builder.mutation<Space, { id: string; name: string }>({
-      query: ({ id, name }) => ({
+    updateSpace: builder.mutation<Space, Partial<Space> & Pick<Space, 'id'>>({
+      query: ({ id, ...patch }) => ({
         url: `space/${id}`,
         method: 'PUT',
-        body: { name }
+        body: patch,
       }),
-      invalidatesTags: ['Space']
+      invalidatesTags: (result, error, { id }) => [{ type: 'Space', id }, { type: 'Space', id: 'LIST' }],
     }),
-    deleteSpace: builder.mutation<void, string>({
+    deleteSpace: builder.mutation<{ success: boolean; id: string }, string>({
       query: (id) => ({
         url: `space/${id}`,
-        method: 'DELETE'
+        method: 'DELETE',
       }),
-      invalidatesTags: ['Space']
-    })
-  })
+      invalidatesTags: (result, error, id) => [{ type: 'Space', id }, { type: 'Space', id: 'LIST' }],
+    }),
+  }),
+  overrideExisting: false,
 });
 
-export const { 
-  useCreateSpaceMutation, 
-  useGetSpacesQuery, 
-  useUpdateSpaceMutation, 
-  useDeleteSpaceMutation 
+export const {
+  useGetSpacesQuery,
+  useGetSpaceQuery,
+  useAddSpaceMutation,
+  useUpdateSpaceMutation,
+  useDeleteSpaceMutation,
 } = spaceApi;

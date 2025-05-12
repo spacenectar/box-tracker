@@ -118,6 +118,8 @@ model Box {
   dateAdded        DateTime @default(now())
   dateLastModified DateTime?
   dateLastAccessed DateTime?
+  colour           String   // Hex color value (e.g., "#6699cc")
+  
 
   location         Location @relation(fields: [locationId], references: [id])
   items            Item[]

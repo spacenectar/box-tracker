@@ -1,27 +1,19 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { healthcheckApi } from '../services'
-import { userApi } from '../services'
-import { spaceApi } from '../services/space'
-import { locationApi } from '../services/location'
+import { setupListeners } from '@reduxjs/toolkit/query'
+import { api } from '../services/baseApi'
 import { authReducer } from './auth-slice'
 
 export const makeStore = () => {
-  return configureStore({
+  const store = configureStore({
     reducer: {
       auth: authReducer,
-      [healthcheckApi.reducerPath]: healthcheckApi.reducer,
-      [userApi.reducerPath]: userApi.reducer,
-      [spaceApi.reducerPath]: spaceApi.reducer,
-      [locationApi.reducerPath]: locationApi.reducer
+      [api.reducerPath]: api.reducer,
     },
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(
-        healthcheckApi.middleware,
-        userApi.middleware,
-        spaceApi.middleware,
-        locationApi.middleware
-      ),
+      getDefaultMiddleware().concat(api.middleware),
   })
+  setupListeners(store.dispatch)
+  return store
 }
 
 // Infer the type of makeStore
