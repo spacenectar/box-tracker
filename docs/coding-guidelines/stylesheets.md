@@ -1,180 +1,212 @@
-# Stylesheets
+# Styling Guide
 
-This section applies only to CSS/SCSS. [Sass] is our preprocessor of choice, and
-we use React's '[css-modules]' to ensure that the styles are scoped to their
-component. This allows us to use generic-looking classes in components without
-worrying about conflicts.
+This guide explains how to style components in the application using SCSS Modules and the project's theme system.
 
-## Coding Style
+## SCSS Modules
 
-As we are using styles which are scoped to the component and each component
-should have a single task, [BEM notation] will not be required or used in any
-stylesheets.
+SCSS Modules are the standard way to style components in this project. They allow you to write scoped SCSS that applies only to the component importing it, preventing style conflicts.
 
-If you require the use of a modifier, the `--modifier` syntax is still acceptable.
+### Basic Usage
 
-### Acceptable
+1. **Create a SCSS Module file:** For a component (e.g., `MyComponent`), create a corresponding `styles.module.scss` file in the same directory.
 
-```css
-.button {
-  padding: $spacing;
-  text-align: centre;
-  background-color: #f00;
-  color: #333;
-  &--disabled {
-    background-color: #ccc;
-  }
-}
-```
+    ```scss
+    // libs/components/my-component/styles.module.scss
 
-### Unacceptable
-
-```css
-.contact_form {
-  &__button {
-    padding: $spacing;
-    text-align: centre;
-    background-color: #f00;
-    color: #333;
-    &--disabled {
-      background-color: #ccc;
+    .container {
+      padding: spacing(2);
+      background-color: col.$grey-100;
+      border: border();
     }
+
+    .title {
+      @include type.heading-small;
+      color: col.$primary;
+      margin-bottom: spacing(1);
+    }
+    ```
+
+2. **Import and use in your component:** Import the styles object and apply the classes using object notation.
+
+    ```typescript
+    // libs/components/my-component/index.tsx
+    import styles from './styles.module.scss';
+
+    const MyComponent = () => {
+      return (
+        <div className={styles.container}>
+          <h2 className={styles.title}>Component Title</h2>
+          {/* ... */}
+        </div>
+      );
+    };
+
+    export default MyComponent;
+    ```
+
+    This generates unique class names in the browser (e.g., `my-component_container__aB3dF`), ensuring styles don't clash globally.
+
+## Theme System
+
+The project includes a comprehensive theme system located in `libs/theme`. Theme variables and mixins are automatically available without additional imports in all `.scss` files via the `additionalData` configuration in `next.config.ts`.
+
+### Variable Prefixes
+
+To access theme variables and mixins, use the following prefixes:
+
+- `type.` : For typography mixins and variables (from `libs/theme/typography.scss`).
+- `col.` : For colour variables (from `libs/theme/colours.scss`).
+- `util.` : For utility mixins (from `libs/theme/utilities/`).
+- `animate.` : For animation mixins/variables (from `libs/theme/animations/`).
+- `bp.` : For breakpoint variables (from `libs/theme/_breakpoints.scss`).
+- **(No Prefix)**: For layout variables like spacing, elevation, borders, and shadows (from `libs/theme/vars/` via `libs/theme/vars.scss`).
+
+### Theme Variables
+
+#### 1. Typography (`type.` prefix)
+
+Located in `libs/theme/typography.scss`.
+
+**Mixins:**
+
+- `@include type.body-text;` (Base body text style)
+- `@include type.small-text;`
+- `@include type.large-text;`
+- `@include type.title;` (Page titles)
+- `@include type.heading-large;`
+- `@include type.heading-medium;`
+- `@include type.heading-small;`
+- `@include type.input;` (Form inputs)
+- `@include type.input-label;`
+- `@include type.input-placeholder;`
+- `@include type.form-metadata;` (Help text, validation messages)
+- `@include type.button;`
+- `@include type.link;`
+
+**Variables:**
+
+- `type.$body-text-size`: `1.4rem`
+- `type.$small-text-size`: `1.2rem`
+- `type.$large-text-size`: `1.6rem`
+- `type.$title-size`: `10rem` (adjusts smaller on smaller viewports)
+- `type.$heading-large-size`: `3.4rem` (adjusts smaller)
+- `type.$heading-medium-size`: `2.4rem` (adjusts smaller)
+- `type.$heading-small-size`: `2rem` (adjusts smaller)
+- `type.$input-size`: `1.4rem`
+- `type.$input-label-size`: `1.4rem`
+- `type.$input-placeholder-size`: `1.4rem`
+- `type.$form-metadata-size`: `1.2rem`
+- `type.$button-size`: `1.4rem`
+- `type.$link-size`: `1.4rem`
+
+#### 2. Colours (`col.` prefix)
+
+Located in `libs/theme/colours.scss`.
+
+**Key Variables:**
+
+- **Backgrounds:** `col.$bg`, `col.$bg-dark`, `col.$main-panel-bg`, `col.$alt-panel-bg`
+- **Brand:** `col.$primary`, `col.$secondary`, `col.$tertiary`
+- **Base:** `col.$dark`, `col.$light`
+- **Greys:** `col.$grey-100` through `col.$grey-900`
+- **Typography:** `col.$body-text`, `col.$body-text-inverse`
+- **Statuses:** `col.$warning`, `col.$success`, `col.$danger`, `col.$info`, `col.$error`
+- **Buttons:** `col.$primary-button`, `col.$primary-button-hover`, `col.$primary-button-text`, `col.$secondary-button`, etc.
+- **Inputs:** `col.$input-bg`, `col.$input-focus-bg`, `col.$input-border`, `col.$input-border-focus`, `col.$label-text`, `col.$input-text`, `col.$disabled-input-text`
+- **Links:** `col.$link`, `col.$link-hover`, `col.$link-disabled`
+- **Actions:** `col.$action`, `col.$action-destroy`, `col.$action-create`, `col.$action-disabled`, hover/focus variants, `col.$action-text`
+- **Shadows/Borders:** `col.$shadow`, `col.$border`, `col.$border-dark`
+- **Accessibility:** `col.$keyboard-focus`
+- **Gradients:** `col.$gradient-primary`
+
+#### 3. Layout & Spacing (No prefix)
+
+Defined in `libs/theme/vars/` and forwarded by `libs/theme/vars.scss`.
+
+- **Spacing:**
+  - `spacing($multiplier)`: Function returns `calc(var(--base-spacing) * $multiplier)`. Base spacing is `0.8rem`.
+  - `margin($multiplier)`, `padding($multiplier)`: Convenience functions using `spacing()`. Also `margin-top()`, `padding-left()`, etc.
+- **Elevation:**
+  - `elevation($level)`: Function returns `box-shadow` based on level (0-5).
+- **Borders:**
+  - `border($width, $style, $color)`: Function returns standard border CSS. Defaults: `1px solid var(--border)`.
+  - `border-radius()`: Returns standard border radius.
+- **Shadows:**
+  - `shadow($level)`: Function returns `box-shadow` based on level (1-3).
+
+### Theme Utilities (`util.` prefix)
+
+Mixins and placeholder selectors for common UI patterns, primarily located in `libs/theme/utilities/`.
+
+**Key Utilities:**
+
+- **Buttons (`buttons.scss`):**
+  - `@include util.button-reset;`: Resets browser default button styles.
+  - `@include util.button-base;`: Base styles for all buttons.
+  - `@include util.button-primary;`: Primary button style.
+  - `@include util.button-secondary;`: Secondary button style.
+  - `@include util.button-text;`: Text/link-style button.
+  - `@include util.button-icon;`: Styles for icon-only buttons.
+- **Inputs (`inputs.scss`):**
+  - `@include util.input-base;`: Base styles for text inputs, textareas, selects.
+  - `@include util.input-label;`: Styles for form labels.
+  - `@include util.input-checkbox-radio;`: Styles for checkboxes and radios.
+  - `@include util.input-select;`: Styles for select dropdowns.
+- **Statuses (`statuses.scss`):**
+  - `@include util.status-badge($status);`: Mixin for creating status badges (pass `success`, `warning`, `danger`, `info`).
+- **Links (`link.scss`):**
+  - `%link`: Placeholder selector for basic link styles.
+  - `%link-subtle`: Placeholder for less prominent links.
+- **Accessibility (`sr-only.scss`, `focus-visible.scss`):**
+  - `@include util.sr-only;`: Hides element visually but keeps it accessible to screen readers.
+  - `@include util.focus-visible;`: Applies focus styles only for keyboard navigation.
+- **Layout (`card.scss`, `paper.scss`, `central-container.scss`):**
+  - `%card`: Placeholder for basic card styles.
+  - `%paper`: Placeholder for elevated paper-like surfaces.
+  - `%central-container`: Placeholder to center content horizontally.
+- **Lists (`list.scss`):**
+  - `%list-reset`: Placeholder to remove default list styling.
+
+## Responsive Design
+
+Use the breakpoint variables defined in `libs/theme/_breakpoints.scss` along with the responsive utility mixin.
+
+**Breakpoints (`bp.` prefix):**
+
+- `bp.$small`: Mobile
+- `bp.$medium`: Tablet
+- `bp.$large`: Desktop
+- `bp.$xlarge`: Large Desktop
+
+**Mixin Usage (`util.` prefix):**
+
+```scss
+.my-element {
+  font-size: 1rem;
+
+  @include util.mq(bp.$medium) {
+    // Styles apply from medium breakpoint upwards
+    font-size: 1.2rem;
+  }
+
+  @include util.mq-max(bp.$small) {
+    // Styles apply only up to the small breakpoint
+    display: block;
   }
 }
 ```
 
-In the example above, contact_form and button should be two components and
-therefore each has its own scoped styles.
+## Best Practices
 
-## Page styles
+1. **Use SCSS Modules:** Always use `.module.scss` files for component styling.
+2. **Leverage Theme Variables:** Prefer theme variables (`col.$primary`, `spacing(1)`) over hardcoded values (`#0078d4`, `8px`).
+3. **Use Theme Mixins/Placeholders:** Use provided mixins (`@include type.heading-small;`) and placeholders (`@extend %card;`) for common patterns like typography, buttons, and cards.
+4. **Keep Selectors Simple:** Rely on module scoping rather than complex nested selectors.
+5. **Mobile First:** Design styles for mobile first, then use `util.mq()` mixin to add overrides for larger screens.
+6. **Accessibility:** Use utilities like `util.sr-only` and `util.focus-visible` where appropriate.
 
-As a page is also a component, we should use the same style syntax as components.
-Styles for pages should live in the `pages` folder and have the same name as
-the page itself but with a `.scss` extension.
+## Additional Resources
 
-## Global CSS
-
-Any CSS which is not specific to a component or page should live in the `theme`
-folder and should be done with caution as these styles are global, this sort
-of styling should ideally be limited to theming.
-
-## Variables
-
-Global sass-style variables and CSS colour variables are used in the project.
-
-All variables are usable in any scss file in the project without importing.
-
-e.g.
-
-```scss
-border-radius: $border-radius;
-```
-
-The example above will set the border-radius property to the value of the
-`$border-radius` variable in `_others.scss` file in the `theme` folder.
-
-## Functions
-
-Several functions also exist to allow for cleaner code. These are used in a
-similar way to variables.
-
-e.g.
-
-```scss
-margin: margin(3);
-```
-
-is the equivalent of writing:
-
-```scss
-margin: $margin * 3;
-```
-
-Functions can be found in the `theme` folder at the bottom of the variable file
-they are in reference to (e.g. the spacing related function used above can be
-found in `_spacing.scss`).
-
-## Mixins
-
-Mixins are similar to functions, except they return whole SCSS snippets instead
-of just values. For an example of a mixin, look at the 'responsive mixin' in
-the section below
-
-Mixins can be found at the bottom of the variable file they are in reference to,
-however, there is also a mixin in the breakpoint.scss file as well as the
-utilities file (see below).
-
-## Utilities
-
-Utilities are a set of pre-made mixins created to help to quickly add
-standardised styles to DOM elements. To use a utility, it's the same as the use
-of any mixin except you need to prefix it with `utils`:
-
-e.g.
-
-```scss
-.my-card-like-component {
-  @include utils.card();
-}
-```
-
-## Responsive
-
-Breakpoint variables and mixins are set in /themes/\_breakpoints.scss. All
-breakpoints use `min-width` to ensure that mobile-first design is used.
-
-There are global breakpoints set as follows:
-
-| name           | size   |
-| -------------- | ------ |
-| `large`        | 1600px |
-| `medium-large` | 1280px |
-| `medium`       | 1024px |
-| `medium-small` | 550px  |
-| `small`        | 420px  |
-| `extra-small`  | 321px  |
-
-Similar to the above, breakpoints can be referenced without needing to import
-them e.g. `$bp-medium-large` is ready to use in any scss file.
-
-Custom breakpoints should be added at any point the layout breaks, these should
-be scoped to the component wherever possible.
-
-## Responsive Mixin
-
-To make writing media queries easier, there is a mq mixin which can be used as
-follows:
-
-```scss
-@include mq($bp-large) {
-  margin: 0 auto;
-}
-```
-
-This is the equivalent of writing:
-
-```scss
-@media only screen and (min-width: $bp-large) {
-  margin: 0 auto;
-}
-```
-
-You can also use custom values in the mixin:
-
-```scss
-@include mq('500px') {
-  margin: 0 auto;
-}
-```
-
-<blockquote class="tip-wrapper">
-  <strong class="warning">Note</strong>
-  As we build things on a mobile-first basis, the mixin only supports
-  `min-width`. If an edge case arises where you need something else, it is
-  acceptable to use a long-form media query but please comment your reasons along
-  with the code to avoid it being accidentally refactored at a later date.
-</blockquote>
-
-[sass]: https://sass-lang.com/ 'Sass'
-[css-modules]: https://create-react-app.dev/docs/adding-a-css-modules-stylesheet/ "React's CSS Modules"
-[bem notation]: http://getbem.com/introduction/ 'BEM Notation'
+- Review the [General Development Guide](./general.md) for general development practices.
+- Explore the components in `libs/components` for examples of styling.
+- Consult the files within `libs/theme` for the definitive list of variables and mixins.
