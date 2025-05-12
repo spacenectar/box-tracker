@@ -1,9 +1,9 @@
-
 /* Import Stylesheet */
 import styles from './styles.module.scss';
 import { useEffect, useState } from 'react';
-import Grid from '@components/layout/grid';
-import BoxPreview from '@components/data-display/box-preview';
+import Grid from '../../layout/grid';
+import BoxPreview, { ColourOptions } from '../box-preview';
+import AddBox from '../../data-input/add-box';
 
 /* Import Types */
 import type { Location } from '@typeDefs/location';
@@ -18,10 +18,22 @@ interface Props extends React.ComponentProps<'section'> {
    * The Box list
    */
   boxes: Box[];
+  /**
+   * Callback function when the add box button is clicked
+   */
+  onAddBoxClick: () => void;
 }
 
-
-export const LocationPane: React.FC<Props> = ({ className, locationData, boxes, ...props }) => {
+/**
+ * The LocationPane Component displays a location and its boxes/items.
+ */
+export const LocationPane: React.FC<Props> = ({
+  className,
+  locationData,
+  boxes,
+  onAddBoxClick,
+  ...props
+}) => {
 
     const [location, setLocation] = useState<Location | null>(null);
     const [boxList, setBoxList] = useState<Box[] | []>([]);
@@ -42,13 +54,18 @@ export const LocationPane: React.FC<Props> = ({ className, locationData, boxes, 
     >
       <header className={styles['header']}>
         <h2 className={styles['title']}>{location?.name}</h2>
-        {location?.address && <span className={styles['address']}>{location?.address}</span>}
+        <span className={styles['address']}>{location?.address || <>&nbsp;</>}</span>
       </header>
       <div className={styles['pane-contents']}>
         <Grid columns={3}>
-
+          {boxList?.map((box) => (
+            <BoxPreview key={box.id} name={box.name} room={box.room} itemNames={box.items.map((item) => item.name)} itemCount={box.items.length} filled={box.items.length / 100} colour={box.colour as ColourOptions} />
+          ))}
+          <AddBox onClick={onAddBoxClick} />
         </Grid>
       </div>
     </section>
   );
 };
+
+export default LocationPane;
