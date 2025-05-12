@@ -1,0 +1,53 @@
+.add-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  padding: padding();
+  border: 1px solid col.$border;
+  border-radius: $border-radius;
+  background-color: col.$grey-100;
+  color: col.$grey-600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  position: relative;
+  text-decoration: none;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 5%;
+    width: 90%;
+    height: 4px;
+    background-color: col.$grey-200;
+    border-bottom-left-radius: $border-radius-sm;
+    border-bottom-right-radius: $border-radius-sm;
+  }
+
+  &:hover,
+  &:focus-visible {
+    background-color: col.$grey-200;
+    border-color: col.$grey-400;
+    outline: none;
+  }
+
+  &:focus-visible {
+    box-shadow: 0 0 0 2px col.$keyboard-focus;
+  }
+
+  .plus-sign {
+    font-size: clamp(2.5rem, 10vw, 4rem);
+    line-height: 1;
+    font-weight: 300;
+    color: col.$grey-800;
+  }
+
+  .text {
+    font-size: type.$body-text-size;
+    margin-top: margin(1);
+    color: col.$grey-800;
+  }
+}
