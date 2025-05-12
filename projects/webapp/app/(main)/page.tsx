@@ -29,6 +29,8 @@ export default function Home() {
     return <div>Error: {error instanceof Error ? error.message : 'An unknown error occurred'}</div>;
   }
 
+  console.log({data})
+
   // User has not completed setup
   if (!isSetupComplete) {
     return (
@@ -36,16 +38,16 @@ export default function Home() {
         <h1 className="heading-large">Welcome to Box Tracker</h1>
         <div className="content-section">
           <p className="text-large mb-4">
-            {!hasSpaces 
-              ? "You haven't created any workspaces yet." 
+            {!hasSpaces
+              ? "You haven't created any workspaces yet."
               : "You have workspaces but no locations set up yet."}
           </p>
           <p className="mb-6">
-            To get started with Box Tracker, you'll need to set up your workspaces and locations.
+            To get started with Box Tracker, you&apos;ll need to set up your workspaces and locations.
             This will help you organize and track your items effectively.
           </p>
-          <button 
-            className="btn-primary" 
+          <button
+            className="btn-primary"
             onClick={() => router.push('/getting-started')}
           >
             Get Started
@@ -63,6 +65,7 @@ export default function Home() {
           <LocationPane
             key={location.id}
             locationData={location}
+            boxes={location.boxes || []}
           />
         ))}
       </Grid>
